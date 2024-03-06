@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'Gill Sans MT';
+    src: url('/assets/fonts/GillSansMT.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Gill Sans MT Bold';
+    src: url('/assets/fonts/GillSansMTBold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Gill Sans MT Italic';
+    src: url('/assets/fonts/GillSansMTItalic.ttf') format('truetype');
+    font-style: italic;
+}

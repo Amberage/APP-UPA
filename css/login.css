@@ -39,7 +39,7 @@ h2.login {
     top: 50%;
     left: 5px;
     transform: translateY(-50%);
-    color: #9d2348;
+    color: #d7a255;
     font-size: 1em;
     font-weight: bold;
     pointer-events: none;
@@ -115,4 +115,19 @@ button.login:hover {
 }
 .register p a:hover{
     text-decoration: underline;
+}
+
+.returnError {
+    padding-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    animation: bounce 2s;
+    color: #ba1934;
+}
+
+.returnSuccesful {
+    padding-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #1a5c50;
 }

@@ -5,12 +5,12 @@ USE UPA
 CREATE TABLE usuarios(
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
-    aPaterno VARCHAR(50) NOT NULL,
-    aMaterno VARCHAR(50),
+    apellido VARCHAR(50) NOT NULL,
     username VARCHAR(12) NOT NULL,
     password VARCHAR(4096) NOT NULL,
-    userType ENUM('admin', 'user') NOT NULL,
-    fechaRegistro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -- adm: Admin | ts: Trabajador Social
+    userType ENUM('adm', 'ts') NOT NULL,
+    fechaRegistro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE mascotasPropietarios(

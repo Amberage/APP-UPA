@@ -39,3 +39,12 @@
       opacity: 1;
     }
   }
+
+  @keyframes hiddeSlow {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@import url("animations.css");
 
 :root {
   --primary-color: #9d2348;
@@ -82,6 +83,10 @@ a {
   text-decoration: none;
 }
 
+.adminSection:hover {
+  animation: bounce 2s;
+}
+
 .logo {
   max-width: 120px;
 }
@@ -93,6 +98,11 @@ body {
 
 body {
   font-family: "Poppins", sans-serif;
+}
+
+span.impact {
+  font-weight: bold;
+  color: #9d2348;
 }
 
 .header {

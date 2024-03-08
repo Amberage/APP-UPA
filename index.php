@@ -1,14 +1,3 @@
-<?php
-// Iniciar sesión si aún no está iniciada
-session_start();
-if ($_SESSION["userType"] == "adm") {
-  header("Location: /views/admin/admin.php");
-} elseif ($_SESSION["userType"] == "ts") {
-  header("Location: /views/ts/tSocial.php");
-}
-session_destroy();
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>

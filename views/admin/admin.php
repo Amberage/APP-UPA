@@ -1,3 +1,12 @@
+<?php
+// Iniciar sesión si aún no está iniciada
+session_start();
+
+if ($_SESSION["userType"] != "adm") {
+    header("Location: /index.html");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -22,13 +31,13 @@
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/index.html"><span><i class="ri-home-4-fill"></i></span></a></li>
+                <li><a href="/views/admin/admin.php">Administración</a></li>
                 <li><a href="#" id="killSession">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">
             <p style="color: black;">UPA Valle de Chalco Solidaridad</p>
-            <h1><span>Administración</span></h1>
+            <h1 style="font-size: 2em;"><span>Administración</span></h1>
         </div>
     </header>
 

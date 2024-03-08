@@ -46,7 +46,7 @@ if ($_SESSION["userType"] != "adm") {
             <p class="section__subheader">PANEL DE ADMINISTRACIÓN</p>
         </div>
         <div class="room__grid">
-            <a class="adminSection" href="/views/admin/adminRegister.php">
+            <a class="adminSection" href="/views/admin/admin_Register.php">
                 <div class="room__card">
                     <div class="room__card__image">
                         <img src="/assets/images/admin_registerUser.png" alt="Registrar Trabajadores Sociales" />

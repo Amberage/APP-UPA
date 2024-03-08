@@ -23,7 +23,7 @@ CREATE TABLE mascotasPropietarios(
     -- Datos del propietario
     nombrePropietario VARCHAR(120) NOT NULL,
     curpPropietario VARCHAR(18) NOT NULL,
-    domicilioPropietario VARCHAR(200) NOT NULL,
+    domicilioPropietario VARCHAR(255) NOT NULL,
     -- Datos del trabajador social
     trabajadorSocial INT NOT NULL,
     fechaRegistro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -6,4 +6,5 @@
 * Averiguar el telefono de la UPA (55 7251 3868 o 55 7251 3862)
 
 # Warning Devs!
-* Modificar el registro del administrador de adm a ts
+* Falta añadir validadores de sesión en el index y en el login
+* En el registro especificar errores de maximos caracteres en nombre y apellidos

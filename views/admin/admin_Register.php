@@ -108,17 +108,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" autocomplete="off">
 
                     <div class="inputbox">
-                        <input type="text" name="nombre" id="nameUser" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}" required title="Solo letras y espacios">
+                        <input type="text" name="nombre" id="nameUser" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}" required title="Solo letras y espacios" maxlength="25"/>
                         <label>Nombre</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" name="apellido" id="lastnameUser" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,40}" required title="Solo letras y espacios">
+                        <input type="text" name="apellido" id="lastnameUser" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,40}" required title="Solo letras y espacios" maxlength="40"/>
                         <label>Apellido</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" name="username" minlength="4" maxlength="12" pattern="^[a-zA-Z0-9_.-]+$" required title="De 4 a 12 caracteres, se permiten letras (sin ñ), números, _ y .">
+                        <input type="text" name="username" minlength="4" maxlength="12" pattern="^[a-zA-Z0-9_.-]+$" required title="Minimo 4 caracteres, se permiten letras (sin ñ), números, _ y .">
                         <label>Nombre de Usuario</label>
                     </div>
 

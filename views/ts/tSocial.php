@@ -46,7 +46,7 @@ if ($_SESSION["userType"] != "ts") {
             <p class="section__subheader">PANEL DE TRABAJO SOCIAL</p>
         </div>
         <div class="room__grid">
-            <a class="adminSection" href="#">
+            <a class="adminSection" href="/views/ts/tSocial_addPets.php">
                 <div class="room__card">
                     <div class="room__card__image">
                         <img src="/assets/images/admin_registerPet.png" alt="Registrar Mascotas" />

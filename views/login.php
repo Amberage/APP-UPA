@@ -6,8 +6,6 @@ if ($_SESSION["userType"] == "adm") {
   header("Location: /views/admin/admin.php");
 } elseif ($_SESSION["userType"] == "ts") {
   header("Location: /views/ts/tSocial.php");
-} else {
-  header("Location: /index.php");
 }
 
 ?>

@@ -1,3 +1,90 @@
+<?php
+include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
+
+// Variable de control de mensajes de error
+$errorQuery = '';
+
+// Verificar si se ha enviado el formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    // Crear conexión
+    $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
+
+    // Verificar la conexión
+    if ($conn->connect_error) {
+        die("Error de conexión en login: " . $conn->connect_error . "\n\n Comunícaselo al departamento de sistemas del municipio, lamentamos las molestias.");
+    }
+
+    // Obtener datos del formulario
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    if(isset($_POST['sessionTime']) && $_POST['sessionTime'] == 'on') {
+        // El checkbox está marcado
+        $tiempoSesion = 2592000;
+    } else {
+        // El checkbox no está marcado
+        $tiempoSesion = 0;
+    }
+
+    // Consulta SQL para obtener la contraseña hasheada del usuario
+    $sql = "SELECT id, nombre, apellido, password, userType FROM usuarios WHERE username = '$username'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows == 1) {
+        // Usuario encontrado, verificar la contraseña
+        $row = $result->fetch_assoc();
+        $hashedPassword = $row["password"];
+
+        if (password_verify($password, $hashedPassword)) {
+            // Establecer persistencia de sesión
+            
+            ini_set('session.gc_maxlifetime', $tiempoSesion);
+            session_set_cookie_params($tiempoSesion, '/');
+            session_start();
+
+            // Contraseña correcta, iniciar sesión
+            $_SESSION["id"] = $row["id"];
+            $_SESSION["nombre"] = $row["nombre"];
+            $_SESSION["apellido"] = $row["apellido"];
+            $_SESSION["userType"] = $row["userType"];
+
+            /* !Depuración
+            // Crear un array con los datos de la sesión
+            $sessionData = array(
+                "id" => $_SESSION["id"],
+                "nombre" => $_SESSION["nombre"],
+                "apellido" => $_SESSION["apellido"],
+                "userType" => $_SESSION["userType"],
+                "tiempoSesion" => $tiempoSesion
+            );
+
+            // Convertir el array a formato JSON
+            $jsonSessionData = json_encode($sessionData);
+            die($jsonSessionData); */
+
+            // Redirigir según el tipo de cuenta
+            if ($row["userType"] == "adm") {
+                header("Location: /views/admin/admin.php");
+            } elseif ($row["userType"] == "ts") {
+                header("Location: /views/ts/tSocial.php");
+            } else {
+                header("Location: /index.html");
+            }
+        } else {
+            // Contraseña incorrecta
+            $errorQuery = 'Usuario o contraseña incorrectos.';
+        }
+    } else {
+        // Usuario no encontrado
+        $errorQuery = 'Usuario o contraseña incorrectos.';
+    }
+
+    // Cerrar conexión
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -29,7 +116,7 @@
     </nav>
     <div class="section__container header__container" id="home">
       <p style="color: black;">UPA Valle de Chalco Solidaridad</p>
-      <h1><span>Registro de Mascotas</span></h1>
+      <h1><span>Sistema de Control</span></h1>
     </div>
   </header>
 
@@ -37,21 +124,22 @@
   <section class="login">
     <div class="form-box">
       <div class="form-value">
-        <form action="">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" autocomplete="off">
           <h2 class="login">Ingresar</h2>
           <div class="inputbox">
-            <ion-icon name="mail-outline"></ion-icon>
-            <input type="text" required>
-            <label for="">Nombre de Usuario</label>
+            <ion-icon name="person-circle-outline"></ion-icon>
+            <input name="username" type="text" required>
+            <label>Nombre de Usuario</label>
           </div>
           <div class="inputbox">
             <ion-icon name="lock-closed-outline"></ion-icon>
-            <input type="password" required>
-            <label for="">Contraseña</label>
+            <input name="password" type="password" required>
+            <label>Contraseña</label>
           </div>
-          <!-- <div class="forget">
-                    <label for=""><input type="checkbox">Remember Me  <a href="#">Forget Password</a></label>
-                </div> -->
+          <div class="forget">
+            <label style="color: #1a5c50;"><input type="checkbox" name="sessionTime"> Mantener sesión iniciada</label>
+          </div>
+          <div class="returnError"><span><?php echo $errorQuery; ?></span></div>
           <div><button class="login">Ingresar</button></div>
         </form>
       </div>

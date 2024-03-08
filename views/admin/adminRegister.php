@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
-    $userType = 'adm';
+    $userType = 'ts';
 
     if($password == $confirmPassword) {
         $esValido = true;
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
     <link rel="stylesheet" href="/css/login.css" />
     <link rel="stylesheet" href="/css/styles.css" />
-    <title>UPA | Administración</title>
+    <title>UPA | Registrar Trabajadores</title>
 </head>
 
 <body>
@@ -82,8 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/admin.html">Administración</a></li>
-                <li><a href="#">Salir</a></li>
+                <li><a href="/views/admin/admin.php">Administración</a></li>
+                <li><a href="#" id="killSession">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">
@@ -183,6 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </footer>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
+    <script src="/javascript/sessionTools.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script>

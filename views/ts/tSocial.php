@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
     <link rel="stylesheet" href="/css/styles.css" />
-    <title>UPA | Administración</title>
+    <title>UPA | Trabajo Social</title>
 </head>
 
 <body>
@@ -23,58 +23,42 @@
             </div>
             <ul class="nav__links" id="nav-links">
                 <li><a href="/index.html"><span><i class="ri-home-4-fill"></i></span></a></li>
-                <li><a href="#consultarActa">Salir</a></li>
+                <li><a href="#" id="killSession">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">
             <p style="color: black;">UPA Valle de Chalco Solidaridad</p>
-            <h1><span>Administración</span></h1>
+            <h1><span>Trabajador Social</span></h1>
         </div>
     </header>
 
     <section class="section__container room__container">
         <div class="about__content">
-            <p class="section__subheader">PANEL DE ADMINISTRACIÓN</p>
+            <p class="section__subheader">PANEL DE TRABAJO SOCIAL</p>
         </div>
         <div class="room__grid">
-            <a class="adminSection" href="/views/admin/register.php">
+            <a class="adminSection" href="#">
                 <div class="room__card">
                     <div class="room__card__image">
-                        <img src="/assets/images/admin_registerUser.png" alt="Adopta tu mascota" />
+                        <img src="/assets/images/admin_registerPet.png" alt="Registrar Mascotas" />
                     </div>
                     <div class="room__card__details">
-                        <h4>Registrar Usuario</h4>
-                        <p style="text-align: justify;"> Registra un nuevo usuario, <span class="impact">los usuarios</span>
-                            son todos aquellos que al acceder al sistema <span class="impact">podrán generar actas para las
-                                mascotas</span>.</p>
+                        <h4>Registrar Mascota</h4>
+                        <p style="text-align: justify;"> Registra una nuevo mascota, <span class="impact">genera un acta</span>
+                            para las mascotas que registres en el sistema.</p>
                     </div>
                 </div>
             </a>
             
-            <a class="adminSection" href="">
+            <a class="adminSection" href="#">
                 <div class="room__card">
                     <div class="room__card__image">
-                        <img src="/assets/images/admin_adminUser.png" alt="Esteriliza a tu mascota" />
-                    </div>
-                    <div class="room__card__details">
-                        <h4>Administrar Usuarios</h4>
-                        <p style="text-align: justify;">¿Necesitas <span class="impact">corregir los datos de algún trabajador</span>
-                            o necesitas <span class="impact">generar una nueva contraseña</span>? En esta sección
-                            podras modificar los datos personales de los trabajadores registrados.</p>
-                    </div>
-                </div>
-            </a>
-            
-            <a class="adminSection" href="">
-                <div class="room__card">
-                    <div class="room__card__image">
-                        <img src="/assets/images/admin_adminRecords.png" alt="Dona alimentos para mascotas" />
+                        <img src="/assets/images/admin_adminRecords.png" alt="Modificar Actas" />
                     </div>
                     <div class="room__card__details">
                         <h4>Administrar Actas</h4>
                         <p style="text-align: justify;">¿Hay errores en algún acta? Aquí puedes <span
-                                class="impact">modificar o eliminar las actas de las mascotas</span> registradas por los
-                            trabajadores.</p>
+                                class="impact">modificar o descargar las actas de las mascotas</span> registradas por ti.</p>
                     </div>
                 </div>
             </a>
@@ -133,6 +117,7 @@
     </footer>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
+    <script src="/javascript/sessionTools.js"></script>
 </body>
 
 </html>

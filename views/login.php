@@ -85,14 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<?php
-if ($_SESSION["userType"] == "adm") {
-  header("Location: /views/admin/admin.php");
-} elseif ($_SESSION["userType"] == "ts") {
-  header("Location: /views/ts/tSocial.php");
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 

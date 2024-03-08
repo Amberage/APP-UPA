@@ -1,4 +1,13 @@
 <?php
+// Iniciar sesión si aún no está iniciada
+session_start();
+
+if ($_SESSION["userType"] != "adm") {
+    header("Location: /index.php");
+}
+?>
+
+<?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
 
 // Variables de control de errores
@@ -75,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <nav>
             <div class="nav__bar">
                 <div class="logo">
-                    <a href="/index.html"><img src="/assets/images/logo_gobVDCH.png" alt="logo" /></a>
+                    <a href="/index.php"><img src="/assets/images/logo_gobVDCH.png" alt="logo" /></a>
                 </div>
                 <div class="nav__menu__btn" id="menu-btn">
                     <i class="ri-menu-line"></i>

@@ -1,4 +1,18 @@
 <?php
+// Iniciar sesión si aún no está iniciada
+session_start();
+
+if ($_SESSION["userType"] == "adm") {
+  header("Location: /views/admin/admin.php");
+} elseif ($_SESSION["userType"] == "ts") {
+  header("Location: /views/ts/tSocial.php");
+} else {
+  header("Location: /index.php");
+}
+
+?>
+
+<?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
 
 // Variable de control de mensajes de error
@@ -69,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } elseif ($row["userType"] == "ts") {
                 header("Location: /views/ts/tSocial.php");
             } else {
-                header("Location: /index.html");
+                header("Location: /index.php");
             }
         } else {
             // Contraseña incorrecta
@@ -103,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <nav>
       <div class="nav__bar">
         <div class="logo">
-          <a href="/index.html"><img src="/assets/images/logo_gobVDCH.png" alt="logo" /></a>
+          <a href="/index.php"><img src="/assets/images/logo_gobVDCH.png" alt="logo" /></a>
         </div>
         <div class="nav__menu__btn" id="menu-btn">
           <i class="ri-menu-line"></i>
@@ -111,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
       <ul class="nav__links" id="nav-links">
         <li><a href="#consultarActa">Consultar Acta</a></li>
-        <li><a href="/index.html"><span><i class="ri-home-4-fill"></i></span></a></li>
+        <li><a href="/index.php"><span><i class="ri-home-4-fill"></i></span></a></li>
       </ul>
     </nav>
     <div class="section__container header__container" id="home">

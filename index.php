@@ -1,3 +1,17 @@
+<?php
+// Iniciar sesión si aún no está iniciada
+session_start();
+
+if ($_SESSION["userType"] == "adm") {
+  header("Location: /views/admin/admin.php");
+} elseif ($_SESSION["userType"] == "ts") {
+  header("Location: /views/ts/tSocial.php");
+} else {
+  header("Location: /index.php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -26,8 +40,8 @@
         <li><a href="#consultarActa">Consultar Acta</a></li>
         <li><a href="#contact">Contáctanos</a></li>
         <li><a href="/views/login.php" style="color: #ba1934; font-weight: bold;">Ingresar</a></li>
-        <li><a href="/views/admin/admin.php" style="color: #ba1934; font-weight: bold;">Administración</a></li>
-        <li><a href="/views/ts/tSocial.php" style="color: #ba1934; font-weight: bold;">Trabajo Social</a></li>
+<!--         <li><a href="/views/admin/admin.php" style="color: #ba1934; font-weight: bold;">Administración</a></li>
+        <li><a href="/views/ts/tSocial.php" style="color: #ba1934; font-weight: bold;">Trabajo Social</a></li> -->
         <li><a href="/test/test.php"><span><i class="ri-code-box-fill"></i></span></a></li>
       </ul>
     </nav>

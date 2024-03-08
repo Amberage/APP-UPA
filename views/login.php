@@ -1,4 +1,16 @@
 <?php
+// Iniciar sesión si aún no está iniciada
+session_start();
+
+if ($_SESSION["userType"] == "adm") {
+  header("Location: /views/admin/admin.php");
+} elseif ($_SESSION["userType"] == "ts") {
+  header("Location: /views/ts/tSocial.php");
+}
+session_destroy();
+?>
+
+<?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
 
 // Variable de control de mensajes de error

@@ -17,15 +17,19 @@ CREATE TABLE mascotasPropietarios(
     -- Esta tabla corresponde a los registros, de aquí se extraen los datos para las actas.
     folio INT AUTO_INCREMENT PRIMARY KEY,
     -- Datos de la mascota
-    sexo ENUM('MACHO', 'HEMBRA') NOT NULL,
-    raza VARCHAR(50) NOT NULL,
-    color VARCHAR(50) NOT NULL,
+    petName VARCHAR(120) NOT NULL,
+    petBreed VARCHAR(50) NOT NULL,
+    petColor VARCHAR(50) NOT NULL,
+    petSex ENUM('MACHO', 'HEMBRA') NOT NULL,
+    petPicture VARCHAR(64) NOT NULL,
     -- Datos del propietario
-    nombrePropietario VARCHAR(120) NOT NULL,
-    curpPropietario VARCHAR(18) NOT NULL,
-    domicilioPropietario VARCHAR(255) NOT NULL,
+    ownerName VARCHAR(200) NOT NULL,
+    ownerINE VARCHAR(26) NOT NULL,
+    ownerCURP VARCHAR(18) NOT NULL,
+    ownerColony VARCHAR(200) NOT NULL,
+    ownerAddress VARCHAR(255) NOT NULL,
     -- Datos del trabajador social
-    trabajadorSocial INT NOT NULL,
+    idTS INT NOT NULL,
     fechaRegistro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (trabajadorSocial) REFERENCES usuarios (id) ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY (idTS) REFERENCES usuarios (id) ON UPDATE CASCADE ON DELETE CASCADE
 );

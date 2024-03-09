@@ -7,4 +7,3 @@
 
 # Warning Devs!
 * Falta añadir validadores de sesión en el index y en el login
-* En el registro especificar errores de maximos caracteres en nombre y apellidos

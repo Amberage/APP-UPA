@@ -139,9 +139,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 /* Se usará el metodo 2, ya que el metodo 1 es propenso a mandar registros duplicados si el usuario actualza el sitio despues de agregar un registro. */
                 /* Metodo 1
                 $successfulQuery = "Mascota insertada correctamente.";
-                header("Location: /test/test.php"); */
+                header("Location: /views/ts/tSocial_addPets.php"); */
                 // Metodo 2
-                echo '<script>alert("Mascota Registrada."); window.location.href = "/test/test.php";</script>';
+                echo '<script>alert("Mascota Registrada."); window.location.href = "/views/ts/tSocial_addPets.php";</script>';
             } else {
                 $errorQuery = "Error al insertar registro: " . $conn->error . "</br>Si el error persiste informa al departamento de sistemas, lamentamos las molestias.";
             }

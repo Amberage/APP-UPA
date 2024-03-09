@@ -21,7 +21,7 @@ CREATE TABLE mascotasPropietarios(
     petBreed VARCHAR(50) NOT NULL,
     petColor VARCHAR(50) NOT NULL,
     petSex ENUM('MACHO', 'HEMBRA') NOT NULL,
-    petPicture VARCHAR(64) NOT NULL,
+    petPicture VARCHAR(255) NOT NULL,
     -- Datos del propietario
     ownerName VARCHAR(200) NOT NULL,
     ownerINE VARCHAR(26) NOT NULL,

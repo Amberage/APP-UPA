@@ -58,10 +58,6 @@ function generarWord($folio) {
             $mes = isset($meses[$month]) ? $meses[$month] : "Mes inválido";
         }
 
-        
-        echo $folio;
-        echo $petName;
-        echo $petColor;
         //Generar PDF
         require_once ($_SERVER['DOCUMENT_ROOT'] . '/libraries/vendor/autoload.php');
         $pathTemplate = ($_SERVER['DOCUMENT_ROOT'] . '/assets/templates/upa.docx');
@@ -106,10 +102,15 @@ function generarWord($folio) {
         
         // Guardar el documento de Word
         header('Content-Description: File Transfer');
-        header('Content-Disposition: attachment; filename="' . $folio . ' ' . $petName . '.docx"');
-        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . basename($pathWordFile) . '"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($pathWordFile));
+        // Leer el archivo y enviar su contenido al navegador
         readfile($pathWordFile);
+        
     } else {
         echo "No se encontraron resultados para el folio $folio";
         die("Error catastrofico... el folio que entro fue:" .$folio);

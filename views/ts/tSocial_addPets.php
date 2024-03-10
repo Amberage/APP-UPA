@@ -1,5 +1,6 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
+require ($_SERVER['DOCUMENT_ROOT'] . '/php/generarWord.php');
 
 session_start();
 
@@ -50,26 +51,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //! Validar la imagen
     if ($esValido == true) {
         if ($_FILES["petPicture"]["size"] <= $tamanoMaximo) {
-
+    
             // Ruta donde se guardará la imagen
             $path_petPictures = $_SERVER['DOCUMENT_ROOT'] . '/actas/petPictures/';
-        
+    
             // Nombre del archivo
             $fileName = $folioActual;
-        
+    
             // Ruta completa del archivo
             $savedPath = $path_petPictures . $fileName . ".jpg";
             $petPicture = $savedPath;
-        
+    
             // Obtenemos la información del archivo
             $tempFile = $_FILES["petPicture"]["tmp_name"];
-        
+    
             // Verificamos si es una imagen
             $typeImg = exif_imagetype($tempFile);
-        
+    
             // Permitir formatos de imagen JPEG, PNG, BMP
             if ($typeImg === IMAGETYPE_JPEG || $typeImg === IMAGETYPE_PNG) {
-        
+    
                 // Creamos una imagen desde el archivo temporal
                 switch ($typeImg) {
                     case IMAGETYPE_JPEG:
@@ -83,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $esValido = false;
                         exit;
                 }
-        
+    
                 // Obtener información de orientación de la imagen
                 $exif = exif_read_data($tempFile);
                 if (!empty($exif['Orientation'])) {
@@ -99,31 +100,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             break;
                     }
                 }
-        
+    
                 // Redimensionamos la imagen a 200x200
-                $newImg = imagecreatetruecolor(200, 200);
-                imagecopyresampled($newImg, $oldImg, 0, 0, 0, 0, 200, 200, imagesx($oldImg), imagesy($oldImg));
-        
-                // Guardamos la imagen redimensionada como JPEG
+                $newImg = imagecreatetruecolor(350, 350);
+                imagecopyresampled($newImg, $oldImg, 0, 0, 0, 0, 350, 350, imagesx($oldImg), imagesy($oldImg));
+    
+                // Ruta donde se encuentra el marco PNG
+                $pathFrame = ($_SERVER['DOCUMENT_ROOT'] . '/assets/images/frameHeart.png');
+    
+                // Cargamos la imagen del marco
+                $frame = imagecreatefrompng($pathFrame);
+    
+                // Obtener las dimensiones de la imagen reducida
+                $width = imagesx($newImg);
+                $height = imagesy($newImg);
+    
+                // Obtener las dimensiones del marco
+                $frameWidth = imagesx($frame);
+                $frameHeight = imagesy($frame);
+    
+                // Calcular la posición para centrar el marco
+                $x = ($width - $frameWidth) / 2;
+                $y = ($height - $frameHeight) / 2;
+    
+                // Superponer el marco sobre la imagen reducida
+                imagecopy($newImg, $frame, $x, $y, 0, 0, $frameWidth, $frameHeight);
+    
+                // Guardamos la imagen resultante
                 imagejpeg($newImg, $savedPath);
-        
+    
                 // Liberamos memoria
                 imagedestroy($newImg);
                 imagedestroy($oldImg);
-        
+                imagedestroy($frame);
+    
                 //echo "La imagen se ha subido correctamente.";
                 $esValido = true;
-        
+    
             } else {
                 $errorQuery = "Formato de imagen no válido. Solo se permiten formatos JPEG y PNG.";
                 $esValido = false;
             }
-        
+    
         } else {
             $errorQuery = "El tamaño del archivo excede el límite permitido (20MB).";
             $esValido = false;
         }
     }
+    
 
     if($esValido == true) {
         // Query para insertar datos en la tabla mascotasPropietarios
@@ -136,12 +160,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Ejecutar la declaración
             if ($stmt->execute()) {
-                /* Se usará el metodo 2, ya que el metodo 1 es propenso a mandar registros duplicados si el usuario actualza el sitio despues de agregar un registro. */
-                /* Metodo 1
-                $successfulQuery = "Mascota insertada correctamente.";
-                header("Location: /views/ts/tSocial_addPets.php"); */
-                // Metodo 2
-                echo '<script>alert("Mascota Registrada."); window.location.href = "/views/ts/tSocial_addPets.php";</script>';
+                $successfulQuery = "El acta de " . $petName . " fue generada.";
+                generarWord($folioActual);
+                /* header("Location: /views/ts/tSocial_addPets.php"); */
             } else {
                 $errorQuery = "Error al insertar registro: " . $conn->error . "</br>Si el error persiste informa al departamento de sistemas, lamentamos las molestias.";
             }
@@ -249,7 +270,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerINE" id="ownerINE" required maxlength="25" />
+                                <input type="text" name="ownerINE" id="ownerINE" required maxlength="18"
+                                    minlength="18" required title="La clave de elector se compone de 18 caracteres" />
                                 <label>INE</label>
                             </div>
 
@@ -315,8 +337,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!--! Fin del div "Two Columns"  -->
                     <script src="/javascript/validarComboBoxPets.js"></script>
                     <div style="text-align: center;"><div><button class="login" style="width: 240px;" onclick="return validarComboBox()">Registrar Mascota</button></div></div>
-                    <div class="returnError"><span id="errorMsg"></span></div>
-                    <div class="returnSuccesful"><span><?php echo $successfulQuery; ?></span></div>
+                    <div class="returnError"><span><?php echo $errorQuery;?></div>
+                    <div class="returnSuccesful"><span><?php echo $successfulQuery;?></span></div>
                 </form>
             </div>
         </div>

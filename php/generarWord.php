@@ -118,5 +118,4 @@ function generarWord($folio) {
     // Cerrar la conexión
     $connection->close();
 }
-generarWord(3);
 ?>

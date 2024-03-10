@@ -1,7 +1,6 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
 require ($_SERVER['DOCUMENT_ROOT'] . '/php/generarWord.php');
-
 session_start();
 
  if ($_SESSION["userType"] != "ts") {
@@ -160,9 +159,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Ejecutar la declaración
             if ($stmt->execute()) {
+                
+                //header("Location: /views/ts/tSocial_addPets.php");
                 $successfulQuery = "El acta de " . $petName . " fue generada.";
                 generarWord($folioActual);
-                /* header("Location: /views/ts/tSocial_addPets.php"); */
             } else {
                 $errorQuery = "Error al insertar registro: " . $conn->error . "</br>Si el error persiste informa al departamento de sistemas, lamentamos las molestias.";
             }

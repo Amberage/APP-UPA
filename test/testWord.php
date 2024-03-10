@@ -106,9 +106,10 @@ function generarWord($folio) {
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
         header('Content-Length: ' . filesize($pathWordFile));
+
         // Leer el archivo y enviar su contenido al navegador
         readfile($pathWordFile);
-        
+
     } else {
         echo "No se encontraron resultados para el folio $folio";
         die("Error catastrofico... el folio que entro fue:" .$folio);
@@ -117,4 +118,7 @@ function generarWord($folio) {
     // Cerrar la conexión
     $connection->close();
 }
+
+
+generarWord(15);
 ?>

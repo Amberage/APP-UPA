@@ -50,7 +50,8 @@ $resultado = $conn->query($sql);
             echo "<td>" . $fila['petBreed'] . "</td>";
             echo "<td>" . $fila['petColor'] . "</td>";
             // Modificación para mostrar la imagen
-            echo "<td><img src='" . $fila['petPicture'] . "' alt='Pet Picture'></td>";
+            #echo "<td><img src='" . str_replace('C:\Users\Alejandro\Desktop\App UPA', '/..', $fila['petPicture']) . "' alt='Pet Picture'></td>"; //Verisión Windows
+            echo "<td><img src='" . str_replace('/home4/amberage/upa.amberage.com.mx/', '../', $fila['petPicture']) . "' alt='Pet Picture'></td>"; //Verisión Linux
             echo "<td>" . $fila['ownerName'] . "</td>";
             echo "<td>" . $fila['ownerCURP'] . "</td>";
             echo "<td>" . $fila['ownerINE'] . "</td>";

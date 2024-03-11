@@ -55,9 +55,9 @@ function generarPDF($folio) {
             $tsUpper = strtoupper($tsName);
         }
         //Generar PDF
-        $apiPath = str_replace($pathPicturesReplace, $pathChars, $_SERVER['DOCUMENT_ROOT']);
+        
         $petPicture = str_replace($pathPicturesReplace, $pathChars, $petPathPicture);
-        echo "<html><body><script src='$apiPath/API/generatePDF.js'></script>";
+        echo "<html><body><script src='../../API/generatePDF.js'></script>";
         echo "<script>createPDF('$folioActual', '$petName', '$petSex', '$petBreed', '$petColor', '$petPicture', '$ownerName', '$ownerCURP', '$ownerINE', '$ownerColony', '$ownerAddress', '$tsUpper', '$dia', '$month', '$anio');</script>";
         echo "</body></html>";
 

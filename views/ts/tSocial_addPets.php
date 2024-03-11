@@ -269,20 +269,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             <div class="inputbox">
                                 <input type="text" name="ownerName" id="ownerName"
-                                    pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,35}" required title="Solo letras y espacios"
-                                    maxlength="35" onblur="upperCase(this);"/>
+                                    pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,40}" required title="Solo letras y espacios"
+                                    maxlength="40" onblur="upperCase(this);"/>
                                 <label>Nombre Propietario</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="ownerINE" id="ownerINE" required maxlength="18"
-                                    minlength="18" required title="La clave de elector se compone de 18 caracteres" onblur="upperCase(this);"/>
+                                    required title="La clave de elector se compone de 18 caracteres" onblur="upperCase(this);"/>
                                 <label>INE</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="ownerCURP" id="ownerCURP" required maxlength="18"
-                                    minlength="18" required title="El CURP se compone de 18 caracteres" onblur="upperCase(this);"/>
+                                    required title="El CURP se compone de 18 caracteres" onblur="upperCase(this);"/>
                                 <label>CURP</label>
                             </div>
 

@@ -146,5 +146,6 @@ async function createPDF(folioActual, petName, petSex, petBreed, petColor, petPi
     renderCenterText(registroFecha, 470, 10, false);
 
     // Guardar el documento
-    pdf.save(`${folioActual} ${petName}.pdf`);
+    var folioSinCeros = folioActual.replace(/^0+/, ''); // Elimina todos los ceros a la izquierda
+    pdf.save(`${folioSinCeros} ${petName}.pdf`);
 }

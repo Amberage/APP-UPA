@@ -31,9 +31,9 @@ function loadImage(url){
 // Generar PDF
 async function createPDF(folioActual, petName, petSex, petBreed, petColor, petPicture, ownerName, ownerCURP, ownerINE, ownerColony, ownerAddress, tsName, dia, month, anio){
     const jsPDF = await loadJsPDF();
-    const background = await loadImage("../../API/background.png");
+    const background = await loadImage("../../API/bg.jpeg");
     const pdf = new jsPDF('p', 'pt', 'letter');
-    pdf.addImage(background, 'png', 0, 0, 615, 792);
+    pdf.addImage(background, 'jpge', 0, 0, 615, 792);
 
     // Renderizar texto centrado
     function renderCenterText(text, yPostion, size, bold) {

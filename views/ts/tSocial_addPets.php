@@ -1,6 +1,6 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
-require ($_SERVER['DOCUMENT_ROOT'] . '/php/generarWord.php');
+require ($_SERVER['DOCUMENT_ROOT'] . '/API/API.php');
 session_start();
 
  if ($_SESSION["userType"] != "ts") {
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($_FILES["petPicture"]["size"] <= $tamanoMaximo) {
     
             // Ruta donde se guardará la imagen
-            $path_petPictures = $_SERVER['DOCUMENT_ROOT'] . '/actas/petPictures/';
+            $path_petPictures = $_SERVER['DOCUMENT_ROOT'] . '/assets/petPictures/';
     
             // Nombre del archivo
             $fileName = $folioActual;
@@ -157,12 +157,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Vincular variables a la declaración preparada como parámetros
             $stmt->bind_param("ssssssssssi", $petName, $petBreed, $petColor, $petSex, $petPicture, $ownerName, $ownerINE, $ownerCURP, $ownerColony, $ownerAddress, $idTS);
 
-            // Ejecutar la declaración
+            // Ejecutar la declaración para generar un word
             if ($stmt->execute()) {
+                $genResult = generarPDF($folioActual);
+
+                if ($genResult == true) {
+                    $successfulQuery = "El acta de " . $petName . " fue generada.";
+                } else {
+                    $errorQuery = "Hubo un error al generar el acta con el registro: " . $folioActual . "</br>Por favor, avisa al departamento de sistemas, lamentamos las molestias.";
+                }
                 
-                //header("Location: /views/ts/tSocial_addPets.php");
-                $successfulQuery = "El acta de " . $petName . " fue generada.";
-                generarWord($folioActual);
             } else {
                 $errorQuery = "Error al insertar registro: " . $conn->error . "</br>Si el error persiste informa al departamento de sistemas, lamentamos las molestias.";
             }
@@ -187,8 +191,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
     <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="stylesheet" href="/css/petRegister.css" />
+    <link rel="stylesheet" href="/css/petRegister.css"/>
     <title>UPA | Generar Acta</title>
+    <script src="/javascript/mayus.js"></script>
 </head>
 
 <body>
@@ -223,22 +228,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="petData">
                             <h2 class="form" style="color: #666c6c;">Mascota</h2>
                             <hr />
-
                             <div class="inputbox">
                                 <input type="text" name="petName" id="petName" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" />
+                                    required title="Solo letras y espacios" maxlength="25" onkeyup="upperCase(this);"/>
                                 <label>Nombre Mascota</label>
+                                
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="petBreed" id="petBreed" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" />
+                                    required title="Solo letras y espacios" maxlength="25" onkeyup="upperCase(this);"/>
                                 <label>Raza</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="petColor" id="petColor" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" />
+                                    required title="Solo letras y espacios" maxlength="25" onkeyup="upperCase(this);"/>
                                 <label>Color</label>
                             </div>
 
@@ -264,20 +269,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             <div class="inputbox">
                                 <input type="text" name="ownerName" id="ownerName"
-                                    pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}" required title="Solo letras y espacios"
-                                    maxlength="25" />
+                                    pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,35}" required title="Solo letras y espacios"
+                                    maxlength="35" onkeyup="upperCase(this);"/>
                                 <label>Nombre Propietario</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="ownerINE" id="ownerINE" required maxlength="18"
-                                    minlength="18" required title="La clave de elector se compone de 18 caracteres" />
+                                    minlength="18" required title="La clave de elector se compone de 18 caracteres" onkeyup="upperCase(this);"/>
                                 <label>INE</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="ownerCURP" id="ownerCURP" required maxlength="18"
-                                    minlength="18" required title="El CURP se compone de 18 caracteres" />
+                                    minlength="18" required title="El CURP se compone de 18 caracteres" onkeyup="upperCase(this);"/>
                                 <label>CURP</label>
                             </div>
 
@@ -329,7 +334,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerAddress" id="ownerAddress" required maxlength="254" />
+                                <input type="text" name="ownerAddress" id="ownerAddress" required maxlength="254" onkeyup="upperCase(this);"/>
                                 <label>Domicilio</label>
                             </div>
                         </div>

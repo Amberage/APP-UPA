@@ -11,4 +11,4 @@
 # Datos para la migración
 * Crear una BBDD con los parametros adecuados acorde al config.php
 * En el php.ini buscar "session.gc_maxlifetime" y setearlo a 2592000
-* Cargar directamente la carpeta libraries para evitar tanta carga FTP
+* Descomprimir el vendor.zip en la ruta en la que se encuentra

@@ -1,8 +1,12 @@
 <?php
+/*
+! ESTE PHP SE ENCUENTRA EN DESUSO
+*/
 use \PhpOffice\PhpWord\Settings;
 use \PhpOffice\PhpWord\Style\Language;
 
 function generarWord($folio) {
+
     require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
     $connection = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
 
@@ -59,10 +63,9 @@ function generarWord($folio) {
         //Generar PDF
         require_once ($_SERVER['DOCUMENT_ROOT'] . '/libraries/vendor/autoload.php');
         $pathTemplate = ($_SERVER['DOCUMENT_ROOT'] . '/assets/templates/upa.docx');
-        $pathPetPicture = ($_SERVER['DOCUMENT_ROOT'] . '/actas/petPictures/' . $folio . ".jpg");
-        $pathWordFile = ($_SERVER['DOCUMENT_ROOT'] . '/actas/' . $folio . ".docx");
-        $pathPDFFile = ($_SERVER['DOCUMENT_ROOT'] . '/actas/' . $folio . ".pdf");
-
+        $pathPetPicture = ($_SERVER['DOCUMENT_ROOT'] . '/assets/petPictures/' . $folio . ".jpg");
+        $pathWordFile = ($_SERVER['DOCUMENT_ROOT'] . '/assets/' . $folio . ".docx");
+        
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor($pathTemplate);
 
         // Establecer los valores
@@ -97,24 +100,14 @@ function generarWord($folio) {
         ]);
 
         $templateProcessor->saveAs($pathWordFile);
-        
-        // Guardar el documento de Word
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="' . basename($pathWordFile) . '"');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize($pathWordFile));
-        // Leer el archivo y enviar su contenido al navegador
-        readfile($pathWordFile);
+        $connection->close();
+        return true;
         
     } else {
         echo "No se encontraron resultados para el folio $folio";
-        die("Error catastrofico... el folio que entro fue:" .$folio);
+        $connection->close();
+        die("Error de conversión... el folio que entro fue:" .$folio . "</br> Avisa al departamento de sistemas.");
+        return false;
     }
-    
-    // Cerrar la conexión
-    $connection->close();
 }
 ?>

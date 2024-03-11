@@ -230,20 +230,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <hr />
                             <div class="inputbox">
                                 <input type="text" name="petName" id="petName" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" onkeyup="upperCase(this);"/>
+                                    required title="Solo letras y espacios" maxlength="25" onblur="upperCase(this);"/>
                                 <label>Nombre Mascota</label>
                                 
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="petBreed" id="petBreed" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" onkeyup="upperCase(this);"/>
+                                    required title="Solo letras y espacios" maxlength="25" onblur="upperCase(this);"/>
                                 <label>Raza</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="petColor" id="petColor" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" onkeyup="upperCase(this);"/>
+                                    required title="Solo letras y espacios" maxlength="25" onblur="upperCase(this);"/>
                                 <label>Color</label>
                             </div>
 
@@ -270,19 +270,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="inputbox">
                                 <input type="text" name="ownerName" id="ownerName"
                                     pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,35}" required title="Solo letras y espacios"
-                                    maxlength="35" onkeyup="upperCase(this);"/>
+                                    maxlength="35" onblur="upperCase(this);"/>
                                 <label>Nombre Propietario</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="ownerINE" id="ownerINE" required maxlength="18"
-                                    minlength="18" required title="La clave de elector se compone de 18 caracteres" onkeyup="upperCase(this);"/>
+                                    minlength="18" required title="La clave de elector se compone de 18 caracteres" onblur="upperCase(this);"/>
                                 <label>INE</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="ownerCURP" id="ownerCURP" required maxlength="18"
-                                    minlength="18" required title="El CURP se compone de 18 caracteres" onkeyup="upperCase(this);"/>
+                                    minlength="18" required title="El CURP se compone de 18 caracteres" onblur="upperCase(this);"/>
                                 <label>CURP</label>
                             </div>
 
@@ -334,7 +334,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerAddress" id="ownerAddress" required maxlength="254" onkeyup="upperCase(this);"/>
+                                <input type="text" name="ownerAddress" id="ownerAddress" required maxlength="254" onblur="upperCase(this);"/>
                                 <label>Domicilio</label>
                             </div>
                         </div>
@@ -342,7 +342,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!--! Fin del div "Two Columns"  -->
                     <script src="/javascript/validarComboBoxPets.js"></script>
                     <div style="text-align: center;"><div><button class="login" style="width: 240px;" onclick="return validarComboBox()">Registrar Mascota</button></div></div>
-                    <div class="returnError"><span><?php echo $errorQuery;?></div>
+                    <div class="returnError" id="errorMsg"><span><?php echo $errorQuery;?></div>
                     <div class="returnSuccesful"><span><?php echo $successfulQuery;?></span></div>
                 </form>
             </div>

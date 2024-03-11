@@ -6,7 +6,8 @@
 * Averiguar el telefono de la UPA (55 7251 3868 o 55 7251 3862)
 
 # Warning Devs!
-* Falta añadir validadores de sesión en el index y en el login
+ * Falta añadir validadores de sesión en el index y en el login
+ * Corregir el problema del mayus en los forms
 
 # Datos para la migración
 * Crear una BBDD con los parametros adecuados acorde al config.php

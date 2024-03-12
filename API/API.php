@@ -1,4 +1,10 @@
 <?php
+/*
+* Nota... Llamarle a esto API es muy exagerado, pero me hacia ilusión jaja salu2.
+* Ahora bien, aqui es donde se genera el pdf que verá el cliente... si no quieren que la app crashee intenten tocar lo menos de esta carpeta.
+* Nota 2: En su momento creí que era buena idea usar $_SERVER['DOCUMENT_ROOT'], pero recien me entero que si esa ruta pasa al HTML o el JS no sera legible.
+* De allí que tenga metodos extraños para arreglar las rutas, pues el script y el HTML tenian problemas para cargar las imagenes en el host (hostinger)
+*/
 function generarPDF($folio) {
     require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
     $connection = new mysqli($servername, $mysql_username, $mysql_password, $dbname);

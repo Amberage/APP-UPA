@@ -13,3 +13,10 @@
 * Crear una BBDD con los parametros adecuados acorde al config.php
 * En el php.ini buscar "session.gc_maxlifetime" y setearlo a 2592000
 * Descomprimir el vendor.zip en la ruta en la que se encuentra
+
+# Dependencias necesarias en PHP
+
+extension=mbstring
+extension=exif
+extension=mysqli
+extension=gd

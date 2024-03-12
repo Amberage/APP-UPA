@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png"/>
   <link rel="stylesheet" href="/css/styles.css" />
   <title>UPA | Valle de Chalco Solidaridad</title>
+  <script src="/debug/showDebug.js"></script>
 </head>
 
 <body>
@@ -26,7 +27,7 @@
         <li><a href="#consultarActa">Consultar Acta</a></li>
         <li><a href="#contact">Contáctanos</a></li>
         <li><a href="/views/login.php" style="color: #ba1934; font-weight: bold;">Ingresar</a></li>
-        <li><a href="debug/test/test.php"><span><i class="ri-code-box-fill"></i></span></a></li>
+        <li id="debugMenu" style="display: none;"><a href="debug/debugPanel.php"><span><i class="ri-code-box-fill"></i></span></a></li>
       </ul>
     </nav>
     <div class="section__container header__container" id="home">
@@ -37,7 +38,7 @@
 
   <section class="section__container about__container" id="aboutUS">
     <div class="about__image">
-      <img src="/assets/images/about_upa.jpg" alt="about" />
+      <img src="/assets/images/about_upa.jpg" alt="about"  id="upa"/>
     </div>
     <div class="about__content">
       <p class="section__subheader">¿QUIÉNES SOMOS?</p>

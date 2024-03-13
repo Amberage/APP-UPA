@@ -1,0 +1,1 @@
+ErrorDocument 404 /views/error/404.html

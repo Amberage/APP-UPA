@@ -19,7 +19,6 @@ function validarComboBox() {
         errorMessage.innerHTML = 'El CURP debe tener al menos 18 caracteres';
         return false; // Evita que el formulario se envíe
     }
-
     
     if (ownerColony === '') {
         errorMessage.innerHTML = 'Por favor seleccione una colonia';

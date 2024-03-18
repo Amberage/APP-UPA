@@ -159,13 +159,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Ejecutar la declaración para generar un word
             if ($stmt->execute()) {
-                $genResult = generarPDF($folioActual);
+               /*  $genResult = generarPDF($folioActual);
 
                 if ($genResult == true) {
                     $successfulQuery = "El acta de " . $petName . " fue generada.";
                 } else {
                     $errorQuery = "Hubo un error al generar el acta con el registro: " . $folioActual . "</br>Por favor, avisa al departamento de sistemas, lamentamos las molestias.";
-                }
+                } */
+                echo "<html><body><script src='/API/imprimirActa.js'></script>";
+                echo "<script>printPet('$folioActual');</script>";
+                echo "</body></html>";
+                $successfulQuery = "El acta de " . $petName . " fue generada.";
                 
             } else {
                 $errorQuery = "Error al insertar registro: " . $conn->error . "</br>Si el error persiste informa al departamento de sistemas, lamentamos las molestias.";

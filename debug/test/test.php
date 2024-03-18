@@ -29,6 +29,7 @@ if(isset($_GET['folio'])) {
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/tables.css" />
     <title>UPA | Consultar Actas</title>
+    <script src="/API/imprimirActa.js"></script>
 </head>
 
 <body>
@@ -71,7 +72,7 @@ if(isset($_GET['folio'])) {
             echo "<td>" . $fila['ownerColony'] . "</td>";
             echo "<td>" . $fila['dia'] . "/" . $fila['mes'] . "/" . $fila['anio'] . "</td>";
             echo "<td>
-                    <a href='?folio=" . $fila['folio'] . "'><img src='/assets/images/descargarActa.png' style='height: 30px; width: 30px;' alt='Descargar acta'></a>
+                    <a href='#printPet" . $fila['folio'] . "' onclick=\"printPet('" . $fila['folio'] . "');\"><img src='/assets/images/descargarActa.png' style='height: 30px; width: 30px;' alt='Descargar acta'></a>
                     <a href='#'><img src='/assets/images/editarActa.png' style='height: 30px; width: 30px; margin-top: 10px;' alt='Editar acta'></a>
                 </td>";
             echo "</tr>";

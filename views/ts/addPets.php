@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
             // Ruta completa del archivo
             $savedPath = $path_petPictures . $fileName . ".jpg";
-            $petPicture = $savedPath;
+            $petPicture = str_replace($pathPicturesReplace, $pathChars, $savedPath);
     
             // Obtenemos la información del archivo
             $tempFile = $_FILES["petPicture"]["tmp_name"];
@@ -208,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/ts/tSocial.php">Inicio</a></li>
+                <li><a href="/views/ts/tSocial.php">Herramientas</a></li>
                 <li><a href="#" id="killSession">Salir</a></li>
             </ul>
         </nav>

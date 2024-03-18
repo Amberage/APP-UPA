@@ -30,7 +30,7 @@ function generarPDF($folio) {
             $petSex = $row["petSex"];
             $petBreed = $row["petBreed"];
             $petColor = $row["petColor"];
-            $petPathPicture = $row["petPicture"];
+            $petPicture = $row["petPicture"];
             $ownerName = $row["ownerName"];
             $ownerCURP = $row["ownerCURP"];
             $ownerINE = $row["ownerINE"];
@@ -61,9 +61,7 @@ function generarPDF($folio) {
             $tsUpper = strtoupper($tsName);
         }
         //Generar PDF
-        
-        $petPicture = str_replace($pathPicturesReplace, $pathChars, $petPathPicture);
-        $petPathJS = "../../" . $petPicture;
+        /* $petPathJS = "../../" . $petPicture; */
         echo "<html><body><script src='../../API/generatePDF.js'></script>";
         echo "<script>createPDF('$folioActual', '$petName', '$petSex', '$petBreed', '$petColor', '$petPicture', '$ownerName', '$ownerCURP', '$ownerINE', '$ownerColony', '$ownerAddress', '$tsUpper', '$dia', '$month', '$anio');</script>";
         echo "</body></html>";

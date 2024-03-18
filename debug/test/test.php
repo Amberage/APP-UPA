@@ -1,71 +1,157 @@
 <?php
 require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
+require ($_SERVER['DOCUMENT_ROOT'] . '/API/API.php');
 $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
-
-// Número de resultados por página
-$resultados_por_pagina = 15;
-
-// Página actual (obtenida de la URL u otro método)
-if (isset($_GET['pagina'])) {
-    $pagina = $_GET['pagina'];
-} else {
-    $pagina = 1;
-}
-
-// Calcular el desplazamiento (offset) basado en la página actual
-$offset = ($pagina - 1) * $resultados_por_pagina;
 
 // Crear la consulta SQL SELECT con JOIN para obtener el nombre y apellido del usuario relacionado
 $sql = "SELECT mp.petName, mp.petSex, mp.petBreed, mp.petColor, mp.petPicture, mp.ownerName, mp.ownerCURP, mp.ownerINE, mp.ownerColony, mp.ownerAddress, CONCAT(u.nombre, ' ', u.apellido) AS nombreCompleto, DAY(mp.fechaRegistro) as dia, MONTH(mp.fechaRegistro) as mes, YEAR(mp.fechaRegistro) as anio, mp.folio
         FROM mascotasPropietarios mp
         INNER JOIN usuarios u ON mp.idTS = u.id
-        LIMIT $offset, $resultados_por_pagina";
+        LIMIT 100";
 
 // Ejecutar la consulta SQL
 $resultado = $conn->query($sql);
+
+if(isset($_GET['folio'])) {
+    // Recuperar el folio de la URL
+    $folio = $_GET['folio'];
+    generarPDF($folio);
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css"/>
-    <link rel="stylesheet" href="test.css" />
-    <title>Mostrar resultados</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/tables.css" />
+    <title>UPA | Consultar Actas</title>
 </head>
+
 <body>
+    <header class="header">
+        <nav>
+            <div class="nav__bar">
+                <div class="logo">
+                    <a href="/index.php"><img src="/assets/images/logo_gobVDCH.png" alt="logo" /></a>
+                </div>
+                <div class="nav__menu__btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+            <ul class="nav__links" id="nav-links">
+                <li><a href="/views/ts/tSocial.php">Herramientas</a></li>
+                <li><a href="#" id="killSession">Salir</a></li>
+            </ul>
+        </nav>
+        <div class="section__container header__container" id="home">
+            <p style="color: black">UPA Valle de Chalco Solidaridad</p>
+            <h1><span>Gestión de Actas</span></h1>
+        </div>
+    </header>
+
+    <section class="tablaActas">
     <?php
     // Mostrar los resultados en una tabla HTML
     if ($resultado->num_rows > 0) {
-        echo "<table>";
+        echo "<table class='tablaActas'>";
         // Cabecera de la tabla
-        echo "<tr><th>Folio</th><th>Pet Name</th><th>Sex</th><th>Breed</th><th>Color</th><th>Picture</th><th>Owner Name</th><th>Owner CURP</th><th>Owner INE</th><th>Owner Colony</th><th>Owner Address</th><th>Owner Complete Name</th><th>Fecha</th></tr>";
+        echo "<tr><th>Folio</th><th>Pet Name</th><th>Picture</th><th>Owner Name</th><th>Owner Colony</th><th>Fecha</th><th>Acción</th></tr>";
         // Output de los datos en la tabla
         while ($fila = $resultado->fetch_assoc()) {
             // Aquí construyes las filas de la tabla con los datos de la consulta
             echo "<tr>";
             echo "<td>" . $fila['folio'] . "</td>";
             echo "<td>" . $fila['petName'] . "</td>";
-            echo "<td>" . $fila['petSex'] . "</td>";
-            echo "<td>" . $fila['petBreed'] . "</td>";
-            echo "<td>" . $fila['petColor'] . "</td>";
-            echo "<td><img src='" . str_replace($pathPicturesReplace, $pathChars, $fila['petPicture']) . "' alt='Pet Picture'></td>";
+            echo "<td><img src='" . str_replace($pathPicturesReplace, $pathChars, $fila['petPicture']) . "' alt='Pet Picture' style='width: 100px; height: 100px;'></td>";
             echo "<td>" . $fila['ownerName'] . "</td>";
-            echo "<td>" . $fila['ownerCURP'] . "</td>";
-            echo "<td>" . $fila['ownerINE'] . "</td>";
             echo "<td>" . $fila['ownerColony'] . "</td>";
-            echo "<td>" . $fila['ownerAddress'] . "</td>";
-            echo "<td>" . $fila['nombreCompleto'] . "</td>";
             echo "<td>" . $fila['dia'] . "/" . $fila['mes'] . "/" . $fila['anio'] . "</td>";
+            echo "<td>
+                    <a href='?folio=" . $fila['folio'] . "'><img src='/assets/images/descargarActa.png' style='height: 30px; width: 30px;' alt='Descargar acta'></a>
+                    <a href='#'><img src='/assets/images/editarActa.png' style='height: 30px; width: 30px; margin-top: 10px;' alt='Editar acta'></a>
+                </td>";
             echo "</tr>";
         }
         echo "</table>";
     } else {
         echo "No se encontraron resultados.";
     }
-
     // Cerrar la conexión
     $conn->close();
     ?>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="section__container footer__container">
+            <div class="footer__col">
+                <div class="logo">
+                    <a href="#home"><img src="/assets/images/logo_gob.png" alt="logo del municipio"
+                            style="height: auto; width: 250px" /></a>
+                </div>
+                <p class="section__description">
+                    En la UPA, cada latido cuenta: protegiendo y promoviendo el
+                    bienestar animal con amor y compromiso.
+                </p>
+            </div>
+            <div class="footer__col">
+                <h4>H. AYUNTAMIENTO DE VALLE DE CHALCO</h4>
+                <ul class="footer__links">
+                    <li>
+                        <a href="https://valledechalco.gob.mx/" target="_blank">Sitio Web</a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/GobiernoVDCHS" target="_blank">Facebook</a>
+                    </li>
+                    <li>
+                        <a href="https://www.youtube.com/@GobValleDeChalcoSolidaridad" target="_blank">YouTube</a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/GobiernoVDCHS" target="_blank">Twitter</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>NUESTROS SERVICIOS</h4>
+                <ul class="footer__links">
+                    <li><a href="#services">Adopción de Mascotas</a></li>
+                    <li><a href="#services">Esterilización de Mascotas</a></li>
+                    <li>
+                        <a href="#medicalServices">Servicios Médicos Veterinarios</a>
+                    </li>
+                    <li><a href="#">Consultar Actas de Adopción</a></li>
+                </ul>
+            </div>
+            <div class="footer__col">
+                <h4>CONTÁCTANOS</h4>
+                <ul class="footer__links">
+                    <li>
+                        <a href="mailto:upavalledechalco@gmail.com">upavalledechalco@gmail.com</a>
+                    </li>
+                    <li><a href="tel:5572513868">55 7251 3868</a></li>
+                </ul>
+                <div class="footer__socials">
+                    <a href="https://www.facebook.com/UPAvalledechalco" target="_blank"><img
+                            src="/assets/images/facebook.png" alt="facebook" /></a>
+                    <a href="https://www.instagram.com/upa_valledechalco" target="_blank"><img
+                            src="/assets/images/instagram.png" alt="instagram" /></a>
+                    <a href="https://maps.app.goo.gl/Kr1hdXWRYfJMzRgD7" target="_blank"><img
+                            src="/assets/images/gmaps.png" alt="maps" /></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer__bar">
+            Valle de Chalco Solidaridad | Copyright © 2024
+        </div>
+    </footer>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="/javascript/indexAnimations.js"></script>
+    <script src="/javascript/sessionTools.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>

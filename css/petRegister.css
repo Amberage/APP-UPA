@@ -228,10 +228,15 @@ input[type="file"]::file-selector-button {
     margin: 20px 0;
     width: 100px;
     border-bottom: 2px solid #d3bf9a;
+    font-size: 0.8em;
+  }
+
+  .inputbox input{
+    font-size: 0.7em;
   }
 
   h2.form {
-    font-size: 1.3em;
+    font-size: 1em;
     color: #666c6c;
   }
 
@@ -240,6 +245,11 @@ input[type="file"]::file-selector-button {
     margin: 20px 0;
     width: 100px;
     border-bottom: 2px solid #d3bf9a;
+    font-size: 0.8em;
+  }
+
+  .selectBox select {
+    font-size: 0.7em;
   }
   input[type="file"]::file-selector-button {
     visibility: hidden;
@@ -249,7 +259,7 @@ input[type="file"]::file-selector-button {
     font-size: 0.5em;
     position: relative;
     top: 25px;
-    left: -80px;
+    left: -70px;
     width: fit-content;
   }
 }

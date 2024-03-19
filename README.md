@@ -10,7 +10,7 @@
  * Corregir el problema del mayus en los forms
 
 # Datos para la migración
-* Crear una BBDD con los parametros adecuados acorde al config.php
+* Crear una BBDD con los parametros adecuados acorde al config.php y la bd.sql
 * En el php.ini buscar "session.gc_maxlifetime" y setearlo a 2592000
 * Descomprimir el vendor.zip en la ruta en la que se encuentra
 

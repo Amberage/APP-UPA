@@ -166,22 +166,28 @@ async function createPDF(folioActual, petName, petSex, petBreed, petColor, petPi
 }
 
 function printPet(folio) {
-    var xhr = new XMLHttpRequest();
-    // Configurar una solicitud POST al archivo PHP
-    xhr.open("POST", "/php/getPetData.php", true);
-  
-    // Establecer una función que se ejecutará cuando la solicitud se complete
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-          //Recibir JSON
-          var petData = JSON.parse(xhr.responseText);
-          //Generar PDF
-          createPDF(petData[0].folio, petData[0].petName, petData[0].petSex, petData[0].petBreed, petData[0].petColor, petData[0].petPicture, petData[0].ownerName, petData[0].ownerCURP, petData[0].ownerINE, petData[0].ownerColony, petData[0].ownerAddress, petData[0].nombreTS, petData[0].dia, petData[0].mes, petData[0].anio);
-      }
+    if (isNaN(folio)) {
+        alert("Error en el folio de la consulta, favor de contactar al departamento de sistemas, Error: " + folio);
+        return;
+    } else {
+        var xhr = new XMLHttpRequest();
+        // Configurar una solicitud POST al archivo PHP
+        xhr.open("POST", "/php/getPetData.php", true);
+    
+        // Establecer una función que se ejecutará cuando la solicitud se complete
+        xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            //Recibir JSON
+            var petData = JSON.parse(xhr.responseText);
+            //Generar PDF
+            createPDF(petData[0].folio, petData[0].petName, petData[0].petSex, petData[0].petBreed, petData[0].petColor, petData[0].petPicture, petData[0].ownerName, petData[0].ownerCURP, petData[0].ownerINE, petData[0].ownerColony, petData[0].ownerAddress, petData[0].nombreTS, petData[0].dia, petData[0].mes, petData[0].anio);
+        }
+        }
+
+        // Establecer el encabezado de la solicitud para enviar datos como un formulario
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        // Enviar la variable al servidor
+        xhr.send("folio=" + folio);
     }
-  
-    // Establecer el encabezado de la solicitud para enviar datos como un formulario
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    // Enviar la variable al servidor
-    xhr.send("folio=" + folio);
+
   }

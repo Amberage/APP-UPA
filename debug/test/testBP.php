@@ -1,3 +1,24 @@
+<?php
+require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
+require ($_SERVER['DOCUMENT_ROOT'] . '/API/API.php');
+$conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
+
+// Crear la consulta SQL SELECT con JOIN para obtener el nombre y apellido del usuario relacionado
+$sql = "SELECT mp.petName, mp.petSex, mp.petBreed, mp.petColor, mp.petPicture, mp.ownerName, mp.ownerCURP, mp.ownerINE, mp.ownerColony, mp.ownerAddress, CONCAT(u.nombre, ' ', u.apellido) AS nombreCompleto, DAY(mp.fechaRegistro) as dia, MONTH(mp.fechaRegistro) as mes, YEAR(mp.fechaRegistro) as anio, mp.folio
+        FROM mascotasPropietarios mp
+        INNER JOIN usuarios u ON mp.idTS = u.id
+        LIMIT 100";
+
+// Ejecutar la consulta SQL
+$resultado = $conn->query($sql);
+
+if(isset($_GET['folio'])) {
+    // Recuperar el folio de la URL
+    $folio = $_GET['folio'];
+    generarPDF($folio);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -32,49 +53,37 @@
             <h1><span>Gestión de Actas</span></h1>
         </div>
     </header>
-
-    <div class="headerTable">
-        <div class="registros">
-            <label for="numRegisters">Mostrar: </label>
-            <select name="numRegisters" id="numRegisters">
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="25">25</option>
-                <option value="35">35</option>
-                <option value="50">50</option>
-                <option value="75">75</option>
-                <option value="100">100</option>
-            </select>
-            <label for="numRegisters">registros</label>
-        </div>
-
-        <div class="search">
-            <label for="searchData">Buscar: </label>
-            <input type="text" name="searchData" id="searchData"/>
-        </div>
-    </div>
-
     <section class="tablaActas">
-        <p></p>
-        <table>
-            <thead>
-                <th>Folio</th>
-                <th>Nombre</th>
-                <th>Fotografía</th>
-                <th>Propietario</th>
-                <th>Colonia</th>
-                <th>Fecha</th>
-                <th>Acciones</th>
-            </thead>
-            <tbody id="contentTable"></tbody>
-        </table>
+    <?php
+    // Mostrar los resultados en una tabla HTML
+    if ($resultado->num_rows > 0) {
+        echo "<table class='tablaActas'>";
+        // Cabecera de la tabla
+        echo "<tr><th>Folio</th><th>Pet Name</th><th>Picture</th><th>Owner Name</th><th>Owner Colony</th><th>Fecha</th><th>Acción</th></tr>";
+        // Output de los datos en la tabla
+        while ($fila = $resultado->fetch_assoc()) {
+            // Aquí construyes las filas de la tabla con los datos de la consulta
+            echo "<tr>";
+            echo "<td>" . $fila['folio'] . "</td>";
+            echo "<td>" . $fila['petName'] . "</td>";
+            echo "<td><img src='" . str_replace($pathPicturesReplace, $pathChars, $fila['petPicture']) . "' alt='Pet Picture' style='width: 100px; height: 100px;'></td>";
+            echo "<td>" . $fila['ownerName'] . "</td>";
+            echo "<td>" . $fila['ownerColony'] . "</td>";
+            echo "<td>" . $fila['dia'] . "/" . $fila['mes'] . "/" . $fila['anio'] . "</td>";
+            echo "<td>
+                    <button class='btnAction' style='background-image: url(\"/assets/images/descargarActa.png\");' onclick=\"printPet('" . $fila['folio'] . "');\"></button>
+                    <button class='btnAction' style='background-image: url(\"/assets/images/editarActa.png\");' onclick=\"alert('Función en desarrollo, maldito desesperado!');\"></button>
+                </td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No se encontraron resultados.";
+    }
+    // Cerrar la conexión
+    $conn->close();
+    ?>
     </section>
-
-    <div class="footerTable">
-        <div><label id="lbl-total"></label></div>
-        <div id="nav-paginacion"></div>
-    </div>
 
     <footer class="footer" id="contact">
         <div class="section__container footer__container">
@@ -143,7 +152,6 @@
     <script src="/javascript/sessionTools.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="/javascript/loaderTable.js"></script>
 </body>
 
 </html>

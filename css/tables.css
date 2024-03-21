@@ -18,13 +18,14 @@ h2.tablaActas {
 
 table.tablaActas {
     border-collapse: collapse;
+    
 
 }
 
 th, td {
     border: 1px solid black;
     padding: 8px;
-    text-align: left;
+    text-align: center;
 }
 
 th {
@@ -33,4 +34,13 @@ th {
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
+}
+
+.btnAction {
+    background-size: cover; /* Para ajustar la imagen al tamaño del botón */
+    width: 40px; /* Ancho del botón */
+    height: 40px; /* Alto del botón */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    background-color: rgba(255, 255, 255, 0);
 }

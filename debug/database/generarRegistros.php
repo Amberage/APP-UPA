@@ -8,7 +8,7 @@ if ($conn->connect_error) {
 }
 
 // Generar 100 registros de prueba
-for ($i = 0; $i < 33; $i++) {
+for ($i = 0; $i < 50; $i++) {
     $petName = "Mascota" . $i;
     $petBreed = "Raza" . $i;
     $petColor = "Color" . $i;

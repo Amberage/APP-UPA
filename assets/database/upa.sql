@@ -33,3 +33,10 @@ CREATE TABLE mascotasPropietarios(
     fechaRegistro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (idTS) REFERENCES usuarios (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+-- Vista: Trabajador Social
+CREATE VIEW pets AS
+SELECT folio, petName, petPicture, ownerName, ownerColony, CONCAT(DAY(mp.fechaRegistro), '/', MONTH(mp.fechaRegistro), '/', YEAR(mp.fechaRegistro)) AS registerDate, CONCAT(users.nombre, ' ', users.apellido) AS tsName, users.id AS tsID
+FROM mascotasPropietarios mp
+INNER JOIN usuarios users ON mp.idTS = users.id
+WHERE users.userType = 'ts';

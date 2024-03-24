@@ -30,7 +30,7 @@ function getData(pagina) {
     .then((response) => response.json())
     .then((data) => {
       contentTable.innerHTML = data.table;
-      document.getElementById("lbl-total").innerHTML = 'Mostrando ' + data.totalFiltro + ' de ' + data.totalRegistros;
+      document.getElementById("lbl-total").innerHTML = data.totalFiltro + ' actas encontradas';
       document.getElementById("nav-paginacion").innerHTML = data.paginacion;
     })
     .catch((err) => console.log(err));

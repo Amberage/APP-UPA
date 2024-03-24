@@ -1,31 +1,95 @@
-section.tablaActas{
+.paginacion {
+    display: inline-block; /* Evita que los elementos se comporten como bloques */
+    list-style-type: none; /* Quita los estilos de viñetas de la lista */
+    padding: 0;
+}
+
+.paginacion nav {
+    text-align: center;
+    padding: 0;
+    position: relative;
+}
+
+.paginacion li {
+    display: inline-block; /* Mostrar elementos como bloques en línea */
+    margin-right: 10px; /* Espacio entre elementos */
+}
+
+.paginaActual {
+    color: #9d2348;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 1.2em;
+}
+
+.restoPaginas {
+    color: #1a5c50;
+    font-weight: bold;
+}
+
+.btnAction {
+    background-size: cover; /* Para ajustar la imagen al tamaño del botón */
+    width: 40px; /* Ancho del botón */
+    height: 40px; /* Alto del botón */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    background-color: rgba(255, 255, 255, 0);
+}
+
+
+.searchbox{
+    position: relative;
+
+    border-bottom: 2px solid #d3bf9a;
+}
+
+.searchbox input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.1em;
+    color: #8b8f91;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.searchbox ion-icon{
+    position: absolute;
+    right: 8px;
+    color: #611230;
+    font-size: 1.2em;
+    top: 20px;
+}
+
+
+/*Tabla*/
+.tablaActas {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-
+    overflow-x: auto; /* Añadir desplazamiento horizontal si el contenido es demasiado ancho */
     background-position: center;
     background-size: cover;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 0.7em;
 }
 
-h2.tablaActas {
-    font-size: 2.5em;
-    color: #666c6c;
-    text-align: center;
-}
 
 table.tablaActas {
     border-collapse: collapse;
-    
-
+    table-layout: fixed; /* Establecer el tamaño fijo de la tabla */
+    width: 100%; /* Esto es importante para que la tabla se ajuste correctamente */
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 th, td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
+    word-wrap: break-word; /* Permitir salto de línea en palabras largas */
 }
 
 th {
@@ -36,11 +100,13 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.btnAction {
-    background-size: cover; /* Para ajustar la imagen al tamaño del botón */
-    width: 40px; /* Ancho del botón */
-    height: 40px; /* Alto del botón */
-    border: none; /* Sin borde */
-    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
-    background-color: rgba(255, 255, 255, 0);
+
+/* Media query para pantallas más pequeñas */
+@media screen and (max-width: 768px) {   
+
+}
+  
+/* Otra media query para pantallas aún más pequeñas */
+@media screen and (max-width: 480px) {
+   
 }

@@ -33,7 +33,21 @@
         </div>
     </header>
 
-    <div class="headerTable">
+    <section class="section__container banner__container" style="padding: 0;">
+    <div class="banner__content">
+      <div class="banner__card">
+        <h4>Actas</h4>
+        <div><p id="lbl-total"></label></div>
+      </div>
+      <div class="banner__card">
+        <h4>Buscar</h4>
+        <div class="searchbox">
+            <ion-icon name="search-sharp"></ion-icon>
+            <input type="text" name="searchData" id="searchData" placeholder="Ingrese busqueda..."/>
+        </div>
+      </div>
+      <div class="banner__card">
+        <h4>Navegar</h4>
         <div class="registros">
             <label for="numRegisters">Mostrar: </label>
             <select name="numRegisters" id="numRegisters">
@@ -48,14 +62,14 @@
             </select>
             <label for="numRegisters">registros</label>
         </div>
-
-        <div class="search">
-            <label for="searchData">Buscar: </label>
-            <input type="text" name="searchData" id="searchData"/>
+        <div class="paginacion">
+            <div id="nav-paginacion"></div>
         </div>
+      </div>
     </div>
+  </section>
 
-    <section class="tablaActas">
+    <div class="tablaActas">
         <p></p>
         <table>
             <thead>
@@ -69,11 +83,6 @@
             </thead>
             <tbody id="contentTable"></tbody>
         </table>
-    </section>
-
-    <div class="footerTable">
-        <div><label id="lbl-total"></label></div>
-        <div id="nav-paginacion"></div>
     </div>
 
     <footer class="footer" id="contact">

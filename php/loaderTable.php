@@ -111,9 +111,9 @@ if($totalRegistros > 0) {
     for($i = $numeroInicio; $i <= $numeroFin; $i++) {
         if ($actualPage == $i) {
             // TODO: Aqui aplicar CSS para que se resalte este campo ya que se encuentra activo
-            $data['paginacion'] .= '<li><a href="#">' . $i . '</a></li>';
+            $data['paginacion'] .= '<li><a class="paginaActual" href="#">' . $i . '</a></li>';
         } else {
-            $data['paginacion'] .= '<li><a href="#" onClick="getData(' . $i . ')">' . $i . '</a></li>';
+            $data['paginacion'] .= '<li><a class="restoPaginas" href="#" onClick="getData(' . $i . ')">' . $i . '</a></li>';
         }
     }
 

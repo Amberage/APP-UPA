@@ -197,6 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/petRegister.css"/>
     <title>UPA | Generar Acta</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/javascript/mayus.js"></script>
 </head>
 

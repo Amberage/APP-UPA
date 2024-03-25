@@ -167,7 +167,11 @@ async function createPDF(folioActual, petName, petSex, petBreed, petColor, petPi
 
 function printPet(folio) {
     if (isNaN(folio)) {
-        alert("Error en el folio de la consulta, favor de contactar al departamento de sistemas, Error: " + folio);
+        Swal.fire({
+            title: "¡ERROR!",
+            text: "Ocurrió un error al generar el acta, favor de contactar al departamento de sistemas. El error esta en el folio: " + folio,
+            icon: "error"
+          });
         return;
     } else {
         var xhr = new XMLHttpRequest();
@@ -188,6 +192,11 @@ function printPet(folio) {
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         // Enviar la variable al servidor
         xhr.send("folio=" + folio);
+        Swal.fire({
+            title: "¡El acta ha sido generada!",
+            text: "Revisa tus descargas, este proceso puede demorar por tu velocidad de internet.",
+            icon: "success"
+          });
     }
 
   }

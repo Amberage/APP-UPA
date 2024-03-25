@@ -1,5 +1,5 @@
 on: push
-name: Deploy Hydrosync Website
+name: Deploy UPA Development Website
 jobs:
   web-deploy:
     name: 🎉 Deploy UPA

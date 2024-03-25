@@ -69,17 +69,16 @@ if ($num_rows > 0) {
     $data['table'] = '';
     while ($row = $result -> fetch_assoc()) {       
         $data['table'] .= '<tr>';
-        $data['table'] .= '<td>' . $row['folio'] . '</td>';
-        $data['table'] .= '<td>' . $row['petName'] . '</td>';
-        //$data['table'] .= '<td>' . $row['petPicture'] . '</td>';
-        $data['table'] .= "<td><img src='" . $row['petPicture'] . "' style='width: 100px; height: 100px;'></img></td>";
-        $data['table'] .= '<td>' . $row['ownerName'] . '</td>';
-        $data['table'] .= '<td>' . $row['ownerColony'] . '</td>';
-        $data['table'] .= '<td>' . $row['registerDate'] . '</td>';
+        $data['table'] .= '<td><label class="lbl-info">No. Acta: </label>' . $row['folio'] . '</td>';
+        $data['table'] .= '<td><label class="lbl-info">Nombre: </label>' . $row['petName'] . '</td>';
+        $data['table'] .= "<td><img style='text-align: center;' src='" . $row['petPicture'] . "' class='actasImg'></img></td>";
+        $data['table'] .= '<td><label class="lbl-info">Propietario: </label>' . $row['ownerName'] . '</td>';
+        $data['table'] .= '<td><label class="lbl-info">Colonia: </label>' . $row['ownerColony'] . '</td>';
+        $data['table'] .= '<td><label class="lbl-info">Registrado el </label>' . $row['registerDate'] . '</td>';
         $data['table'] .= '<td>' .
                         "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/descargarActa.png\");' onClick=\"printPet(" . $row['folio'] . ")\";></button>" .
                         "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/editarActa.png\");' onclick=\"alert('Función en desarrollo, maldito desesperado!');\"></button>" .
-                        "<button class='btnAction' style='background-image: url(\"/assets/images/eliminarActa.png\");' onclick=\"alert('Función en desarrollo, maldito desesperado!');\"></button>" .
+                        "<button class='btnAction' style='background-image: url(\"/assets/images/eliminarActa.png\");' onClick=deletePet(". $row['folio'] .");></button>" .
                  '</td>';
         $data['table'] .= '</tr>';
     }

@@ -35,3 +35,51 @@ function getData(pagina) {
     })
     .catch((err) => console.log(err));
 }
+
+
+/*
+* En esta function se manda la solicitud para borrar un acta.
+! No se implementó ningun validador, ya que no se considera que este sistema sea objetivo de algun ciberataque, pero de requererirse solo hay
+! que llamar a la cookie de inicio de sesión y validar que las cuentas sean de admin o ts, EN EL ESTADO ACTUAL ESTA FUNCIONALIDAD ES EXPLOTABLE!
+*/
+
+function deletePet(folio) {
+  let deleteURL = "/php/eliminarActa.php";
+  Swal.fire({
+    title: "¿Estas seguro que deseas eliminar el acta número " + folio + "?",
+    text: "¡Esta acción es irreversible!",
+    color: "#666c6c",
+    icon: "warning",
+    showCancelButton: true,
+    cancelButtonColor: "#1A5C50",
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#9D2348",
+    confirmButtonText: "Eliminar Acta"
+  }).then((result) => {
+    if (result.isConfirmed) {
+
+      //Datos que se van a enviar
+      let delPet = new FormData();
+      delPet.append("delFolio", folio);
+      //Enviarlos via post, despues la respuesta del PHP se imprime en el HTML
+
+      fetch(deleteURL, {
+        method: "POST",
+        body: delPet,
+      })
+        .then((response) => response.json())
+        .then((delResponse) => {
+          Swal.fire({
+            color: "#666c6c",
+            title: "Acta Eliminada",
+            text: delResponse,
+            icon: "success",
+            confirmButtonColor: "#1A5C50",
+          });
+          getData(actualPage);
+        })
+        .catch((err) => console.log(err));
+
+    }
+  });
+}

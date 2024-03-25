@@ -73,7 +73,12 @@
     background-size: cover;
     padding-top: 20px;
     padding-bottom: 20px;
-    font-size: 0.7em;
+    font-size: 1em;
+}
+
+.actasImg {
+    width: 100px;
+    height: 100px;
 }
 
 
@@ -81,11 +86,9 @@ table.tablaActas {
     border-collapse: collapse;
     table-layout: fixed; /* Establecer el tamaño fijo de la tabla */
     width: 100%; /* Esto es importante para que la tabla se ajuste correctamente */
-    margin-left: 50px;
-    margin-right: 50px;
 }
 
-th, td {
+th, td{
     border: 1px solid black;
     padding: 8px;
     text-align: center;
@@ -93,20 +96,74 @@ th, td {
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #d3bf9a;
+    color: #9d2348;
 }
 
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #FFF2EE;
+}
+
+tr {
+    background-color: #ffe3d0;
+    color: #1a5c50;
+}
+
+.lbl-info {
+    display: none;
 }
 
 
 /* Media query para pantallas más pequeñas */
-@media screen and (max-width: 768px) {   
+@media screen and (max-width: 768px) {
+    .tablaActas table {
+        width: 75%;
+    }
+
+    .tablaActas tr {
+        display: flex;
+        flex-direction: column;
+        border: 3px solid #9d2449;
+        padding: 1em;
+        margin-bottom: 1em;
+    }
+
+    .tablaActas td {
+        border: 0px solid red;
+        padding: 8px;
+        text-align: center;
+        word-wrap: break-word;
+    }
+
+    .tablaActas thead {
+        display: none;
+    }
+
+    .actasImg {
+        width: 75px;
+        height: 75px;
+        display: block; /* Asegura que la imagen sea un bloque para poder aplicar márgenes automáticos */
+        margin: auto; /* Centra la imagen horizontalmente dentro del td */
+    }
+
+    .btnAction {
+        background-size: cover; /* Para ajustar la imagen al tamaño del botón */
+        width: 35px; /* Ancho del botón */
+        height: 35px; /* Alto del botón */
+        border: none; /* Sin borde */
+        cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+        background-color: rgba(255, 255, 255, 0);
+    }
+
+    .lbl-info {
+        display: inline;
+        font-weight: bold;
+    }
 
 }
   
 /* Otra media query para pantallas aún más pequeñas */
 @media screen and (max-width: 480px) {
+    
    
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/tables.css" />
@@ -36,18 +37,7 @@
     <section class="section__container banner__container" style="padding: 0;">
     <div class="banner__content">
       <div class="banner__card">
-        <h4>Actas</h4>
-        <div><p id="lbl-total"></label></div>
-      </div>
-      <div class="banner__card">
-        <h4>Buscar</h4>
-        <div class="searchbox">
-            <ion-icon name="search-sharp"></ion-icon>
-            <input type="text" name="searchData" id="searchData" placeholder="Ingrese busqueda..."/>
-        </div>
-      </div>
-      <div class="banner__card">
-        <h4>Navegar</h4>
+        <h4>Registros</h4>
         <div class="registros">
             <label for="numRegisters">Mostrar: </label>
             <select name="numRegisters" id="numRegisters">
@@ -65,6 +55,17 @@
         <div class="paginacion">
             <div id="nav-paginacion"></div>
         </div>
+      </div>
+      <div class="banner__card">
+        <h4>Buscar</h4>
+        <div class="searchbox">
+            <ion-icon name="search-sharp"></ion-icon>
+            <input type="text" name="searchData" id="searchData" placeholder="Ingrese busqueda..."/>
+        </div>
+      </div>
+      <div class="banner__card">
+        <h4>Actas</h4>
+        <div><p id="lbl-total"></label></div>
       </div>
     </div>
   </section>
@@ -150,6 +151,7 @@
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
     <script src="/javascript/sessionTools.js"></script>
+    <script src="/javascript/delete.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="/javascript/loaderTable.js"></script>

@@ -20,3 +20,8 @@ extension=mbstring
 extension=exif
 extension=mysqli
 extension=gd
+
+
+# Pendientes:
+- Gestionar mejor los JS
+- Crear un JS para editPets

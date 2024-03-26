@@ -1,0 +1,286 @@
+section.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  background-position: center;
+  background-size: cover;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.form-box {
+  position: relative;
+  width: 700px;
+  height: 400px;
+  background: transparent;
+  backdrop-filter: blur(15px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10%;
+}
+
+h2.login {
+  font-size: 2.5em;
+  color: #666c6c;
+  text-align: center;
+}
+.inputbox {
+  position: relative;
+  margin: 20px 0;
+  width: 350px;
+  border-bottom: 2px solid #d3bf9a;
+}
+.inputbox label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: #d7a255;
+  font-size: 1em;
+  font-weight: bold;
+  pointer-events: none;
+  transition: 0.5s;
+}
+input:focus ~ label,
+input:valid ~ label {
+  top: -5px;
+}
+.inputbox input {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.1em;
+  padding: 0 35px 0 5px;
+  color: #8b8f91;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.inputbox ion-icon {
+  position: absolute;
+  right: 8px;
+  color: #611230;
+  font-size: 1.2em;
+  top: 20px;
+}
+.forget {
+  margin: -15px 0 15px;
+  font-size: 0.9em;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.forget label input {
+  margin-right: 3px;
+}
+.forget label a {
+  color: #fff;
+  text-decoration: none;
+}
+.forget label a:hover {
+  text-decoration: underline;
+}
+button.login {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: #2A8C77;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+button.login:hover {
+  background: #1A5C50;
+}
+
+button.cancel {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: #9d2348;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+button.cancel:hover {
+  background-color: #611230;
+}
+.register {
+  font-size: 0.9em;
+  color: #fff;
+  text-align: center;
+  margin: 25px 0 10px;
+}
+.register p a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+}
+.register p a:hover {
+  text-decoration: underline;
+}
+
+.returnError {
+  padding-top: 20px;
+  text-align: center;
+  font-weight: bold;
+  animation: bounce 2s;
+  color: #ba1934;
+}
+
+.returnSuccesful {
+  padding-top: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #1a5c50;
+}
+
+/* Estilo para el contenedor div */
+.twoColumns {
+  /* Especificamos dos columnas */
+  column-count: 2;
+  /* Establecemos el espacio entre columnas */
+  column-gap: 50px;
+}
+
+/*Select Form*/
+.selectBox {
+  position: relative;
+  margin: 20px 0;
+  width: 350px;
+  border-bottom: 2px solid #d3bf9a;
+}
+.selectBox label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: #d7a255;
+  font-size: 1em;
+  font-weight: bold;
+  pointer-events: none;
+  transition: 0.5s;
+}
+select:focus ~ label,
+select:valid ~ label {
+  top: -5px;
+}
+.selectBox select {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.1em;
+  padding: 0 35px 0 5px;
+  color: #8b8f91;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+/* Estilo para el input de tipo file */
+input[type="file"] {
+  font-size: small;
+  position: relative;
+  top: 25px;
+  left: 0px;
+}
+
+/* Estilo para el texto "Seleccionar archivo" */
+input[type="file"]::file-selector-button {
+  visibility: show;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-style: italic;
+}
+
+.options {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Media query para pantallas más pequeñas */
+@media screen and (max-width: 768px) {
+  .inputbox {
+    position: relative;
+    margin: 20px 0;
+    width: 200px;
+    border-bottom: 2px solid #d3bf9a;
+  }
+
+  h2.form {
+    font-size: 1.3em;
+    color: #666c6c;
+  }
+
+  .selectBox {
+    position: relative;
+    margin: 20px 0;
+    width: 200px;
+    border-bottom: 2px solid #d3bf9a;
+  }
+
+  input[type="file"]::file-selector-button {
+    visibility: hidden;
+  }
+
+  input[type="file"] {
+    font-size: small;
+    position: relative;
+    top: 25px;
+    left: -110px;
+    width: fit-content;
+  }
+}
+
+/* Otra media query para pantallas aún más pequeñas */
+@media screen and (max-width: 480px) {
+  .inputbox {
+    position: relative;
+    margin: 20px 0;
+    width: 100px;
+    border-bottom: 2px solid #d3bf9a;
+    font-size: 0.8em;
+  }
+
+  .inputbox input{
+    font-size: 0.7em;
+  }
+
+  h2.form {
+    font-size: 1em;
+    color: #666c6c;
+  }
+
+  .selectBox {
+    position: relative;
+    margin: 20px 0;
+    width: 100px;
+    border-bottom: 2px solid #d3bf9a;
+    font-size: 0.8em;
+  }
+
+  .selectBox select {
+    font-size: 0.7em;
+  }
+  input[type="file"]::file-selector-button {
+    visibility: hidden;
+  }
+
+  input[type="file"] {
+    font-size: 0.5em;
+    position: relative;
+    top: 25px;
+    left: -70px;
+    width: fit-content;
+  }
+}

@@ -38,7 +38,7 @@
 
     <a href="./test/test.php" class="btn" style="display: inline-block; margin-bottom: 10px;">Fichero actual de testing</a>
 
-    <a href="./database/generarRegistros.php" class="btn" style="display: inline-block; margin-bottom: 10px;">Generar 33 Registros</a>
+    <a href="./database/generarRegistros.php" class="btn" style="display: inline-block; margin-bottom: 10px;">Generar 50 Registros</a>
 
     <a href="./database/adminRegister.php" class="btn" style="display: inline-block; margin-bottom: 10px;">Registrar usuarios </br> (Ignora Control de Errores)</a>
 

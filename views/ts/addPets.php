@@ -1,189 +1,11 @@
 <?php
-include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
-require ($_SERVER['DOCUMENT_ROOT'] . '/API/API.php');
 session_start();
 
  if ($_SESSION["userType"] != "ts") {
     header("Location: /index.php");
+} else {
+    $idTS = $_SESSION["id"];
 }
-
-// Variables de control de errores
-$tamanoMaximo = 20 * 1024 * 1024; // Tamaño máximo permitido en bytes (20MB)
-$errorQuery = '';
-$successfulQuery = '';
-$esValido = false;
-$idTS = $_SESSION["id"];
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Datos de la mascota
-    $petName = strtoupper($_POST['petName']);
-    $petBreed = strtoupper($_POST['petBreed']);
-    $petColor = strtoupper($_POST['petColor']);
-    $petSex = strtoupper($_POST['petSex']);
-    // Datos del Propietario
-    $ownerName = strtoupper($_POST['ownerName']);
-    $ownerINE = strtoupper($_POST['ownerINE']);
-    $ownerCURP = strtoupper($_POST['ownerCURP']);
-    $ownerColony = strtoupper($_POST['ownerColony']);
-    $ownerAddress = strtoupper($_POST['ownerAddress']);
-
-    // Iniciar la conexión a la BBDD
-    $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
-
-    //! Consultar y validar el último folio
-    $queryFolio = "SELECT MAX(folio) AS lastFolio FROM mascotasPropietarios";
-    $lastFolio = $conn->query($queryFolio);
-
-    if ($lastFolio) {
-        // Obtener el resultado como un array asociativo y Obtener el último folio
-        $row = $lastFolio->fetch_assoc();
-        $lastFolio = $row['lastFolio'];
-        $folioActual= strval($lastFolio + 1);
-        $esValido = true;
-    } else {
-        // Manejar el error si la consulta falla
-        $lastFolio = -1; 
-        $esValido = false;
-        $errorQuery = "Error en la consulta del ultimo foloio: " . "</br>Informa al departamento de sistemas, lamentamos las molestias.";
-    }
-
-    //! Validar la imagen
-    if ($esValido == true) {
-        if ($_FILES["petPicture"]["size"] <= $tamanoMaximo) {
-    
-            // Ruta donde se guardará la imagen
-            $path_petPictures = $_SERVER['DOCUMENT_ROOT'] . '/assets/petPictures/';
-    
-            // Nombre del archivo
-            $fileName = $folioActual;
-    
-            // Ruta completa del archivo
-            $savedPath = $path_petPictures . $fileName . ".jpg";
-            $petPicture = str_replace($pathPicturesReplace, $pathChars, $savedPath);
-    
-            // Obtenemos la información del archivo
-            $tempFile = $_FILES["petPicture"]["tmp_name"];
-    
-            // Verificamos si es una imagen
-            $typeImg = exif_imagetype($tempFile);
-    
-            // Permitir formatos de imagen JPEG, PNG, BMP
-            if ($typeImg === IMAGETYPE_JPEG || $typeImg === IMAGETYPE_PNG) {
-    
-                // Creamos una imagen desde el archivo temporal
-                switch ($typeImg) {
-                    case IMAGETYPE_JPEG:
-                        $oldImg = imagecreatefromjpeg($tempFile);
-                        break;
-                    case IMAGETYPE_PNG:
-                        $oldImg = imagecreatefrompng($tempFile);
-                        break;
-                    default:
-                        $errorQuery = "Formato de imagen no soportado.";
-                        $esValido = false;
-                        exit;
-                }
-    
-                // Obtener información de orientación de la imagen
-                $exif = exif_read_data($tempFile);
-                if (!empty($exif['Orientation'])) {
-                    switch ($exif['Orientation']) {
-                        case 3:
-                            $oldImg = imagerotate($oldImg, 180, 0);
-                            break;
-                        case 6:
-                            $oldImg = imagerotate($oldImg, -90, 0);
-                            break;
-                        case 8:
-                            $oldImg = imagerotate($oldImg, 90, 0);
-                            break;
-                    }
-                }
-    
-                // Redimensionamos la imagen a 200x200
-                $newImg = imagecreatetruecolor(350, 350);
-                imagecopyresampled($newImg, $oldImg, 0, 0, 0, 0, 350, 350, imagesx($oldImg), imagesy($oldImg));
-    
-                // Ruta donde se encuentra el marco PNG
-                $pathFrame = ($_SERVER['DOCUMENT_ROOT'] . '/assets/images/frameHeart.png');
-    
-                // Cargamos la imagen del marco
-                $frame = imagecreatefrompng($pathFrame);
-    
-                // Obtener las dimensiones de la imagen reducida
-                $width = imagesx($newImg);
-                $height = imagesy($newImg);
-    
-                // Obtener las dimensiones del marco
-                $frameWidth = imagesx($frame);
-                $frameHeight = imagesy($frame);
-    
-                // Calcular la posición para centrar el marco
-                $x = ($width - $frameWidth) / 2;
-                $y = ($height - $frameHeight) / 2;
-    
-                // Superponer el marco sobre la imagen reducida
-                imagecopy($newImg, $frame, $x, $y, 0, 0, $frameWidth, $frameHeight);
-    
-                // Guardamos la imagen resultante
-                imagejpeg($newImg, $savedPath);
-    
-                // Liberamos memoria
-                imagedestroy($newImg);
-                imagedestroy($oldImg);
-                imagedestroy($frame);
-    
-                //echo "La imagen se ha subido correctamente.";
-                $esValido = true;
-    
-            } else {
-                $errorQuery = "Formato de imagen no válido. Solo se permiten formatos JPEG y PNG.";
-                $esValido = false;
-            }
-    
-        } else {
-            $errorQuery = "El tamaño del archivo excede el límite permitido (20MB).";
-            $esValido = false;
-        }
-    }
-    
-
-    if($esValido == true) {
-        // Query para insertar datos en la tabla mascotasPropietarios
-        $query = "INSERT INTO mascotasPropietarios (petName, petBreed, petColor, petSex, petPicture, ownerName, ownerINE, ownerCURP, ownerColony, ownerAddress, idTS) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        // Preparar la consulta
-        if ($stmt = $conn->prepare($query)) {
-            // Vincular variables a la declaración preparada como parámetros
-            $stmt->bind_param("ssssssssssi", $petName, $petBreed, $petColor, $petSex, $petPicture, $ownerName, $ownerINE, $ownerCURP, $ownerColony, $ownerAddress, $idTS);
-
-            // Ejecutar la declaración para generar un word
-            if ($stmt->execute()) {
-               /*  $genResult = generarPDF($folioActual);
-
-                if ($genResult == true) {
-                    $successfulQuery = "El acta de " . $petName . " fue generada.";
-                } else {
-                    $errorQuery = "Hubo un error al generar el acta con el registro: " . $folioActual . "</br>Por favor, avisa al departamento de sistemas, lamentamos las molestias.";
-                } */
-                echo "<html><body><script src='/API/imprimirActa.js'></script>";
-                echo "<script>printPet('$folioActual');</script>";
-                echo "</body></html>";
-                $successfulQuery = "El acta de " . $petName . " fue generada.";
-                
-            } else {
-                $errorQuery = "Error al insertar registro: " . $conn->error . "</br>Si el error persiste informa al departamento de sistemas, lamentamos las molestias.";
-            }
-
-            // Cerrar la declaración
-            $stmt->close();
-        } else {
-            $errorQuery = "Error en la preparación de la consulta: " . $conn->error . "</br>Informa al departamento de sistemas, lamentamos las molestias.";
-        }
-        }
-    // Cerrar la conexión a la base de datos
-    mysqli_close($conn);
-    }
 ?>
 
 <!DOCTYPE html>
@@ -195,10 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
     <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="stylesheet" href="/css/petRegister.css"/>
+    <link rel="stylesheet" href="/css/petAdd.css"/>
     <title>UPA | Generar Acta</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/javascript/mayus.js"></script>
 </head>
 
 <body>
@@ -213,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/ts/tSocial.php">Herramientas</a></li>
+                <li><a href="/views/ts/dashboard.php">Herramientas</a></li>
                 <li><a href="#" id="killSession">Salir</a></li>
             </ul>
         </nav>
@@ -227,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section class="login" style="padding-bottom: 150px; padding-top: 100px">
         <div class="form-box">
             <div class="form-value">
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <form autocomplete="off" id="petDataForm">
                     <div class="twoColumns">
                         <!-- !DATOS DE LA MASCOTA -->
                         <div class="petData">
@@ -290,6 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     required title="El CURP se compone de 18 caracteres" onblur="upperCase(this);"/>
                                 <label>CURP</label>
                             </div>
+                            <input type="text" name="idTS" id="idTS" value="<?php echo $idTS?>" style="display: none;"/>
 
                             <div class="selectBox">
                                 <select name="ownerColony" id="ownerColony">
@@ -345,11 +166,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
                     <!--! Fin del div "Two Columns"  -->
-                    <script src="/javascript/validarComboBoxPets.js"></script>
-                    <div style="text-align: center;"><div><button class="login" style="width: 240px;" onclick="return validarComboBox()">Registrar Mascota</button></div></div>
-                    <div class="returnError" id="errorMsg"><span><?php echo $errorQuery;?></div>
-                    <div class="returnSuccesful"><span><?php echo $successfulQuery;?></span></div>
                 </form>
+                <div style="text-align: center;"><div><button class="login" style="width: 240px; margin-top: 30px;" type="button" onclick="sendPet()">Registrar Mascota</button></div></div>
+                <div class="returnSuccesful" id="successMsg"></div>
+                <div class="returnError" id="errorMsg"></div>
             </div>
         </div>
     </section>
@@ -417,9 +237,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Valle de Chalco Solidaridad | Copyright © 2024
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/javascript/ts_addPets.js"></script>
+    <script src="/API/imprimirActa.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
-    <script src="/javascript/sessionTools.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

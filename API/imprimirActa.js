@@ -176,7 +176,7 @@ function printPet(folio) {
     } else {
         var xhr = new XMLHttpRequest();
         // Configurar una solicitud POST al archivo PHP
-        xhr.open("POST", "/php/getPetData.php", true);
+        xhr.open("POST", "/php/getPrintPetData.php", true);
     
         // Establecer una función que se ejecutará cuando la solicitud se complete
         xhr.onreadystatechange = function () {
@@ -194,7 +194,7 @@ function printPet(folio) {
         xhr.send("folio=" + folio);
         Swal.fire({
             title: "¡El acta ha sido generada!",
-            text: "Revisa tus descargas, este proceso puede demorar por tu velocidad de internet.",
+            text: "Revisa tus descargas, este proceso puede demorar por tu velocidad de internet o dispositivo.",
             icon: "success"
           });
     }

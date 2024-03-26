@@ -49,25 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["apellido"] = $row["apellido"];
             $_SESSION["userType"] = $row["userType"];
 
-            /* !Depuración
-            // Crear un array con los datos de la sesión
-            $sessionData = array(
-                "id" => $_SESSION["id"],
-                "nombre" => $_SESSION["nombre"],
-                "apellido" => $_SESSION["apellido"],
-                "userType" => $_SESSION["userType"],
-                "tiempoSesion" => $tiempoSesion
-            );
-
-            // Convertir el array a formato JSON
-            $jsonSessionData = json_encode($sessionData);
-            die($jsonSessionData); */
-
             // Redirigir según el tipo de cuenta
             if ($row["userType"] == "adm") {
                 header("Location: /views/admin/admin.php");
             } elseif ($row["userType"] == "ts") {
-                header("Location: /views/ts/tSocial.php");
+                header("Location: /views/ts/dashboard.php");
             } else {
                 header("Location: /index.php");
             }
@@ -99,6 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+<div id="killSession"></div>
   <header class="header">
     <nav>
       <div class="nav__bar">
@@ -140,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label style="color: #1a5c50;"><input type="checkbox" name="sessionTime"> Mantener sesión iniciada</label>
           </div>
           <div class="returnError"><span><?php echo $errorQuery; ?></span></div>
-          <div><button class="login">Ingresar</button></div>
+          <div style="margin-top: 20px;"><button class="login">Ingresar</button></div>
         </form>
       </div>
     </div>

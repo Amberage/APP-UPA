@@ -18,7 +18,7 @@ if (isset($_GET['petID'])) {
     }
     
     // Preparar la consulta SQL
-    $sql = "SELECT petName, petBreed, petColor, petSex, petPicture, ownerName, ownerINE, ownerCURP, ownerColony, ownerAddress FROM `mascotaspropietarios` WHERE folio = $petID";
+    $sql = "SELECT petName, petBreed, petColor, petSex, petPicture, ownerName, ownerINE, ownerCURP, ownerColony, ownerAddress FROM `mascotasPropietarios` WHERE folio = $petID";
     
     // Ejecutar la consulta
     $result = $conn->query($sql);

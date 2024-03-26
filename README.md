@@ -7,7 +7,6 @@
 
 # Warning Devs!
  * Falta añadir validadores de sesión en el index y en el login
- * Corregir el problema del mayus en los forms
 
 # Datos para la migración
 * Crear una BBDD con los parametros adecuados acorde al config.php y la bd.sql
@@ -15,13 +14,7 @@
 * Descomprimir el vendor.zip en la ruta en la que se encuentra
 
 # Dependencias necesarias en PHP
-
 extension=mbstring
 extension=exif
 extension=mysqli
 extension=gd
-
-
-# Pendientes:
-- Gestionar mejor los JS
-- Crear un JS para editPets

@@ -1,3 +1,8 @@
+<?php
+include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+validarSesion('ts_session');
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,8 +27,9 @@
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/ts/dashboard.php">Herramientas</a></li>
-                <li><a href="#" id="killSession">Salir</a></li>
+                <li><a href="/views/ts/dashboard.php">Inicio</a></li>
+                <li><a href="/views/ts/addPets.php">Crear Acta</a></li>
+                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">
@@ -32,7 +38,7 @@
         </div>
     </header>
 
-    <section class="section__container banner__container" style="padding: 0;">
+    <section class="section__container banner__container" style="padding: 0;  animation: showSlow 1s forwards">
     <div class="banner__content">
       <div class="banner__card">
         <h4>Registros</h4>
@@ -66,9 +72,9 @@
         <div><p id="lbl-total"></label></div>
       </div>
     </div>
-  </section>
+    </section>
 
-    <div class="tablaActas">
+    <div class="tablaActas" style="animation: showSlow 1s forwards">
         <p></p>
         <table>
             <thead>

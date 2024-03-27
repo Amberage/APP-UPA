@@ -13,6 +13,7 @@
 
 <body>
   <header class="header">
+    <div id="killSession"></div>
     <nav>
       <div class="nav__bar">
         <div class="logo">

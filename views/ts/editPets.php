@@ -1,11 +1,7 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
-require ($_SERVER['DOCUMENT_ROOT'] . '/API/API.php');
-session_start();
-
- if ($_SESSION["userType"] != "ts") {
-    header("Location: /index.php");
-}
+include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+validarSesion('ts_session');
 
 // Verifica si se recibió el parámetro 'petID'
 if (isset($_GET['petID'])) {
@@ -38,13 +34,15 @@ if (isset($_GET['petID'])) {
         $bd_ownerColony = $row['ownerColony'];
         $bd_ownerAddress = $row['ownerAddress'];
     } else {
-        die("Error del servidor: Se solicitó un ID inexistente, favor de comunicarse con el departamento de sistemas.");
+        //die("Error del servidor: Se solicitó un ID inexistente, favor de comunicarse con el departamento de sistemas.");
+        header("Location: /views/ts/viewPets.php");
     }
     // Cerrar la conexión
     $conn->close();
 } else {
     // Si no se recibe el parámetro 'petID', muestra un mensaje de error o redirecciona al usuario
-    die("Error en el servidor: Error del 'GET' en la modificación de mascotas, favor de comunicarse con el departamento de sistemas.");
+    //die("Error en el servidor: Error del 'GET' en la modificación de mascotas, favor de comunicarse con el departamento de sistemas.");
+    header("Location: /views/ts/viewPets.php");
 }
 
 $errorQuery = '';
@@ -77,8 +75,10 @@ $successfulQuery = '';
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/ts/dashboard.php">Herramientas</a></li>
-                <li><a href="#" id="killSession">Salir</a></li>
+                <li><a href="/views/ts/dashboard.php">Inicio</a></li>
+                <li><a href="/views/ts/addPets.php">Crear Acta</a></li>
+                <li><a href="/views/ts/viewPets.php">Ver Actas</a></li>
+                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">
@@ -88,7 +88,7 @@ $successfulQuery = '';
     </header>
 
     <!-- Ingresar formulario aqui abajo -->
-    <section class="login" style="padding-bottom: 150px; padding-top: 100px">
+    <section class="login" style="padding-bottom: 150px; padding-top: 100px; animation: showSlow 1s forwards">
         <div class="form-box">
             <div class="form-value">
             <form autocomplete="off">
@@ -163,7 +163,7 @@ $successfulQuery = '';
 
                             <div class="selectBox">
                                 <select name="ownerColony" id="ownerColony">
-                                <option value="">Seleccione Colonia</option>
+                                    <option value="">Seleccione Colonia</option>
                                     <option value="AlFREDO BARANDA" <?php if(isset($bd_ownerColony) && $bd_ownerColony == 'AlFREDO BARANDA') echo 'selected'; ?>>Alfredo Baranda</option>
                                     <option value="ALFREDO DEL MAZO" <?php if(isset($bd_ownerColony) && $bd_ownerColony == 'ALFREDO DEL MAZO') echo 'selected'; ?>>Alfredo del Mazo</option>
                                     <option value="AMÉRICAS I" <?php if(isset($bd_ownerColony) && $bd_ownerColony == 'AMÉRICAS I') echo 'selected'; ?>>Américas I</option>

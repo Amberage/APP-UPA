@@ -1,10 +1,6 @@
 <?php
-// Iniciar sesión si aún no está iniciada
-session_start();
-
-if ($_SESSION["userType"] != "ts") {
-    header("Location: /index.php");
-}
+include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+validarSesion('ts_session');
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +27,7 @@ if ($_SESSION["userType"] != "ts") {
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/ts/tSocial.php">Inicio</a></li>
-                <li><a href="#" id="killSession">Salir</a></li>
+            <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">

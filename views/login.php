@@ -1,5 +1,7 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
+include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+validarSesion('gnr_session');
 
 // Variable de control de mensajes de error
 $errorQuery = '';
@@ -51,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Redirigir según el tipo de cuenta
             if ($row["userType"] == "adm") {
-                header("Location: /views/admin/admin.php");
+                header("Location: /views/admin/dashboard.php");
             } elseif ($row["userType"] == "ts") {
                 header("Location: /views/ts/dashboard.php");
             } else {

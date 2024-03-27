@@ -1,11 +1,6 @@
 <?php
-session_start();
-
- if ($_SESSION["userType"] != "ts") {
-    header("Location: /index.php");
-} else {
-    $idTS = $_SESSION["id"];
-}
+include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+validarSesion('ts_session');
 ?>
 
 <!DOCTYPE html>
@@ -33,8 +28,9 @@ session_start();
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/ts/dashboard.php">Herramientas</a></li>
-                <li><a href="#" id="killSession">Salir</a></li>
+                <li><a href="/views/ts/dashboard.php">Inicio</a></li>
+                <li><a href="/views/ts/viewPets.php">Ver Actas</a></li>
+                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">
@@ -44,7 +40,7 @@ session_start();
     </header>
 
     <!-- Ingresar registro aqui abajo -->
-    <section class="login" style="padding-bottom: 150px; padding-top: 100px">
+    <section class="login" style="padding-bottom: 150px; padding-top: 100px; animation: showSlow 1s forwards;">
         <div class="form-box">
             <div class="form-value">
             <form autocomplete="off" id="petDataForm">
@@ -167,9 +163,12 @@ session_start();
                     </div>
                     <!--! Fin del div "Two Columns"  -->
                 </form>
-                <div style="text-align: center;"><div><button class="login" style="width: 240px; margin-top: 30px;" type="button" onclick="sendPet()">Registrar Mascota</button></div></div>
+                <div class="options" style="margin-top: 10px;">
+                    <div style="text-align: center;"><div><button class="login" style="width: 240px;" type="button" onclick="sendPet()">Registrar Mascota</button></div></div>
+                    <div><button class="cancel" style="width: 240px; margin-top: 10px;" onClick="back();">Volver</button></div>
+                </div>
                 <div class="returnSuccesful" id="successMsg"></div>
-                <div class="returnError" id="errorMsg"></div>
+                <div class="returnError" style="margin-top:-20px;" id="errorMsg"></div>
             </div>
         </div>
     </section>

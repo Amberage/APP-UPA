@@ -148,3 +148,7 @@ function resetForm() {
 function upperCase(e){
     e.value = e.value.toUpperCase();
 }
+
+function back() {
+    window.location.href = '/views/ts/dashboard.php';
+}

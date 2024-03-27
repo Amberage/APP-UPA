@@ -35,6 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
             // Ruta completa del archivo
             $savedPath = $path_petPictures . $fileName . ".jpg";
+            $savedPathBackup = $path_petPictures . "/backup/" . $fileName . ".jpg";
+            $petPicture = str_replace($pathPicturesReplace, $pathChars, $savedPath);
+
             // Obtenemos la información del archivo
             $tempFile = $_FILES["petPicture"]["tmp_name"];
     
@@ -101,14 +104,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
                 // Guardamos la imagen resultante
                 imagejpeg($newImg, $savedPath);
+                imagejpeg($newImg, $savedPathBackup);
     
                 // Liberamos memoria
                 imagedestroy($newImg);
                 imagedestroy($oldImg);
                 imagedestroy($frame);
     
-                //echo "La imagen se ha subido correctamente.";
-                $petPicture = str_replace($pathPicturesReplace, $pathChars, $savedPath);
                 $esValido = true;
             } else {
                 $responseData['errorMsg'] = "Formato de imagen no válido. Solo se permiten formatos JPEG y PNG.";

@@ -76,5 +76,5 @@ document.getElementById('killSession').addEventListener('click', function(event)
   // Realizar una solicitud al servidor para eliminar la cookie
   // Esto puede hacerse a través de una redirección a un script PHP que elimine la cookie
 
-  window.location.href = '/php/killSession.php'; // Redireccionar a un script PHP que elimine la cookie
+  window.location.href = '/php/st_killSession.php'; // Redireccionar a un script PHP que elimine la cookie
 });

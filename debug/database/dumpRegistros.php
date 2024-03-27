@@ -1,6 +1,7 @@
 <?php
 require($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
 $delPath = ($_SERVER['DOCUMENT_ROOT'] . '/assets/petPictures');
+$delBP = ($_SERVER['DOCUMENT_ROOT'] . '/assets/petPictures/backup');
 $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
 
 // Verificar conexión
@@ -30,6 +31,24 @@ foreach ($files as $file) {
     if (is_file($file)) {
         unlink($file); // Eliminar archivo
         echo "Archivo eliminado: " . $file . "<br>"; // Mensaje sin alert
+    }
+}
+
+
+// TRUNCATE TABLE backup_mascotasPropietarios;
+$sql_truncate = "TRUNCATE TABLE backup_mascotasPropietarios";
+if ($conn->query($sql_truncate) === TRUE) {
+    echo "<script>alert('Tabla backup_mascotasPropietarios truncada con éxito');</script>";
+} else {
+    echo "<script>alert('Error al truncar la tabla: " . $conn->error . "');</script>";
+}
+
+// Eliminar todo fichero existente dentro de la ruta $delPath
+$files = glob($delBP . '/*'); // Obtener lista de archivos en el directorio
+foreach ($files as $file) {
+    if (is_file($file)) {
+        unlink($file); // Eliminar archivo
+        echo "Archivo backup eliminado: " . $file . "<br>"; // Mensaje sin alert
     }
 }
 

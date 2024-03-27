@@ -1,3 +1,7 @@
+<?php
+include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+validarSesion('gnr_session');
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

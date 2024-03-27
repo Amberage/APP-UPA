@@ -32,12 +32,12 @@ if ($_SESSION["userType"] != "adm") {
             </div>
             <ul class="nav__links" id="nav-links">
                 <li><a href="/views/admin/admin.php">Administración</a></li>
-                <li><a href="#" id="killSession">Salir</a></li>
+                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">
             <p style="color: black;">UPA Valle de Chalco Solidaridad</p>
-            <h1 style="font-size: 2em;"><span>Administración</span></h1>
+            <h1 style="font-size: 3em;"><span>Administración</span></h1>
         </div>
     </header>
 
@@ -87,7 +87,6 @@ if ($_SESSION["userType"] != "adm") {
                     </div>
                 </div>
             </a>
-            
         </div>
     </section>
 
@@ -142,8 +141,6 @@ if ($_SESSION["userType"] != "adm") {
     </footer>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
-    <script src="/javascript/sessionTools.js"></script>
-    
 </body>
 
 </html>

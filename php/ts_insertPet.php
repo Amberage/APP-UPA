@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
 
     //! Consultar y validar el último folio
-    $queryFolio = "SELECT MAX(folio) AS lastFolio FROM mascotasPropietarios";
+    $queryFolio = "SELECT COUNT(*) AS lastFolio FROM backup_mascotaspropietarios;";
     $lastFolio = $conn->query($queryFolio);
 
     if ($lastFolio) {
@@ -55,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
             // Ruta completa del archivo
             $savedPath = $path_petPictures . $fileName . ".jpg";
+            $savedPathBackup = $path_petPictures . "/backup/" . $fileName . ".jpg";
             $petPicture = str_replace($pathPicturesReplace, $pathChars, $savedPath);
     
             // Obtenemos la información del archivo
@@ -123,6 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
                 // Guardamos la imagen resultante
                 imagejpeg($newImg, $savedPath);
+                imagejpeg($newImg, $savedPathBackup);
     
                 // Liberamos memoria
                 imagedestroy($newImg);

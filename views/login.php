@@ -1,7 +1,11 @@
 <?php
-include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
-include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
-validarSesion('gnr_session');
+require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
+
+if (!isset($_SESSION["id"]) || !isset($_SESSION["nombre"]) || !isset($_SESSION["apellido"]) || !isset($_SESSION["userType"])) {
+  //pass
+} else {
+  header("Location: /index.php");
+}
 
 // Variable de control de mensajes de error
 $errorQuery = '';

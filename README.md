@@ -20,4 +20,4 @@ extension=gd
 
 
 # Pendientes DEVS:
-* Corregir validaciones del sistema en insert y edit para pets
+* Replicar la funcion del petPicture en updatePets

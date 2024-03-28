@@ -49,7 +49,7 @@ if (isset($_SESSION["id"]) && isset($_SESSION["nombre"]) && isset($_SESSION["ape
   </header>
 
   <!-- Ingresar login aqui abajo -->
-  <section class="login">
+  <section class="login" style="animation: showSlow 1s forwards;">
     <div class="form-box">
       <div class="form-value">
         <form autocomplete="off">

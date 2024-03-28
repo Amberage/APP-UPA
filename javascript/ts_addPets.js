@@ -63,7 +63,7 @@ function validateFormData() {
         errorMessage.innerHTML = 'Por favor, ingrese el nombre del propietario';
         return false;
     } else if (!namePattern.test(ownerName)) {
-        errorMessage.innerHTML = 'Por favor, ingrese un nombre válido. </br> Solo letras. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
+        errorMessage.innerHTML = 'Por favor, ingrese un nombre válido para el propietario. </br> Solo letras. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
 
@@ -133,18 +133,43 @@ function createPet() {
     })
         .then((response) => response.json())
         .then((responseData) => {
-            successMessage.innerHTML = responseData.successfulMssg;
+            //successMessage.innerHTML = responseData.successfulMssg;
             errorMessage.innerHTML = responseData.errorMsg;
             let folio = responseData.folio;
             let validateQuery = responseData.validateQuery;
-            if(validateQuery === true) {
-                if (folio != undefined) {
-                    printPet(folio);
-                    resetForm();
-                } else {
-                    errorMessage.innerHTML = 'Error al generar el acta, consulte con el departamento de sistemas.';
-                }
+            let backupState = responseData.backupState;
+            if(backupState === false) {
+                Swal.fire({
+                    title: "¡Error al generar el respaldo!",
+                    text: "El acta esta disponible, pero la imagen no ha sido respaldada adecuadamente, informa al departamento de sistemas.",
+                    icon: "error"
+                  });
             }
+
+            if(validateQuery === true && backupState === true) {
+                Swal.fire({
+                    title: `¡${petName} ha sido regitrad@!`,
+                    text: "¿Desea descargar el acta?",
+                    color: "#666c6c",
+                    icon: "success",
+                    showCancelButton: true,
+                    cancelButtonColor: "#1A5C50",
+                    cancelButtonText: "No",
+                    confirmButtonColor: "#1A5C50",
+                    confirmButtonText: "Descargar Acta"
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        printPet(folioActa);
+                    }
+                  });
+            } else {
+                Swal.fire({
+                    title: "¡Error al registrar a" + petName + "!",
+                    text: `Favor de informar al departamento de sistemas, lamentamos los inconvenientes. \n(Problema en el procesamiento de datos, result: ${resultQuery} validate: ${validateQuery})`,
+                    icon: "error"
+                  });
+            }
+            resetForm();
         })
         .catch((err) => console.log(err));
 }

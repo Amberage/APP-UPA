@@ -63,6 +63,13 @@ CREATE TABLE backup_mascotasPropietarios(
     FOREIGN KEY (idTS) REFERENCES usuarios (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+-- Vista: Administrador
+CREATE VIEW adminPets AS
+SELECT folio, petName, petPicture, ownerName, ownerColony, CONCAT(DAY(mp.fechaRegistro), '/', MONTH(mp.fechaRegistro), '/', YEAR(mp.fechaRegistro)) AS registerDate, CONCAT(users.nombre, ' ', users.apellido) AS tsName, users.id AS tsID
+FROM backup_mascotasPropietarios mp
+INNER JOIN usuarios users ON mp.idTS = users.id
+WHERE users.userType = 'ts' || users.userType = 'adm';
+
 -- Triggers para clonar la información de la tabla original en la del respaldo.
 --! Nota: Esto cumple dos funciones, tener un respaldo de la BBDD y llevar un conteo de los registros reales en la tabla de mascotas.
 CREATE TRIGGER insertBackup AFTER INSERT ON mascotasPropietarios

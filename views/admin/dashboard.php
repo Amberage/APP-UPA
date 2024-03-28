@@ -74,7 +74,7 @@ if ($_SESSION["userType"] != "adm") {
                 </div>
             </a>
             
-            <a class="adminSection" href="">
+            <a class="adminSection" href="/views/admin/viewPets.php">
                 <div class="room__card">
                     <div class="room__card__image">
                         <img src="/assets/images/admin_adminRecords.png" alt="Dona alimentos para mascotas" />

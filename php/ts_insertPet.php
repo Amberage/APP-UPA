@@ -7,6 +7,26 @@ $responseData = [];
 $responseData['successfulMssg'] = '';
 $responseData['errorMsg'] = '';
 
+function modifyBackupPath($folioBP, $pathPictureBP) {
+    require($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
+    $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
+    if ($conn->connect_error) {
+        die("Conexión fallida en modifyBackupPath: " . $conn->connect_error);
+    }
+    // Preparar la declaración SQL y vincular parámetros
+    $updateBackup = $conn->prepare("UPDATE backup_mascotasPropietarios SET petPicture = ? WHERE folio = ?");
+    $updateBackup->bind_param("si", $pathPictureBP, $folioBP);
+
+    // Ejecutar la declaración
+    if ($updateBackup->execute() === TRUE) {
+        $conn->close();
+        return true;
+    } else {
+        $conn->close();
+        return false;
+    } 
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Datos del TS
     $idTS = strtoupper($_POST['idTS']);
@@ -57,6 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $savedPath = $path_petPictures . $fileName . ".jpg";
             $savedPathBackup = $path_petPictures . "/backup/" . $fileName . ".jpg";
             $petPicture = str_replace($pathPicturesReplace, $pathChars, $savedPath);
+            $petPictureBackup = str_replace($pathPicturesReplace, $pathChars, $savedPathBackup);
     
             // Obtenemos la información del archivo
             $tempFile = $_FILES["petPicture"]["tmp_name"];
@@ -161,6 +182,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Ejecutar la declaración para generar un word
             if ($stmt->execute()) {
                 $responseData['successfulMssg'] = "El acta de " . $petName . " fue generada.";
+                $backupAdd = modifyBackupPath($folioActual, $petPictureBackup);
+                if($backupAdd == true) {
+                    $responseData['backupState'] = true;
+                } else {
+                    $responseData['backupState'] = false;
+                }
             } else {
                 $responseData['errorMsg'] = "Error al insertar registro: " . $conn->error . "</br>Si el error persiste informa al departamento de sistemas, lamentamos las molestias.";
             }

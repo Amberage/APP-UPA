@@ -58,7 +58,7 @@ function validateFormData() {
         errorMessage.innerHTML = 'Por favor, ingrese el nombre del propietario';
         return false;
     } else if (!namePattern.test(ownerName)) {
-        errorMessage.innerHTML = 'Por favor, ingrese un nombre válido. </br> Solo letras. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
+        errorMessage.innerHTML = 'Por favor, ingrese un nombre válido para el propietario. </br> Solo letras. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
 

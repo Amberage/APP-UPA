@@ -4,20 +4,12 @@
 * Busqueda dinámica (Filtros): https://www.youtube.com/watch?v=IP2Ye2KKfoc&t
 * Limit(00:00) y Paginación(10:28): https://www.youtube.com/watch?v=NHF7RH3ALPM&t
 */
-session_start();
-if (!isset($_SESSION["id"])) {
-    header("Location: /index.php");
-    exit;
-} else {
-    $tsID = $_SESSION["id"];
-}
-
 require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
 $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
 // Datos de la tabla
 $primaryKey = 'folio';
-$table = 'pets';
-$columns = ['folio', 'petName', 'ownerName', 'ownerColony', 'registerDate', 'petPicture'];
+$table = 'adminPets';
+$columns = ['folio', 'petName', 'ownerName', 'tsName', 'registerDate', 'petPicture'];
 
 // Filtro
 $searchData = isset($_POST['searchData']) ? $conn -> real_escape_string($_POST['searchData']) : null;
@@ -47,7 +39,7 @@ $stamentLIMIT = "LIMIT $inicio, $limit";
 //Query General
 $sql = "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", $columns) . "
 FROM $table
-WHERE tsID = $tsID $statementAND $stamentLIMIT";
+WHERE tsID != 0 $statementAND $stamentLIMIT";
 $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 
@@ -80,7 +72,7 @@ if ($num_rows > 0) {
         $data['table'] .= '<td><label class="lbl-info">Nombre: </label>' . $row['petName'] . '</td>';
         $data['table'] .= "<td><img style='text-align: center;' src='" . $row['petPicture'] . "' class='actasImg'></img></td>";
         $data['table'] .= '<td><label class="lbl-info">Propietario: </label>' . $row['ownerName'] . '</td>';
-        $data['table'] .= '<td><label class="lbl-info">Colonia: </label>' . $row['ownerColony'] . '</td>';
+        $data['table'] .= '<td><label class="lbl-info">Trabajador Social: </label>' . $row['tsName'] . '</td>';
         $data['table'] .= '<td><label class="lbl-info">Registrado el </label>' . $row['registerDate'] . '</td>';
         $data['table'] .= '<td>' .
                         "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/descargarActa.png\");' onClick=\"printPet(" . $row['folio'] . ")\";></button>" .
@@ -126,7 +118,7 @@ if($totalRegistros > 0) {
     $data['paginacion'] .= '</ul>';
     $data['paginacion'] .= '</nav>';
 }
-
+$data['debug'] = $sql;
 echo json_encode($data, JSON_UNESCAPED_UNICODE);
 $conn->close();
 ?>

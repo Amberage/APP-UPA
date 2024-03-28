@@ -8,6 +8,8 @@ $responseData['successfulMssg'] = '';
 $responseData['errorMsg'] = '';
 $responseData['resultQuery'] = 0;
 
+$responseData['debug'] = '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $folioActa = $_POST['folioActa'];
     $old_petPicture = $_POST['old_petPicture'];
@@ -26,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_FILES['petPicture']) && $_FILES['petPicture']['error'] === UPLOAD_ERR_OK) {
         //! Validar la imagen: Aqui se genera la nueva imagen y se guarda en la ruta adecuada.
         if ($_FILES["petPicture"]["size"] <= $tamanoMaximo) {
-    
             // Ruta donde se guardará la imagen
             $path_petPictures = $_SERVER['DOCUMENT_ROOT'] . '/assets/petPictures/';
     
@@ -112,6 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 imagedestroy($frame);
     
                 $esValido = true;
+                $petPicture = str_replace($pathPicturesReplace, $pathChars, $savedPath);
             } else {
                 $responseData['errorMsg'] = "Formato de imagen no válido. Solo se permiten formatos JPEG y PNG.";
                 $esValido = false;
@@ -148,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Preparar la consulta
         if ($stmt = $conn->prepare($query)) {
             // Vincular variables a la declaración preparada como parámetros
-            $stmt->bind_param("ssssssssssi", $petName, $petBreed, $petColor, $petSex, $old_petPicture, $ownerName, $ownerINE, $ownerCURP, $ownerColony, $ownerAddress, $folioActa);
+            $stmt->bind_param("ssssssssssi", $petName, $petBreed, $petColor, $petSex, $petPicture, $ownerName, $ownerINE, $ownerCURP, $ownerColony, $ownerAddress, $folioActa);
 
             // Ejecutar la declaración para generar un word
             if ($stmt->execute()) {

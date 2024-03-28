@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 @import url("animations.css");
+@import url(/css/fonts.css);
 
 .paginacion {
     display: inline-block; /* Evita que los elementos se comporten como bloques */

@@ -20,6 +20,7 @@ if ($conn->query($query) === TRUE) {
     if (file_exists($petPicture)) {
         unlink($petPicture); 
     }
+    
 } else {
     $response = "Error al eliminar el acta: " . $delFolio . " Error: " . $conn->error . "</br> Favor de comunicarse con el departamento de sistemas";
 }

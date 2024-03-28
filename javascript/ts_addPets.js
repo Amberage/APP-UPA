@@ -21,20 +21,30 @@ function validateFormData() {
     var ownerColony = document.getElementById('ownerColony').value;
     var ownerAddress = document.getElementById('ownerAddress').value;
     
+    const namePattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/;
 
     //Errores de la mascota
     if (petName === '') {
         errorMessage.innerHTML = 'Por favor, ingrese el nombre de la mascota';
+        return false;
+    } else if (!namePattern.test(petName)) {
+        errorMessage.innerHTML = 'Por favor, ingrese un nombre válido para la mascota. </br> Solo letras, mínimo 3. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
 
     if (petBreed === '') {
         errorMessage.innerHTML = 'Por favor, ingrese la raza de la mascota';
         return false;
+    } else if (!namePattern.test(petBreed)) {
+        errorMessage.innerHTML = 'Por favor, ingrese una raza válida para la mascota. </br> Solo letras, mínimo 3. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
+        return false;
     }
 
     if (petColor === '') {
         errorMessage.innerHTML = 'Por favor, ingrese el color de la mascota';
+        return false;
+    } else if (!namePattern.test(petColor)) {
+        errorMessage.innerHTML = 'Por favor, ingrese un color válido para la mascota. </br> Solo letras, mínimo 3. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
     
@@ -48,20 +58,22 @@ function validateFormData() {
         return false;
     }
 
-
     //Errores del propietario
     if (ownerName === '') {
         errorMessage.innerHTML = 'Por favor, ingrese el nombre del propietario';
         return false;
+    } else if (!namePattern.test(ownerName)) {
+        errorMessage.innerHTML = 'Por favor, ingrese un nombre válido. </br> Solo letras. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
+        return false;
     }
 
     if (ownerINE.length < 18) {
-        errorMessage.innerHTML = 'El INE debe tener al menos 18 caracteres';
+        errorMessage.innerHTML = 'El INE debe tener 18 caracteres';
         return false;
     }
 
     if (ownerCURP.length < 18) {
-        errorMessage.innerHTML = 'El CURP debe tener al menos 18 caracteres';
+        errorMessage.innerHTML = 'El CURP debe tener 18 caracteres';
         return false;
     }
     

@@ -1,6 +1,18 @@
 <?php
-include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
-validarSesion('gnr_session');
+/* include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+validarSesion('gnr_session'); */
+session_start();
+if (isset($_SESSION["id"]) && isset($_SESSION["nombre"]) && isset($_SESSION["apellido"]) && isset($_SESSION["userType"])) {
+  if($_SESSION["userType"] = 'ts') {
+    header("Location: /views/ts/dashboard.php");
+    exit;
+  } else if ($_SESSION["userType"] = 'adm') {
+    header("Location: /views/admin/dashboard.php");
+    exit;
+  } else {
+    die("Error en el login, tipo de cuenta desconocida, favor de comunicarse con el departamento de sistemas.");
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -1,86 +1,21 @@
 <?php
-require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
-
-if (!isset($_SESSION["id"]) || !isset($_SESSION["nombre"]) || !isset($_SESSION["apellido"]) || !isset($_SESSION["userType"])) {
-  //pass
-} else {
-  header("Location: /index.php");
-}
-
-// Variable de control de mensajes de error
-$errorQuery = '';
-
-// Verificar si se ha enviado el formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Crear conexión
-    $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
-
-    // Verificar la conexión
-    if ($conn->connect_error) {
-        die("Error de conexión en login: " . $conn->connect_error . "\n\n Comunícaselo al departamento de sistemas del municipio, lamentamos las molestias.");
-    }
-
-    // Obtener datos del formulario
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-    if(isset($_POST['sessionTime']) && $_POST['sessionTime'] == 'on') {
-        // El checkbox está marcado
-        $tiempoSesion = 2592000;
-    } else {
-        // El checkbox no está marcado
-        $tiempoSesion = 0;
-    }
-
-    // Consulta SQL para obtener la contraseña hasheada del usuario
-    $sql = "SELECT id, nombre, apellido, password, userType FROM usuarios WHERE username = '$username'";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows == 1) {
-        // Usuario encontrado, verificar la contraseña
-        $row = $result->fetch_assoc();
-        $hashedPassword = $row["password"];
-
-        if (password_verify($password, $hashedPassword)) {
-            // Establecer persistencia de sesión
-            
-            ini_set('session.gc_maxlifetime', $tiempoSesion);
-            session_set_cookie_params($tiempoSesion, '/');
-            session_start();
-
-            // Contraseña correcta, iniciar sesión
-            $_SESSION["id"] = $row["id"];
-            $_SESSION["nombre"] = $row["nombre"];
-            $_SESSION["apellido"] = $row["apellido"];
-            $_SESSION["userType"] = $row["userType"];
-
-            // Redirigir según el tipo de cuenta
-            if ($row["userType"] == "adm") {
-                header("Location: /views/admin/dashboard.php");
-            } elseif ($row["userType"] == "ts") {
-                header("Location: /views/ts/dashboard.php");
-            } else {
-                header("Location: /index.php");
-            }
-        } else {
-            // Contraseña incorrecta
-            $errorQuery = 'Usuario o contraseña incorrectos.';
-        }
-    } else {
-        // Usuario no encontrado
-        $errorQuery = 'Usuario o contraseña incorrectos.';
-    }
-
-    // Cerrar conexión
-    $conn->close();
+session_start();
+if (isset($_SESSION["id"]) && isset($_SESSION["nombre"]) && isset($_SESSION["apellido"]) && isset($_SESSION["userType"])) {
+  if($_SESSION["userType"] = 'ts') {
+    header("Location: /views/ts/dashboard.php");
+    exit;
+  } else if ($_SESSION["userType"] = 'adm') {
+    header("Location: /views/admin/dashboard.php");
+    exit;
+  } else {
+    die("Error en el login, tipo de cuenta desconocida, favor de comunicarse con el departamento de sistemas.");
+  }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+  <script src="/javascript/gnr_session.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
@@ -117,24 +52,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <section class="login">
     <div class="form-box">
       <div class="form-value">
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" autocomplete="off">
+        <form autocomplete="off">
           <h2 class="login">Ingresar</h2>
           <div class="inputbox">
             <ion-icon name="person-circle-outline"></ion-icon>
-            <input name="username" type="text" required>
+            <input id="username" type="text" required>
             <label>Nombre de Usuario</label>
           </div>
           <div class="inputbox">
             <ion-icon name="lock-closed-outline"></ion-icon>
-            <input name="password" type="password" required>
+            <input id="password" type="password" required>
             <label>Contraseña</label>
           </div>
           <div class="forget">
-            <label style="color: #1a5c50;"><input type="checkbox" name="sessionTime"> Mantener sesión iniciada</label>
+            <label style="color: #1a5c50;"><input type="checkbox" id="sessionTime"> Mantener sesión iniciada</label>
           </div>
-          <div class="returnError"><span><?php echo $errorQuery; ?></span></div>
-          <div style="margin-top: 20px;"><button class="login">Ingresar</button></div>
         </form>
+        <div style="margin-top: 20px;"><button class="login" type="button" onClick="login();">Ingresar</button></div>
+        <div class="returnError" style="margin-top:10px;" id="errorMsg"></div>
       </div>
     </div>
   </section>
@@ -200,6 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       Valle de Chalco Solidaridad | Copyright © 2024
     </div>
   </footer>
+  <script src="/javascript/st_login.js"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
   <script src="/javascript/indexAnimations.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

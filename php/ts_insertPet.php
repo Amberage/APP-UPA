@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
 
     //! Consultar y validar el último folio
-    $queryFolio = "SELECT COUNT(*) AS lastFolio FROM backup_mascotaspropietarios;";
+    $queryFolio = "SELECT COUNT(*) AS lastFolio FROM backup_mascotasPropietarios;";
     $lastFolio = $conn->query($queryFolio);
 
     if ($lastFolio) {

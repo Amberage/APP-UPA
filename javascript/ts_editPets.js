@@ -130,8 +130,9 @@ function updatePet() {
         .then((response) => response.json())
         .then((responseData) => {
             errorMessage.innerHTML = responseData.errorMsg;
-            let result = responseData.resultQuery;
-            if(result === 1) {
+            let resultQuery = responseData.resultQuery;
+            let validateQuery = responseData.validateQuery;
+            if(resultQuery === true && validateQuery ===true) {
                 Swal.fire({
                     title: responseData.successfulMssg,
                     text: "¿Desea descargar el acta actualizada?",
@@ -150,7 +151,7 @@ function updatePet() {
             } else {
                 Swal.fire({
                     title: "¡Error al actualizar el acta!",
-                    text: "Favor de informar al departamento de sistemas, lamentamos los inconvenientes. \n(PROBLEMA EN LA BBDD)",
+                    text: `Favor de informar al departamento de sistemas, lamentamos los inconvenientes. \n(Problema en el procesamiento de datos, result: ${resultQuery} validate: ${validateQuery})`,
                     icon: "error"
                   });
             }

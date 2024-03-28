@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Ejecutar la declaración para generar un word
             if ($stmt->execute()) {
                 $responseData['successfulMssg'] = "¡El acta de " . $petName . " ha sido actualizada!";
-                $responseData['resultQuery'] = 1;
+                $responseData['resultQuery'] = true;
             } else {
                 $responseData['errorMsg'] ="Error al insertar registro: " . $conn->error . "</br>Si el error persiste informa al departamento de sistemas, lamentamos las molestias.";
             }
@@ -168,6 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     // Cerrar la conexión a la base de datos
     mysqli_close($conn);
+    $responseData['validateQuery'] = $esValido;
     echo json_encode($responseData, JSON_UNESCAPED_UNICODE);
     }
 ?>

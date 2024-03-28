@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $esValido = false;
         }
     } else {
-        $esValido == false;
+        $esValido = false;
         $responseData['errorMsg'] = 'Error en la recepción de la fotografia, informe al departamento de sistemas';
     }
     
@@ -173,6 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     // Cerrar la conexión a la base de datos
     mysqli_close($conn);
+    $responseData['validateQuery'] = $esValido;
     echo json_encode($responseData, JSON_UNESCAPED_UNICODE);
     }
 ?>

@@ -136,11 +136,14 @@ function createPet() {
             successMessage.innerHTML = responseData.successfulMssg;
             errorMessage.innerHTML = responseData.errorMsg;
             let folio = responseData.folio;
-            if (folio != undefined) {
-                printPet(folio);
-                resetForm();
-            } else {
-                errorMessage.innerHTML = 'Error al generar el acta, consulte con el departamento de sistemas.';
+            let validateQuery = responseData.validateQuery;
+            if(validateQuery === true) {
+                if (folio != undefined) {
+                    printPet(folio);
+                    resetForm();
+                } else {
+                    errorMessage.innerHTML = 'Error al generar el acta, consulte con el departamento de sistemas.';
+                }
             }
         })
         .catch((err) => console.log(err));

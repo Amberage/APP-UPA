@@ -17,3 +17,7 @@ extension=gd
 
 ### Notas para futuros cambios
 * El nombre de las bases de datos y las tablas es sensible a minusculas y mayusculas en un servidor basado en Linux, cuidado al desarrollar.
+
+
+# Pendientes DEVS:
+* Corregir validaciones del sistema en insert y edit para pets

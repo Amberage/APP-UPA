@@ -106,7 +106,9 @@ validarSesion('ts_session');
                                     required title="El CURP se compone de 18 caracteres" onblur="upperCase(this);"/>
                                 <label>CURP</label>
                             </div>
-                            <input type="text" name="idTS" id="idTS" value="<?php echo $idTS?>" style="display: none;"/>
+                            <script src="/javascript/ts_getIdTS.js"></script>
+                            <script>printTS();</script>
+                            <input type="text" name="idTS" id="idTS" style="display: none;"/>
 
                             <div class="selectBox">
                                 <select name="ownerColony" id="ownerColony">

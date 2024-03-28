@@ -81,6 +81,8 @@ function validateFormData() {
 }
 
 function createPet() {
+    // Datos del TS
+    var idTS = document.getElementById('idTS').value;
     // Datos de la mascota
     var petName = document.getElementById('petName').value;
     var petBreed = document.getElementById('petBreed').value;
@@ -98,7 +100,7 @@ function createPet() {
 
     let formData = new FormData();
     // Datos del TS
-    formData.append("idTS", getID());
+    formData.append("idTS", idTS);
     // Datos de la mascota
     formData.append("petName", petName);
     formData.append("petBreed", petBreed);
@@ -151,25 +153,4 @@ function upperCase(e){
 
 function back() {
     window.location.href = '/views/ts/dashboard.php';
-}
-
-function getID() {
-    const loaderURL = "/php/st_getSessionData.php";
-    fetch(loaderURL, {
-        method: "POST"
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error en la solicitud a la sesión');
-        }
-        return response.json();
-    })
-    .then(sessionData => {
-        let tsID;
-        tsID = sessionData.id;
-        return tsID;
-    })
-    .catch(error => {
-        alert('Error al obtener el ID del Trabajador Social, favor de comunicarse con el departamento de sistemas.', error);
-});
 }

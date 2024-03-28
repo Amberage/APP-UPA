@@ -14,3 +14,6 @@ extension=gd
 * Conseguir logotipos oficiales
 * Cambiar el logotipo del header por el oficial de la UPA
 * Averiguar el telefono de la UPA (55 7251 3868 o 55 7251 3862)
+
+### Notas para futuros cambios
+* El nombre de las bases de datos y las tablas es sensible a minusculas y mayusculas en un servidor basado en Linux, cuidado al desarrollar.

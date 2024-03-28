@@ -133,7 +133,7 @@ function createPet() {
     })
         .then((response) => response.json())
         .then((responseData) => {
-            //successMessage.innerHTML = responseData.successfulMssg;
+            successMessage.innerHTML = responseData.successfulMssg;
             errorMessage.innerHTML = responseData.errorMsg;
             let folio = responseData.folio;
             let validateQuery = responseData.validateQuery;
@@ -159,7 +159,7 @@ function createPet() {
                     confirmButtonText: "Descargar Acta"
                   }).then((result) => {
                     if (result.isConfirmed) {
-                        printPet(folioActa);
+                        printPet(folio);
                     }
                   });
             } else {

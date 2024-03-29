@@ -132,7 +132,32 @@ function updatePet() {
             errorMessage.innerHTML = responseData.errorMsg;
             let resultQuery = responseData.resultQuery;
             let validateQuery = responseData.validateQuery;
-            if(resultQuery === true && validateQuery ===true) {
+            let backupState = responseData.backupState;
+            let backupRequired = responseData.backupRequired;
+            let errorState = true;
+            let backupMsg = 'default';
+
+            if(backupState === true && backupRequired === 'no') {
+                backupMsg = 'NO se solicituo un backup pero si se genero uno';
+                errorState = true;
+            }
+
+            if(backupState === true && backupRequired === 'si') {
+                backupMsg = 'SI se solicito un backup y se genero adecuadamente';
+                errorState = false;
+            }
+
+            if(backupState === false && backupRequired === 'si') {
+                backupMsg = 'SI se solicito un backup, pero este no se generó.';
+                errorState = true;
+            }
+
+            if(backupState === false && backupRequired === 'no') {
+                backupMsg = 'No se solicito ningun backup';
+                errorState = false;
+            }
+
+            if(resultQuery === true && validateQuery === true && errorState === false) {
                 Swal.fire({
                     title: responseData.successfulMssg,
                     text: "¿Desea descargar el acta actualizada?",
@@ -149,9 +174,10 @@ function updatePet() {
                     }
                   });
             } else {
+                console.log(backupMsg);
                 Swal.fire({
                     title: "¡Error al actualizar el acta!",
-                    text: `Favor de informar al departamento de sistemas, lamentamos los inconvenientes. \n(Problema en el procesamiento de datos, result: ${resultQuery} validate: ${validateQuery})`,
+                    text: `Favor de informar al departamento de sistemas, lamentamos los inconvenientes. (Problema en el procesamiento de datos, result: ${resultQuery} validate: ${validateQuery} backup:${backupMsg})`,
                     icon: "error"
                   });
             }

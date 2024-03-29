@@ -8,7 +8,25 @@ $responseData['successfulMssg'] = '';
 $responseData['errorMsg'] = '';
 $responseData['resultQuery'] = 0;
 
-$responseData['debug'] = '';
+function modifyBackupPath($folioBP, $pathPictureBP) {
+    require($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
+    $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
+    if ($conn->connect_error) {
+        die("Conexión fallida en modifyBackupPath: " . $conn->connect_error);
+    }
+    // Preparar la declaración SQL y vincular parámetros
+    $updateBackup = $conn->prepare("UPDATE backup_mascotasPropietarios SET petPicture = ? WHERE folio = ?");
+    $updateBackup->bind_param("si", $pathPictureBP, $folioBP);
+
+    // Ejecutar la declaración
+    if ($updateBackup->execute() === TRUE) {
+        $conn->close();
+        return true;
+    } else {
+        $conn->close();
+        return false;
+    } 
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $folioActa = $_POST['folioActa'];
@@ -38,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $savedPath = $path_petPictures . $fileName . ".jpg";
             $savedPathBackup = $path_petPictures . "/backup/" . $fileName . ".jpg";
             $petPicture = str_replace($pathPicturesReplace, $pathChars, $savedPath);
+            $petPictureBackup = str_replace($pathPicturesReplace, $pathChars, $savedPathBackup);
 
             // Obtenemos la información del archivo
             $tempFile = $_FILES["petPicture"]["tmp_name"];
@@ -113,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 imagedestroy($frame);
     
                 $esValido = true;
-                $petPicture = str_replace($pathPicturesReplace, $pathChars, $savedPath);
+                $imagenActualizada = true;
             } else {
                 $responseData['errorMsg'] = "Formato de imagen no válido. Solo se permiten formatos JPEG y PNG.";
                 $esValido = false;
@@ -127,6 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $petPicture = $old_petPicture;
         $esValido = true;
+        $imagenActualizada = false;
     }
 
     // Iniciar la conexión a la BBDD
@@ -156,6 +176,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->execute()) {
                 $responseData['successfulMssg'] = "¡El acta de " . $petName . " ha sido actualizada!";
                 $responseData['resultQuery'] = true;
+                if($imagenActualizada == true) {
+                    $responseData['backupRequired'] = 'si';
+                    $backupAdd = modifyBackupPath($folioActa, $petPictureBackup);
+                    if($backupAdd == true) {
+                        $responseData['backupState'] = true;
+                    } else {
+                        $responseData['backupState'] = false;
+                    }
+                } else {
+                    $responseData['backupRequired'] = 'no';
+                    $responseData['backupState'] = false;
+                }
             } else {
                 $responseData['errorMsg'] ="Error al insertar registro: " . $conn->error . "</br>Si el error persiste informa al departamento de sistemas, lamentamos las molestias.";
             }

@@ -31,7 +31,7 @@ if ($_SESSION["userType"] != "adm") {
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/admin/admin.php">Administración</a></li>
+                <li><a href="/views/admin/dashboard.php">Administración</a></li>
                 <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
             </ul>
         </nav>
@@ -46,7 +46,7 @@ if ($_SESSION["userType"] != "adm") {
             <p class="section__subheader">PANEL DE ADMINISTRACIÓN</p>
         </div>
         <div class="room__grid">
-            <a class="adminSection" href="/views/admin/admin_Register.php">
+            <a class="adminSection" href="/views/admin/addTS.php">
                 <div class="room__card">
                     <div class="room__card__image">
                         <img src="/assets/images/admin_registerUser.png" alt="Registrar Trabajadores Sociales" />

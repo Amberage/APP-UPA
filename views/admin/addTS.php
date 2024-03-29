@@ -1,81 +1,17 @@
 <?php
-// Iniciar sesión si aún no está iniciada
-session_start();
-
-if ($_SESSION["userType"] != "adm") {
-    header("Location: /index.php");
-}
-?>
-
-<?php
-include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
-
-// Variables de control de errores
-$errorQuery = '';
-$successfulQuery = '';
-$esValido = false;
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtener los datos del formulario
-    $nombre = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
-    $userType = 'ts';
-
-    if($password == $confirmPassword) {
-        $esValido = true;
-    } else {
-        $esValido = false;
-        $errorQuery = "Las contraseñas no coinciden";
-    }
-
-    if($esValido == true) {
-        // Iniciar la conexión a la BBDD
-        $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Error de conexión: " . $conn->connect_error . "\n\n Comunícaselo al departamento de sistemas del municipio, lamentamos las molestias.");
-        }
-
-        // Verificar si ya existe un usuario con el mismo username
-        $checkUsernameQuery = "SELECT * FROM usuarios WHERE username = '$username'";
-        $result = mysqli_query($conn, $checkUsernameQuery);
-
-        if (mysqli_num_rows($result) > 0) {
-            $errorQuery = "El nombre de usuario ya está en uso";
-        } else {
-            // Hashear la contraseña antes de almacenarla en la base de datos
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-            // Preparar la consulta SQL para insertar el nuevo usuario
-            $sql = "INSERT INTO usuarios (nombre, apellido, username, password, userType) 
-                    VALUES ('$nombre', '$apellido', '$username', '$hashedPassword', '$userType')";
-
-            // Ejecutar la consulta
-            if (mysqli_query($conn, $sql)) {
-                $successfulQuery = "Usuario registrado correctamente";
-            } else {
-                $errorQuery = "Error al registrar usuario: " . mysqli_error($conn) . "\n Comunícaselo al departamento de sistemas del municipio, lamentamos las molestias.";
-            }
-        }
-        // Cerrar la conexión a la base de datos
-        mysqli_close($conn);
-    }
-}
+include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+validarSesion('adm_session');
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
-    <link rel="stylesheet" href="/css/login.css" />
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/login.css" />
     <title>UPA | Registrar Trabajadores</title>
 </head>
 
@@ -91,7 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/admin/admin.php">Administración</a></li>
+                <li><a href="/views/admin/dashboard.php">Administración</a></li>
+                <li><a href="/views/admin/viewTS.php">Administrar Trabajadores</a></li>
+                <li><a href="/views/admin/viewPets.php">Administrar Actas</a></li>
                 <li><a href="#" id="killSession">Salir</a></li>
             </ul>
         </nav>
@@ -102,40 +40,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
 
     <!-- Ingresar registro aqui abajo -->
-    <section class="login" style="padding-bottom: 150px; padding-top: 100px;">
+    <section class="login" style="padding-bottom: 150px; padding-top: 100px; animation: showSlow 1s forwards;">
     <div class="form-box">
             <div class="form-value">
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" autocomplete="off">
-
+                <form autocomplete="off">
                     <div class="inputbox">
-                        <input type="text" name="nombre" id="nameUser" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}" required title="Solo letras y espacios" maxlength="25"/>
+                        <input type="text" id="tsName" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}" required title="Solo letras y espacios" maxlength="25"/>
                         <label>Nombre</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" name="apellido" id="lastnameUser" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,40}" required title="Solo letras y espacios" maxlength="40"/>
+                        <input type="text" id="tsLastname" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,40}" required title="Solo letras y espacios" maxlength="40"/>
                         <label>Apellido</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" name="username" minlength="4" maxlength="12" pattern="^[a-zA-Z0-9_.-]+$" required title="Minimo 4 caracteres, se permiten letras (sin ñ), números, _ y .">
+                        <input type="text" id="username" pattern="[a-zA-Z0-9_.]{4,12}" required title="Mínimo 4 caracteres, se permiten letras (sin ñ), números, _ y .">
                         <label>Nombre de Usuario</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="password" name="password" minlength="6" required title="Mínimo 6 caracteres">
+                        <input type="password" id="password" minlength="6" pattern=".{6,36}" required title="Mínimo 6 caracteres, maximo 64 caracteres">
                         <label>Contraseña</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="password" name="confirmPassword" minlength="6" required>
+                        <input type="password" id="confirmPassword" minlength="6" pattern=".{6,36}" required>
                         <label>Confirmar Contraseña</label>
                     </div>
-
-                    <div><button class="login">Registrar Usuario</button></div>
-                    <div class="returnError"><span><?php echo $errorQuery; ?></span></div>
-                    <div class="returnSuccesful"><span><?php echo $successfulQuery; ?></span></div>
                 </form>
+                <div class="options">
+                    <div><button class="login" style="width: 240px;" type="button" onClick="sendTS()">Registrar Usuario</button></div>
+                    <div><button class="cancel" style="width: 240px; margin-top: 10px;" onClick="back();">Volver</button></div>
+                </div>
+                <div class="returnSuccesful" id="successMsg"></div>
+                <div class="returnError" style="margin-top: 0px;" id="errorMsg"></div>
             </div>
         </div>
     </section>
@@ -190,26 +129,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Valle de Chalco Solidaridad | Copyright © 2024
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/javascript/adm_addTS.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
-    <script src="/javascript/sessionTools.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script>
-        document.getElementById('nameUser').addEventListener('keypress', function(event) {
-            var char = event.which || event.keyCode;
-            if (char >= 48 && char <= 57) {
-                event.preventDefault();
-            }
-        });
-
-        document.getElementById('lastnameUser').addEventListener('keypress', function(event) {
-            var char = event.which || event.keyCode;
-            if (char >= 48 && char <= 57) {
-                event.preventDefault();
-            }
-        });
-    </script>
 </body>
 
 </html>

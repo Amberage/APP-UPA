@@ -14,7 +14,7 @@ function getData(pagina) {
   let numRegisters = document.getElementById("numRegisters").value;
 
   let contentTable = document.getElementById("contentTable");
-  let loaderURL = "/php//adm_viewPet.php";
+  let loaderURL = "/php/adm_viewPet.php";
 
   //Datos que se van a enviar
   let formData = new FormData();
@@ -32,7 +32,6 @@ function getData(pagina) {
       contentTable.innerHTML = data.table;
       document.getElementById("lbl-total").innerHTML = data.totalFiltro + ' actas encontradas';
       document.getElementById("nav-paginacion").innerHTML = data.paginacion;
-      console.log(data.debug);
     })
     .catch((err) => console.log(err));
 }

@@ -7,9 +7,9 @@
 require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
 $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
 // Datos de la tabla
-$primaryKey = 'folio';
-$table = 'adminPets';
-$columns = ['folio', 'petName', 'ownerName', 'tsName', 'registerDate', 'petPicture'];
+$primaryKey = 'id';
+$table = 'usuarios';
+$columns = ['nombre', 'apellido', 'username', 'id'];
 
 // Filtro
 $searchData = isset($_POST['searchData']) ? $conn -> real_escape_string($_POST['searchData']) : null;
@@ -18,7 +18,7 @@ if ($searchData != null) {
     $statementAND = 'AND (';
 
     $cont = count($columns);
-    for ($i = 0; $i < $cont - 1; $i++) { // - 1 para quitar del filtro el petPicture
+    for ($i = 0; $i < $cont - 1; $i++) { //-1 Para omitir el filtro por id
         $statementAND .= $columns[$i] . " LIKE '%" . $searchData . "%' OR ";
     }
     $statementAND = substr_replace($statementAND, "", -3);
@@ -39,7 +39,7 @@ $stamentLIMIT = "LIMIT $inicio, $limit";
 //Query General
 $sql = "SELECT SQL_CALC_FOUND_ROWS " . implode(", ", $columns) . "
 FROM $table
-WHERE tsID != 0 $statementAND $stamentLIMIT";
+WHERE userType = 'ts' $statementAND $stamentLIMIT";
 $result = $conn -> query($sql);
 $num_rows = $result -> num_rows;
 
@@ -68,16 +68,12 @@ if ($num_rows > 0) {
     $data['table'] = '';
     while ($row = $result -> fetch_assoc()) {       
         $data['table'] .= '<tr>';
-        $data['table'] .= '<td><label class="lbl-info">No. Acta: </label>' . $row['folio'] . '</td>';
-        $data['table'] .= '<td><label class="lbl-info">Nombre: </label>' . $row['petName'] . '</td>';
-        $data['table'] .= "<td><img style='text-align: center;' src='" . $row['petPicture'] . "' class='actasImg'></img></td>";
-        $data['table'] .= '<td><label class="lbl-info">Propietario: </label>' . $row['ownerName'] . '</td>';
-        $data['table'] .= '<td><label class="lbl-info">Trabajador Social: </label>' . $row['tsName'] . '</td>';
-        $data['table'] .= '<td><label class="lbl-info">Registrado el </label>' . $row['registerDate'] . '</td>';
+        $data['table'] .= '<td><label class="lbl-info">Nombre: </label><span id="name' . $row['id'] . '">' . $row['nombre'] . '</span></td>';
+        $data['table'] .= '<td><label class="lbl-info">Apellido: </label>' . $row['apellido'] . '</td>';
+        $data['table'] .= '<td><label class="lbl-info">Propietario: </label>' . $row['username'] . '</td>';
         $data['table'] .= '<td>' .
-                        "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/descargarActa.png\");' onClick=\"printPetBackup(" . $row['folio'] . ")\";></button>" .
-                        "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/editarActa.png\");' onClick=editPet(". $row['folio'] .");></button>" .
-                        "<button class='btnAction' style='background-image: url(\"/assets/images/eliminarActa.png\");' onClick=deletePet(". $row['folio'] .");></button>" .
+                        "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/editarActa.png\");' onClick=editTS(" . $row['id'] . ");></button>" .
+                        "<button class='btnAction' style='background-image: url(\"/assets/images/eliminarActa.png\");' onClick=deleteTS(" . $row['id'] . ");></button>" .
                  '</td>';
         $data['table'] .= '</tr>';
     }

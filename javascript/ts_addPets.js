@@ -94,19 +94,19 @@ function validateFormData() {
 
 function createPet() {
     // Datos del TS
-    var idTS = document.getElementById('idTS').value;
+    var idTS = document.getElementById('idTS').value.trim();
     // Datos de la mascota
-    var petName = document.getElementById('petName').value;
-    var petBreed = document.getElementById('petBreed').value;
-    var petColor = document.getElementById('petColor').value;
+    var petName = document.getElementById('petName').value.trim();
+    var petBreed = document.getElementById('petBreed').value.trim();
+    var petColor = document.getElementById('petColor').value.trim();
     var petSex = document.getElementById('petSex').value;
     var petPicture = document.getElementById('petPicture').files[0];
     // Datos del dueño
-    var ownerName = document.getElementById('ownerName').value;
-    var ownerINE = document.getElementById('ownerINE').value;
-    var ownerCURP = document.getElementById('ownerCURP').value;
+    var ownerName = document.getElementById('ownerName').value.trim();
+    var ownerINE = document.getElementById('ownerINE').value.trim();
+    var ownerCURP = document.getElementById('ownerCURP').value.trim();
     var ownerColony = document.getElementById('ownerColony').value;
-    var ownerAddress = document.getElementById('ownerAddress').value;
+    var ownerAddress = document.getElementById('ownerAddress').value.trim();
 
     const loaderURL = "/php/ts_insertPet.php";
 

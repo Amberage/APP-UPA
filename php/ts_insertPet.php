@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         $esValido = false;
-        $responseData['errorMsg'] = 'Error en la recepción de la fotografia, informe al departamento de sistemas';
+        $responseData['errorMsg'] = 'Error en la recepción de la fotografía, informe al departamento de sistemas';
     }
     
 

@@ -89,20 +89,20 @@ function validateFormData() {
 
 function updatePet() {
     // Datos de la mascota
-    var petName = document.getElementById('petName').value;
-    var petBreed = document.getElementById('petBreed').value;
-    var petColor = document.getElementById('petColor').value;
-    var petSex = document.getElementById('petSex').value;
+    var petName = document.getElementById('petName').value.trim();
+    var petBreed = document.getElementById('petBreed').value.trim();
+    var petColor = document.getElementById('petColor').value.trim();
+    var petSex = document.getElementById('petSex').value
     var petPicture = document.getElementById('petPicture').files[0];
     // Datos del dueño
-    var ownerName = document.getElementById('ownerName').value;
-    var ownerINE = document.getElementById('ownerINE').value;
-    var ownerCURP = document.getElementById('ownerCURP').value;
+    var ownerName = document.getElementById('ownerName').value.trim();
+    var ownerINE = document.getElementById('ownerINE').value.trim();
+    var ownerCURP = document.getElementById('ownerCURP').value.trim();
     var ownerColony = document.getElementById('ownerColony').value;
-    var ownerAddress = document.getElementById('ownerAddress').value;
+    var ownerAddress = document.getElementById('ownerAddress').value.trim();
     // Datos antiguos
-    var folioActa = document.getElementById('folioActa').value;
-    var old_petPicture = document.getElementById('old_petPicture').value;
+    var folioActa = document.getElementById('folioActa').value.trim();
+    var old_petPicture = document.getElementById('old_petPicture').value.trim();
 
     const loaderURL = "/php/ts_updatePet.php";
     let formData = new FormData();

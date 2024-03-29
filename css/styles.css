@@ -53,6 +53,11 @@ Gris: #666c6c
   animation: scale 1s;
 }
 
+.swalInput {
+  font-family: 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+}
+
 
 .section__container {
   max-width: var(--max-width);

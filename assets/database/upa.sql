@@ -90,7 +90,6 @@ BEGIN
     petBreed = NEW.petBreed,
     petColor = NEW.petColor,
     petSex = NEW.petSex,
-    petPicture = NEW.petPicture,
     ownerName = NEW.ownerName,
     ownerINE = NEW.ownerINE,
     ownerCURP = NEW.ownerCURP,

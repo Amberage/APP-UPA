@@ -89,6 +89,7 @@ input:valid ~ label {
 .forget label a:hover {
   text-decoration: underline;
 }
+
 button.login {
   width: 100%;
   height: 40px;
@@ -100,6 +101,9 @@ button.login {
   cursor: pointer;
   font-size: 1em;
   font-weight: 600;
+  cursor: pointer; /* Restaura el cursor a su valor predeterminado */
+  pointer-events: auto; /* Restaura la capacidad de recibir eventos de puntero */
+  opacity: 100%;
 }
 
 button.login:hover {
@@ -156,4 +160,33 @@ button.cancel:hover {
 .options {
   text-align: center;
   margin-top: 50px;
+}
+
+.pwdEdit label input {
+  margin-right: 3px;
+  color: #9d2348;
+}
+.pwdEdit label a {
+  color: #9d2348;
+  text-decoration: none;
+}
+.pwdEdit label a:hover {
+  text-decoration: underline;
+  color: #9d2348;
+}
+
+button.loginDisabled {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: #2a8c77;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  opacity: 35%;
+  cursor: default;
+  pointer-events: none;
 }

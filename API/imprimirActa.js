@@ -174,29 +174,81 @@ function printPet(folio) {
           });
         return;
     } else {
-        var xhr = new XMLHttpRequest();
-        // Configurar una solicitud POST al archivo PHP
-        xhr.open("POST", "/php/getPrintPetData.php", true);
-    
-        // Establecer una función que se ejecutará cuando la solicitud se complete
-        xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            //Recibir JSON
-            var petData = JSON.parse(xhr.responseText);
-            //Generar PDF
-            createPDF(petData[0].folio, petData[0].petName, petData[0].petSex, petData[0].petBreed, petData[0].petColor, petData[0].petPicture, petData[0].ownerName, petData[0].ownerCURP, petData[0].ownerINE, petData[0].ownerColony, petData[0].ownerAddress, petData[0].nombreTS, petData[0].dia, petData[0].mes, petData[0].anio);
-        }
-        }
+        const loaderURL = "/php/getPrintPetData.php";
+        let formData = new FormData();
+        formData.append("folio", folio);
+        //Enviarlos via POST
+        fetch(loaderURL, {
+        method: "POST",
+        body: formData,
+    })
+        .then((response) => response.json())
+        .then((responseData) => {
+            let successMsg  = responseData.successMsg;
+            let errorMsg  = responseData.errorMsg;
+            let resultQuery = responseData.resultQuery;
 
-        // Establecer el encabezado de la solicitud para enviar datos como un formulario
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        // Enviar la variable al servidor
-        xhr.send("folio=" + folio);
-        Swal.fire({
-            title: "¡El acta ha sido generada!",
-            text: "Revisa tus descargas, este proceso puede demorar por tu velocidad de internet o dispositivo.",
-            icon: "success"
-          });
+            if(resultQuery === false) {
+                Swal.fire({
+                    title: "¡Error!",
+                    text: errorMsg,
+                    icon: "error"
+                  });
+            }
+
+            if(resultQuery === true) {
+                Swal.fire({
+                    title: successMsg,
+                    html: '<b>Este proceso puede demorar debido a la velocidad de internet o tu dispositivo, no olvides revisar tus descargas.</b><br><br><p style="font-size: 0.75em; color: #9d2348; font-style: italic;">Si el acta no se genera después de un minuto ponte en contacto con el departamento de sistemas.</p>',
+                    icon: "success"
+                  });
+                createPDF(responseData[0].folio, responseData[0].petName, responseData[0].petSex, responseData[0].petBreed, responseData[0].petColor, responseData[0].petPicture, responseData[0].ownerName, responseData[0].ownerCURP, responseData[0].ownerINE, responseData[0].ownerColony, responseData[0].ownerAddress, responseData[0].nombreTS, responseData[0].dia, responseData[0].mes, responseData[0].anio);
+            }
+        })
+        .catch((err) => console.log(err));
     }
+}
 
-  }
+function printPetBackup(folio) {
+    if (isNaN(folio)) {
+        Swal.fire({
+            title: "¡ERROR!",
+            text: "Ocurrió un error al generar el acta, favor de contactar al departamento de sistemas. El error esta en el folio: " + folio,
+            icon: "error"
+          });
+        return;
+    } else {
+        const loaderURL = "/php/getPrintPetDataBackup.php";
+        let formData = new FormData();
+        formData.append("folio", folio);
+        //Enviarlos via POST
+        fetch(loaderURL, {
+        method: "POST",
+        body: formData,
+    })
+        .then((response) => response.json())
+        .then((responseData) => {
+            let successMsg  = responseData.successMsg;
+            let errorMsg  = responseData.errorMsg;
+            let resultQuery = responseData.resultQuery;
+
+            if(resultQuery === false) {
+                Swal.fire({
+                    title: "¡Error!",
+                    text: errorMsg,
+                    icon: "error"
+                  });
+            }
+
+            if(resultQuery === true) {
+                Swal.fire({
+                    title: successMsg,
+                    html: '<b>Este proceso puede demorar debido a la velocidad de internet o tu dispositivo, no olvides revisar tus descargas.</b><br><br><p style="font-size: 0.75em; color: #9d2348; font-style: italic;">Si el acta no se genera después de un minuto ponte en contacto con el departamento de sistemas.</p>',
+                    icon: "success"
+                  });
+                createPDF(responseData[0].folio, responseData[0].petName, responseData[0].petSex, responseData[0].petBreed, responseData[0].petColor, responseData[0].petPicture, responseData[0].ownerName, responseData[0].ownerCURP, responseData[0].ownerINE, responseData[0].ownerColony, responseData[0].ownerAddress, responseData[0].nombreTS, responseData[0].dia, responseData[0].mes, responseData[0].anio);
+            }
+        })
+        .catch((err) => console.log(err));
+    }
+}

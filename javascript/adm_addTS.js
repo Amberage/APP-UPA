@@ -35,10 +35,10 @@ function validateFormData() {
     }
 
     if (username === '') {
-        errorMessage.innerHTML = 'Por favor, ingrese un username.';
+        errorMessage.innerHTML = 'Por favor, ingrese un nombre de usuario.';
         return false;
     } else if (!usernamePattern.test(username)) {
-        errorMessage.innerHTML = 'Por favor, ingrese un username válido </br> Mínimo 4 caracteres. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Sin espacios, acentos o caracteres especiales)</p>';
+        errorMessage.innerHTML = 'Por favor, ingrese un nombre de usuario válido </br> Mínimo 4 caracteres. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Sin espacios, acentos o caracteres especiales)</p>';
         return false;
     } else if (username.length < 4 || username.length > 12) {
         errorMessage.innerHTML = 'El nombre de usuario no es valido <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Mínimo 4 caracteres, máximo 12 caracteres.)</p>';
@@ -69,10 +69,10 @@ function validateFormData() {
 }
 
 function createTS() {
-    // Datos de la mascota
-    var tsName = document.getElementById('tsName').value;
-    var tsLastname = document.getElementById('tsLastname').value;
-    var username = document.getElementById('username').value;
+    // Datos del trabajador
+    var tsName = document.getElementById('tsName').value.trim();
+    var tsLastname = document.getElementById('tsLastname').value.trim();
+    var username = document.getElementById('username').value.trim();
     var password = document.getElementById('password').value;
     var confirmPassword = document.getElementById('confirmPassword').value;
     const loaderURL = "/php/adm_insertTS.php";

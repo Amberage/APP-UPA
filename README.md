@@ -9,6 +9,8 @@ extension=mbstring
 extension=exif
 extension=mysqli
 extension=gd
+post_max_size = 20M
+upload_max_filesize = 20M
 
 ## Lista de Pendientes:
 * Conseguir logotipos oficiales
@@ -20,4 +22,5 @@ extension=gd
 
 
 # Pendientes DEVS:
-* Replicar la funcion del petPicture en updatePets
+* adm_deleteTS, modificar para apuntar a donde deberia.
+* Arreglar el problema de la modificacion de usuarios

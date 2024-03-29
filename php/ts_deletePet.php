@@ -15,8 +15,6 @@ $query = "DELETE FROM mascotasPropietarios WHERE folio = '$delFolio'";
 // Ejecutar la consulta
 if ($conn->query($query) === TRUE) {
     $response = "El acta " . $delFolio . " ha sido eliminada!";
-    unlink($petPicture); 
-
     if (file_exists($petPicture)) {
         unlink($petPicture); 
     }

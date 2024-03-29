@@ -60,7 +60,7 @@ if ($_SESSION["userType"] != "adm") {
                 </div>
             </a>
             
-            <a class="adminSection" href="">
+            <a class="adminSection" href="/views/admin/viewTS.php">
                 <div class="room__card">
                     <div class="room__card__image">
                         <img src="/assets/images/admin_adminUser.png" alt="Esteriliza a tu mascota" />

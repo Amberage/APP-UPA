@@ -75,27 +75,31 @@ WHERE users.userType = 'ts' || users.userType = 'adm';
 CREATE TRIGGER insertBackup AFTER INSERT ON mascotasPropietarios
 FOR EACH ROW
 BEGIN
-    INSERT INTO backup_mascotasPropietarios 
-    (folio, petName, petBreed, petColor, petSex, petPicture, ownerName, ownerINE, ownerCURP, ownerColony, ownerAddress, idTS, fechaRegistro) 
-    VALUES 
-    (NEW.folio, NEW.petName, NEW.petBreed, NEW.petColor, NEW.petSex, NEW.petPicture, NEW.ownerName, NEW.ownerINE, NEW.ownerCURP, NEW.ownerColony, NEW.ownerAddress, NEW.idTS, NEW.fechaRegistro);
+    IF @recoveryBackup IS NULL THEN
+        INSERT INTO backup_mascotasPropietarios 
+        (folio, petName, petBreed, petColor, petSex, petPicture, ownerName, ownerINE, ownerCURP, ownerColony, ownerAddress, idTS, fechaRegistro) 
+        VALUES 
+        (NEW.folio, NEW.petName, NEW.petBreed, NEW.petColor, NEW.petSex, NEW.petPicture, NEW.ownerName, NEW.ownerINE, NEW.ownerCURP, NEW.ownerColony, NEW.ownerAddress, NEW.idTS, NEW.fechaRegistro);
+    END IF;
 END;
 
 CREATE TRIGGER updateBackup AFTER UPDATE ON mascotasPropietarios
 FOR EACH ROW
 BEGIN
-    UPDATE backup_mascotasPropietarios 
-    SET 
-    petName = NEW.petName,
-    petBreed = NEW.petBreed,
-    petColor = NEW.petColor,
-    petSex = NEW.petSex,
-    ownerName = NEW.ownerName,
-    ownerINE = NEW.ownerINE,
-    ownerCURP = NEW.ownerCURP,
-    ownerColony = NEW.ownerColony,
-    ownerAddress = NEW.ownerAddress,
-    idTS = NEW.idTS,
-    fechaRegistro = NEW.fechaRegistro
-    WHERE folio = NEW.folio;
+    IF @recoveryBackup IS NULL THEN
+        UPDATE backup_mascotasPropietarios 
+        SET 
+        petName = NEW.petName,
+        petBreed = NEW.petBreed,
+        petColor = NEW.petColor,
+        petSex = NEW.petSex,
+        ownerName = NEW.ownerName,
+        ownerINE = NEW.ownerINE,
+        ownerCURP = NEW.ownerCURP,
+        ownerColony = NEW.ownerColony,
+        ownerAddress = NEW.ownerAddress,
+        idTS = NEW.idTS,
+        fechaRegistro = NEW.fechaRegistro
+        WHERE folio = NEW.folio;
+    END IF;
 END;

@@ -30,7 +30,7 @@ validarSesion('adm_session');
                 <li><a href="/views/admin/dashboard.php">Administración</a></li>
                 <li><a href="/views/admin/viewTS.php">Administrar Trabajadores</a></li>
                 <li><a href="/views/admin/viewPets.php">Administrar Actas</a></li>
-                <li><a href="#" id="killSession">Salir</a></li>
+                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">

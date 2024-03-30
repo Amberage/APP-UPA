@@ -2,7 +2,7 @@
 require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $idUPA = 1001; // TODO: Modificar para apuntar al ID de la cuenta admin de la UPA
+    $idUPA = 3;
     $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
 
     // Verificar conexión
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($stmt->affected_rows > 0) {
                 $queryResult = true;
-                $response = "El usuario ha sido eliminado, las " . count($folios) . " actas que tenía registradas ahora son propiedad de UPA Valle de Chalco Solidaridad";
+                $response = "El usuario ha sido eliminado, " . count($folios) . " actas que tenía registradas ahora son propiedad de UPA Valle de Chalco Solidaridad";
             } else {
                 $queryResult = false;
                 $response = "Error al eliminar el usuario con el idTS: " . $idTS . ". No se encontraron actas asociadas al usuario.";
@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->affected_rows > 0) {
             $queryResult = true;
-            $response = "El usuario ha sido eliminado, ya que no tenía actas registradas. Estas no se han visto modificadas.";
+            $response = "El usuario no tenia actas registradas, por lo tanto las actas no se han visto modificadas.";
         } else {
             $queryResult = false;
             $response = "Error al eliminar el usuario con el idTS: " . $idTS . ". El usuario no tenía actas registradas.";

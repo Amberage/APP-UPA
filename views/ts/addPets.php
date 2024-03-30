@@ -40,7 +40,7 @@ validarSesion('ts_session');
     </header>
 
     <!-- Ingresar registro aqui abajo -->
-    <section class="login" style="padding-bottom: 150px; padding-top: 100px; animation: showSlow 1s forwards;">
+    <section class="login" style="padding-bottom: 150px; padding-top: 150px; animation: showSlow 1s forwards;">
         <div class="form-box">
             <div class="form-value">
             <form autocomplete="off" id="petDataForm">
@@ -96,13 +96,13 @@ validarSesion('ts_session');
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerINE" id="ownerINE" required maxlength="18"
+                                <input type="text" name="ownerINE" id="ownerINE" required maxlength="18" onkeydown="return killSpace(event);" onpaste="return false"
                                     required title="La clave de elector se compone de 18 caracteres" onblur="upperCase(this);"/>
                                 <label>INE</label>
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerCURP" id="ownerCURP" required maxlength="18"
+                                <input type="text" name="ownerCURP" id="ownerCURP" required maxlength="18" onkeydown="return killSpace(event);" onpaste="return false"
                                     required title="El CURP se compone de 18 caracteres" onblur="upperCase(this);"/>
                                 <label>CURP</label>
                             </div>

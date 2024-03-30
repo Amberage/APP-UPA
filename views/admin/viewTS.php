@@ -12,7 +12,7 @@ validarSesion('adm_session');
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/petView.css" />
-    <title>UPA | Editar Trabajadores</title>
+    <title>UPA | Administrar Trabajadores</title>
 </head>
 
 <body>
@@ -30,7 +30,7 @@ validarSesion('adm_session');
                 <li><a href="/views/admin/dashboard.php">Administración</a></li>
                 <li><a href="/views/admin/addTS.php">Registrar Trabajador</a></li>
                 <li><a href="/views/admin/viewPets.php">Administrar Actas</a></li>
-                <li><a href="#" id="killSession">Salir</a></li>
+                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">

@@ -1,6 +1,6 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
-#validarSesion('ts_session');
+validarSesion('adm_session');
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/petView.css" />
-    <title>UPA | Consultar Actas</title>
+    <title>UPA | Gestión de Actas</title>
 </head>
 
 <body>
@@ -27,8 +27,9 @@ include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/ts/dashboard.php">Inicio</a></li>
-                <li><a href="/views/ts/addPets.php">Crear Acta</a></li>
+                <li><a href="/views/admin/dashboard.php">Administración</a></li>
+                <li><a href="/views/admin/addTS.php">Registrar Trabajador</a></li>
+                <li><a href="/views/admin/viewTS.php">Administrar Trabajadores</a></li>
                 <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
             </ul>
         </nav>
@@ -148,7 +149,7 @@ include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
                 </div>
             </div>
         </div>
-        <div class="footer__bar">
+        <div class="footer__bar" onclick="buttonVisibilty();">
             Valle de Chalco Solidaridad | Copyright © 2024
         </div>
     </footer>
@@ -160,5 +161,4 @@ include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
     <script src="/javascript/adm_viewPets.js"></script>
     <script src="/API/imprimirActa.js"></script>
 </body>
-
 </html>

@@ -22,5 +22,5 @@ upload_max_filesize = 20M
 
 
 # Pendientes DEVS:
-* adm_deleteTS, modificar para apuntar a donde deberia.
-* Arreglar el problema de la modificacion de usuarios
+* Validaciones editPets en el form del TS
+* Validaciones addPets en el form del TS

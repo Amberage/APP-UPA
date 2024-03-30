@@ -5,6 +5,27 @@
 * Limit(00:00) y Paginación(10:28): https://www.youtube.com/watch?v=NHF7RH3ALPM&t
 */
 require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
+
+function getFolios($servername, $mysql_username, $mysql_password, $dbname) {
+    $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $sql = "SELECT folio FROM mascotaspropietarios";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $folios = array();
+        while ($row = $result->fetch_assoc()) {
+            $folios[] = $row["folio"];
+        }
+        $conn->close();
+        return $folios;
+    } else {
+        $conn->close();
+        return array();
+    }
+}
+
 $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
 // Datos de la tabla
 $primaryKey = 'folio';
@@ -65,20 +86,29 @@ $data['paginacion'] = '';
 
 // Mandar al HTML
 if ($num_rows > 0) {
+    $tsFolios = getFolios($servername, $mysql_username, $mysql_password, $dbname);
     $data['table'] = '';
-    while ($row = $result -> fetch_assoc()) {       
-        $data['table'] .= '<tr>';
+    while ($row = $result -> fetch_assoc()) {  
+        if (in_array($row['folio'], $tsFolios)) {
+            $classTR = 'enabled';
+            $buttons = '<td>' .
+            "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/descargarActa.png\")' onClick=\"printPetBackup(" . $row['folio'] . ")\";></button>" .
+            "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/editarActa.png\")' onClick=editPet(". $row['folio'] .");></button>" .
+            '</td>';
+        } else {
+            $classTR = 'disabled';
+            $buttons = '<td>' .
+            "<button class='btnAction' style='background-image: url(\"/assets/images/restaurarActa.png\")' onClick=restorePet(". $row['folio'] .");></button>" .
+            '</td>';
+        }
+        $data['table'] .= '<tr class="'.$classTR.'">';
         $data['table'] .= '<td><label class="lbl-info">No. Acta: </label>' . $row['folio'] . '</td>';
         $data['table'] .= '<td><label class="lbl-info">Nombre: </label>' . $row['petName'] . '</td>';
         $data['table'] .= "<td><img style='text-align: center;' src='" . $row['petPicture'] . "' class='actasImg'></img></td>";
         $data['table'] .= '<td><label class="lbl-info">Propietario: </label>' . $row['ownerName'] . '</td>';
         $data['table'] .= '<td><label class="lbl-info">Trabajador Social: </label>' . $row['tsName'] . '</td>';
         $data['table'] .= '<td><label class="lbl-info">Registrado el </label>' . $row['registerDate'] . '</td>';
-        $data['table'] .= '<td>' .
-                        "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/descargarActa.png\");' onClick=\"printPetBackup(" . $row['folio'] . ")\";></button>" .
-                        "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/editarActa.png\");' onClick=editPet(". $row['folio'] .");></button>" .
-                        "<button class='btnAction' style='background-image: url(\"/assets/images/eliminarActa.png\");' onClick=deletePet(". $row['folio'] .");></button>" .
-                 '</td>';
+        $data['table'] .=  $buttons;
         $data['table'] .= '</tr>';
     }
 } else {

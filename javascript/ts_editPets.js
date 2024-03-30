@@ -27,7 +27,7 @@ function validateFormData() {
     if (petName === '') {
         errorMessage.innerHTML = 'Por favor, ingrese el nombre de la mascota';
         return false;
-    } else if (!namePattern.test(petName)) {
+    } else if (!namePattern.test(petName) || petName.length < 3) {
         errorMessage.innerHTML = 'Por favor, ingrese un nombre válido para la mascota. </br> Solo letras, mínimo 3. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
@@ -35,7 +35,7 @@ function validateFormData() {
     if (petBreed === '') {
         errorMessage.innerHTML = 'Por favor, ingrese la raza de la mascota';
         return false;
-    } else if (!namePattern.test(petBreed)) {
+    } else if (!namePattern.test(petBreed)|| petBreed.length < 3) {
         errorMessage.innerHTML = 'Por favor, ingrese una raza válida para la mascota. </br> Solo letras, mínimo 3. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
@@ -43,7 +43,7 @@ function validateFormData() {
     if (petColor === '') {
         errorMessage.innerHTML = 'Por favor, ingrese el color de la mascota';
         return false;
-    } else if (!namePattern.test(petColor)) {
+    } else if (!namePattern.test(petColor) || petColor.length < 3) {
         errorMessage.innerHTML = 'Por favor, ingrese un color válido para la mascota. </br> Solo letras, mínimo 3. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
@@ -57,8 +57,8 @@ function validateFormData() {
     if (ownerName === '') {
         errorMessage.innerHTML = 'Por favor, ingrese el nombre del propietario';
         return false;
-    } else if (!namePattern.test(ownerName)) {
-        errorMessage.innerHTML = 'Por favor, ingrese un nombre válido para el propietario. </br> Solo letras. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
+    } else if (!namePattern.test(ownerName) || ownerName.length < 4) {
+        errorMessage.innerHTML = 'Por favor, ingrese un nombre válido para el propietario. </br> Solo letras, mínimo 4. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
 
@@ -77,8 +77,8 @@ function validateFormData() {
         return false;
     }
 
-    if (ownerAddress === '') {
-        errorMessage.innerHTML = 'Por favor, ingrese una dirección';
+    if (ownerAddress === '' || ownerAddress.length < 5) {
+        errorMessage.innerHTML = 'Por favor, ingrese una dirección válida</br> Mínimo 5 caracteres.';
         return false;
     }
 
@@ -186,10 +186,20 @@ function updatePet() {
         .catch((err) => console.log(err));
 }
 
+function cancelPet() {
+    window.location.href = '/views/ts/viewPets.php';
+}
+
+
 function upperCase(e){
     e.value = e.value.toUpperCase();
 }
 
-function cancelPet() {
-    window.location.href = '/views/ts/viewPets.php';
+function killSpace(event) {
+    var codigoTecla = event.keyCode || event.which;
+    // Verificar si la tecla presionada es un espacio o si se está intentando pegar
+    if (codigoTecla === 32 || (event.ctrlKey && (codigoTecla === 86 || codigoTecla === 118))) {
+        event.preventDefault();
+        return false;
+    }
 }

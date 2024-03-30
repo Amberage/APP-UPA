@@ -49,7 +49,7 @@ if (isset($_GET['idTS'])) {
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/login.css" />
-    <title>UPA | Modificar Trabajador</title>
+    <title>UPA | Editar Trabajador</title>
 </head>
 
 <body>
@@ -67,12 +67,12 @@ if (isset($_GET['idTS'])) {
                 <li><a href="/views/admin/dashboard.php">Administración</a></li>
                 <li><a href="/views/admin/viewTS.php">Administrar Trabajadores</a></li>
                 <li><a href="/views/admin/viewPets.php">Administrar Actas</a></li>
-                <li><a href="#" id="killSession">Salir</a></li>
+                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">
             <p style="color: black;">UPA Valle de Chalco Solidaridad</p>
-            <h1><span>Modificar Usuario</span></h1>
+            <h1><span>Editar Usuarios</span></h1>
         </div>
     </header>
 
@@ -83,17 +83,17 @@ if (isset($_GET['idTS'])) {
                 <form autocomplete="off">
                 <input type="text" name="idTS" id="idTS" value=<?php echo $idTS?> style="display: none;"/>
                     <div class="inputbox">
-                        <input type="text" id="tsName" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}" value=<?php echo $bd_nombre?> required title="Solo letras y espacios" maxlength="25"/>
+                        <input type="text" id="tsName" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}" value="<?php echo isset($bd_nombre) ? $bd_nombre : ''; ?>" required title="Solo letras y espacios" maxlength="25"/>
                         <label>Nombre</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" id="tsLastname" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,40}" value=<?php echo $bd_apellido?> required title="Solo letras y espacios" maxlength="40"/>
+                        <input type="text" id="tsLastname" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,40}" value="<?php echo isset($bd_apellido) ? $bd_apellido : ''; ?>" required title="Solo letras y espacios" maxlength="40"/>
                         <label>Apellido</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" id="username" pattern="[a-zA-Z0-9_.]{4,12}" value=<?php echo $bd_username?> required title="Mínimo 4 caracteres, se permiten letras (sin ñ), números, _ y .">
+                        <input type="text" id="username" pattern="[a-zA-Z0-9_.]{4,12}" value="<?php echo isset($bd_username) ? $bd_username : ''; ?>" required title="Mínimo 4 caracteres, se permiten letras (sin ñ), números, _ y .">
                         <label>Nombre de Usuario</label>
                     </div>
 

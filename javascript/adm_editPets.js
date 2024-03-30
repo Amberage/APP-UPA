@@ -1,10 +1,11 @@
 var errorMessage = document.getElementById('errorMsg');
 var successMessage = document.getElementById('successMsg');
-const idTS = document.getElementById('idTS').value;
+const folioActa = document.getElementById('folioActa').value;
+const old_petPicture = document.getElementById('old_petPicture').value;
 
-function sendPet() {
+function editPet() {
     if (validateFormData() === true) {
-        createPet();
+        updatePet();
     }
 }
 
@@ -13,21 +14,20 @@ function validateFormData() {
     var petBreed = document.getElementById('petBreed').value;
     var petColor = document.getElementById('petColor').value;
     var petSex = document.getElementById('petSex').value;
-    var petPicture = document.getElementById('petPicture').value;
 
     var ownerName = document.getElementById('ownerName').value;
     var ownerINE = document.getElementById('ownerINE').value;
     var ownerCURP = document.getElementById('ownerCURP').value;
     var ownerColony = document.getElementById('ownerColony').value;
     var ownerAddress = document.getElementById('ownerAddress').value;
-    
+
     const namePattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/;
 
     //Errores de la mascota
     if (petName === '') {
         errorMessage.innerHTML = 'Por favor, ingrese el nombre de la mascota';
         return false;
-    } else if (!namePattern.test(petName) || petName.length < 3) {
+    } else if (!namePattern.test(petName)) {
         errorMessage.innerHTML = 'Por favor, ingrese un nombre válido para la mascota. </br> Solo letras, mínimo 3. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
@@ -35,7 +35,7 @@ function validateFormData() {
     if (petBreed === '') {
         errorMessage.innerHTML = 'Por favor, ingrese la raza de la mascota';
         return false;
-    } else if (!namePattern.test(petBreed)|| petBreed.length < 3) {
+    } else if (!namePattern.test(petBreed)) {
         errorMessage.innerHTML = 'Por favor, ingrese una raza válida para la mascota. </br> Solo letras, mínimo 3. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
@@ -43,7 +43,7 @@ function validateFormData() {
     if (petColor === '') {
         errorMessage.innerHTML = 'Por favor, ingrese el color de la mascota';
         return false;
-    } else if (!namePattern.test(petColor) || petColor.length < 3) {
+    } else if (!namePattern.test(petColor)) {
         errorMessage.innerHTML = 'Por favor, ingrese un color válido para la mascota. </br> Solo letras, mínimo 3. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
@@ -53,27 +53,22 @@ function validateFormData() {
         return false;
     }
 
-    if (petPicture === '') {
-        errorMessage.innerHTML = 'Por favor, suba una imagen de la mascota';
-        return false;
-    }
-
     //Errores del propietario
     if (ownerName === '') {
         errorMessage.innerHTML = 'Por favor, ingrese el nombre del propietario';
         return false;
-    } else if (!namePattern.test(ownerName) || ownerName.length < 4) {
-        errorMessage.innerHTML = 'Por favor, ingrese un nombre válido para el propietario. </br> Solo letras, mínimo 4. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
+    } else if (!namePattern.test(ownerName)) {
+        errorMessage.innerHTML = 'Por favor, ingrese un nombre válido para el propietario. </br> Solo letras. <p style="font-weight: normal; font-style: italic; font-size:0.75em;">(Se permiten espacios)</p>';
         return false;
     }
 
     if (ownerINE.length < 18) {
-        errorMessage.innerHTML = 'El INE debe tener 18 caracteres';
+        errorMessage.innerHTML = 'El INE debe tener al menos 18 caracteres';
         return false;
     }
 
     if (ownerCURP.length < 18) {
-        errorMessage.innerHTML = 'El CURP debe tener 18 caracteres';
+        errorMessage.innerHTML = 'El CURP debe tener al menos 18 caracteres';
         return false;
     }
     
@@ -82,8 +77,8 @@ function validateFormData() {
         return false;
     }
 
-    if (ownerAddress === '' || ownerAddress.length < 5) {
-        errorMessage.innerHTML = 'Por favor, ingrese una dirección válida</br> Mínimo 5 caracteres.';
+    if (ownerAddress === '') {
+        errorMessage.innerHTML = 'Por favor, ingrese una dirección';
         return false;
     }
 
@@ -92,14 +87,12 @@ function validateFormData() {
     return true;
 }
 
-function createPet() {
-    // Datos del TS
-    var idTS = document.getElementById('idTS').value.trim();
+function updatePet() {
     // Datos de la mascota
     var petName = document.getElementById('petName').value.trim();
     var petBreed = document.getElementById('petBreed').value.trim();
     var petColor = document.getElementById('petColor').value.trim();
-    var petSex = document.getElementById('petSex').value;
+    var petSex = document.getElementById('petSex').value
     var petPicture = document.getElementById('petPicture').files[0];
     // Datos del dueño
     var ownerName = document.getElementById('ownerName').value.trim();
@@ -107,12 +100,12 @@ function createPet() {
     var ownerCURP = document.getElementById('ownerCURP').value.trim();
     var ownerColony = document.getElementById('ownerColony').value;
     var ownerAddress = document.getElementById('ownerAddress').value.trim();
+    // Datos antiguos
+    var folioActa = document.getElementById('folioActa').value.trim();
+    var old_petPicture = document.getElementById('old_petPicture').value.trim();
 
-    const loaderURL = "/php/ts_insertPet.php";
-
+    const loaderURL = "/php/ts_updatePet.php";
     let formData = new FormData();
-    // Datos del TS
-    formData.append("idTS", idTS);
     // Datos de la mascota
     formData.append("petName", petName);
     formData.append("petBreed", petBreed);
@@ -125,6 +118,9 @@ function createPet() {
     formData.append("ownerCURP", ownerCURP);
     formData.append("ownerColony", ownerColony);
     formData.append("ownerAddress", ownerAddress);
+    // Datos antiguos
+    formData.append("folioActa", folioActa);
+    formData.append("old_petPicture", old_petPicture);
     
     //Enviarlos via POST
     fetch(loaderURL, {
@@ -133,23 +129,38 @@ function createPet() {
     })
         .then((response) => response.json())
         .then((responseData) => {
-            successMessage.innerHTML = responseData.successfulMssg;
             errorMessage.innerHTML = responseData.errorMsg;
-            let folio = responseData.folio;
+            let resultQuery = responseData.resultQuery;
             let validateQuery = responseData.validateQuery;
             let backupState = responseData.backupState;
-            if(backupState === false) {
-                Swal.fire({
-                    title: "¡Error al generar el respaldo!",
-                    text: "El acta esta disponible, pero la imagen no ha sido respaldada adecuadamente, informa al departamento de sistemas.",
-                    icon: "error"
-                  });
+            let backupRequired = responseData.backupRequired;
+            let errorState = true;
+            let backupMsg = 'default';
+
+            if(backupState === true && backupRequired === 'no') {
+                backupMsg = 'NO se solicituo un backup pero si se genero uno';
+                errorState = true;
             }
 
-            if(validateQuery === true && backupState === true) {
+            if(backupState === true && backupRequired === 'si') {
+                backupMsg = 'SI se solicito un backup y se genero adecuadamente';
+                errorState = false;
+            }
+
+            if(backupState === false && backupRequired === 'si') {
+                backupMsg = 'SI se solicito un backup, pero este no se generó.';
+                errorState = true;
+            }
+
+            if(backupState === false && backupRequired === 'no') {
+                backupMsg = 'No se solicito ningun backup';
+                errorState = false;
+            }
+
+            if(resultQuery === true && validateQuery === true && errorState === false) {
                 Swal.fire({
-                    title: `¡${petName} ha sido regitrad@!`,
-                    text: "¿Desea descargar el acta?",
+                    title: responseData.successfulMssg,
+                    text: "¿Desea descargar el acta actualizada?",
                     color: "#666c6c",
                     icon: "success",
                     showCancelButton: true,
@@ -159,47 +170,26 @@ function createPet() {
                     confirmButtonText: "Descargar Acta"
                   }).then((result) => {
                     if (result.isConfirmed) {
-                        printPet(folio);
+                        printPet(folioActa);
                     }
                   });
             } else {
+                console.log(backupMsg);
                 Swal.fire({
-                    title: "¡Error al registrar a" + petName + "!",
-                    text: `Favor de informar al departamento de sistemas, lamentamos los inconvenientes. \n(Problema en el procesamiento de datos, result: ${resultQuery} validate: ${validateQuery})`,
+                    title: "¡Error al actualizar el acta!",
+                    text: `Favor de informar al departamento de sistemas, lamentamos los inconvenientes. (Problema en el procesamiento de datos, result: ${resultQuery} validate: ${validateQuery} backup:${backupMsg})`,
                     icon: "error"
                   });
             }
-            resetForm();
+
         })
         .catch((err) => console.log(err));
-}
-
-function resetForm() {
-    document.getElementById('petName').value = "";
-    document.getElementById('petBreed').value = "";
-    document.getElementById('petColor').value = "";
-    document.getElementById('petSex').value = "";
-    document.getElementById('petPicture').value = null;
-    document.getElementById('ownerName').value = "";
-    document.getElementById('ownerINE').value = "";
-    document.getElementById('ownerCURP').value = "";
-    document.getElementById('ownerColony').value = "";
-    document.getElementById('ownerAddress').value = "";
-}
-
-function back() {
-    window.location.href = '/views/ts/dashboard.php';
 }
 
 function upperCase(e){
     e.value = e.value.toUpperCase();
 }
 
-function killSpace(event) {
-    var codigoTecla = event.keyCode || event.which;
-    // Verificar si la tecla presionada es un espacio o si se está intentando pegar
-    if (codigoTecla === 32 || (event.ctrlKey && (codigoTecla === 86 || codigoTecla === 118))) {
-        event.preventDefault();
-        return false;
-    }
+function cancelPet() {
+    window.location.href = '/views/admin/viewPets.php';
 }

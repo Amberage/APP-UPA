@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
             // Ruta completa del archivo
             $savedPath = $path_petPictures . $fileName . ".jpg";
-            $savedPathBackup = $path_petPictures . "/backup/" . $fileName . ".jpg";
+            $savedPathBackup = $path_petPictures . "backup/" . $fileName . ".jpg";
             $petPicture = str_replace($pathPicturesReplace, $pathChars, $savedPath);
             $petPictureBackup = str_replace($pathPicturesReplace, $pathChars, $savedPathBackup);
 

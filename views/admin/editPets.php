@@ -1,7 +1,7 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
 include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
-validarSesion('ts_session');
+validarSesion('adm_session');
 
 // Verifica si se recibió el parámetro 'petID'
 if (isset($_GET['petID'])) {
@@ -35,19 +35,15 @@ if (isset($_GET['petID'])) {
         $bd_ownerAddress = $row['ownerAddress'];
     } else {
         //die("Error del servidor: Se solicitó un ID inexistente, favor de comunicarse con el departamento de sistemas.");
-        header("Location: /views/ts/viewPets.php");
+        header("Location: /views/admin/viewPets.php");
     }
     // Cerrar la conexión
     $conn->close();
 } else {
     // Si no se recibe el parámetro 'petID', muestra un mensaje de error o redirecciona al usuario
     //die("Error en el servidor: Error del 'GET' en la modificación de mascotas, favor de comunicarse con el departamento de sistemas.");
-    header("Location: /views/ts/viewPets.php");
+    header("Location: /views/admin/viewPets.php");
 }
-
-$errorQuery = '';
-$successfulQuery = '';
-
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +84,7 @@ $successfulQuery = '';
     </header>
 
     <!-- Ingresar formulario aqui abajo -->
-    <section class="login" style="padding-bottom: 150px; padding-top: 150px; animation: showSlow 1s forwards">
+    <section class="login" style="padding-bottom: 150px; padding-top: 100px; animation: showSlow 1s forwards">
         <div class="form-box">
             <div class="form-value">
             <form autocomplete="off">
@@ -148,14 +144,14 @@ $successfulQuery = '';
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerINE" id="ownerINE" required maxlength="18" onkeydown="return killSpace(event);" onpaste="return false"
+                                <input type="text" name="ownerINE" id="ownerINE" required maxlength="18"
                                     required title="La clave de elector se compone de 18 caracteres" onblur="upperCase(this);"
                                     value="<?php echo isset($bd_ownerINE) ? $bd_ownerINE : ''; ?>"/>
                                 <label>INE</label>
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerCURP" id="ownerCURP" required maxlength="18" onkeydown="return killSpace(event);" onpaste="return false"
+                                <input type="text" name="ownerCURP" id="ownerCURP" required maxlength="18"
                                     required title="El CURP se compone de 18 caracteres" onblur="upperCase(this);"
                                     value="<?php echo isset($bd_ownerCURP) ? $bd_ownerCURP : ''; ?>"/>
                                 <label>CURP</label>
@@ -296,7 +292,7 @@ $successfulQuery = '';
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/API/imprimirActa.js"></script>
-    <script src="/javascript/ts_editPets.js"></script>
+    <script src="/javascript/adm_editPets.js"></script>
 </body>
 
 </html>

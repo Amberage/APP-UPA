@@ -13,22 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $esValido = false;
     $responseData = array();
 
-    /* validacion username: 
-    * Dado el idTS (primarykey e irrepetible en los registros) y el username, revisar en la tabla de usuarios lo siguiente:
-    * Si el username proporcionado no existe en la tabla, regresa $esValido = true, pues no se considera duplicidad.
-    * Si el idTS esta asociado a el username proporcionado, regresa $esValido = true, pues no se considera duplicidad.
-    * Si existe el username proporcionado pero no se encuentra asociado al idTS, regresa $esValido = false, pues se considera duplicidad.
-    * La logica es:
-    * if(username existe en la tabla) {
-        if(username esta asociado al mismo idTs) {
-            $esValido = true; //No existe duplicidad
-        } else {
-            $esValido = false; //Existe duplicidad
-        }
-    } else {
-        $esValido = true;
-    }
-    */
 
     // Validación del username
     $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);

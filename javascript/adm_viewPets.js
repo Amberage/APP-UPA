@@ -37,52 +37,42 @@ function getData(pagina) {
 }
 
 function editPet(folio) {
-  window.location.href = '/views/ts/editPets.php?petID=' + folio;
+  //window.location.href = '/views/admin/editPets.php?petID=' + folio;
+  alert(`Funcion en desarrollo, ID: ${folio}`)
 }
 
-/*
-* En esta function se manda la solicitud para borrar un acta.
-! No se implementó ningun validador, ya que no se considera que este sistema sea objetivo de algun ciberataque, pero de requererirse solo hay
-! que llamar a la cookie de inicio de sesión y validar que las cuentas sean de admin o ts, EN EL ESTADO ACTUAL ESTA FUNCIONALIDAD ES EXPLOTABLE!
-*/
+function restorePet(folioRestore) {
+  let deleteURL = "/php/adm_restorePet.php";
+  //Datos que se van a enviar
+  let restoreID = new FormData();
+  restoreID.append("folioRestore", folioRestore);
+  fetch(deleteURL, {
+    method: "POST",
+    body: restoreID,
+  })
+    .then((response) => response.json())
+    .then((responseData) => {
+        let message = responseData.message;
+        let queryResult = responseData.queryResult;
 
-function deletePet(folio) {
-  let deleteURL = "/php/ts_deletePet.php";
-  Swal.fire({
-    title: "¿Estas seguro que deseas eliminar el acta número " + folio + "?",
-    text: "¡Esta acción es irreversible!",
-    color: "#666c6c",
-    icon: "warning",
-    showCancelButton: true,
-    cancelButtonColor: "#1A5C50",
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#9D2348",
-    confirmButtonText: "Eliminar Acta"
-  }).then((result) => {
-    if (result.isConfirmed) {
-
-      //Datos que se van a enviar
-      let delPet = new FormData();
-      delPet.append("delFolio", folio);
-      //Enviarlos via post, despues la respuesta del PHP se imprime en el HTML
-
-      fetch(deleteURL, {
-        method: "POST",
-        body: delPet,
-      })
-        .then((response) => response.json())
-        .then((delResponse) => {
-          Swal.fire({
-            color: "#666c6c",
-            title: "Acta Eliminada",
-            text: delResponse,
-            icon: "success",
-            confirmButtonColor: "#1A5C50",
-          });
-          getData(actualPage);
-        })
-        .catch((err) => console.log(err));
-
-    }
-  });
+        if(queryResult === true) {
+            Swal.fire({
+                color: "#666c6c",
+                title: "¡Acta Restaurada!",
+                text: message,
+                icon: "success",
+                confirmButtonColor: "#1A5C50",
+              });
+              getData(actualPage);
+        } else {
+            Swal.fire({
+                color: "#666c6c",
+                title: "ERROR",
+                text: message,
+                icon: "error",
+                confirmButtonColor: "#1A5C50",
+              });
+        }
+    })
+    .catch((err) => console.log(err));
 }

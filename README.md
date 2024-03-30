@@ -22,4 +22,3 @@ upload_max_filesize = 20M
 
 
 # Pendientes DEVS:
-* Correggir el CSS de ts viewPets que se ha empalmado con el de admin

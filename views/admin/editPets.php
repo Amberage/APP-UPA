@@ -14,7 +14,10 @@ if (isset($_GET['petID'])) {
     }
     
     // Preparar la consulta SQL
-    $sql = "SELECT petName, petBreed, petColor, petSex, petPicture, ownerName, ownerINE, ownerCURP, ownerColony, ownerAddress FROM `mascotasPropietarios` WHERE folio = $petID";
+    $sql = "SELECT m.petName, m.petBreed, m.petColor, m.petSex, m.petPicture, m.ownerName, m.ownerINE, m.ownerCURP, m.ownerColony, m.ownerAddress, CONCAT(u.nombre, ' ', u.apellido) AS nameTS, m.idTS
+            FROM `mascotasPropietarios` AS m
+            INNER JOIN `usuarios` AS u ON m.idTS = u.id
+            WHERE m.folio = $petID";
     
     // Ejecutar la consulta
     $result = $conn->query($sql);
@@ -33,19 +36,37 @@ if (isset($_GET['petID'])) {
         $bd_ownerCURP = $row['ownerCURP'];
         $bd_ownerColony = $row['ownerColony'];
         $bd_ownerAddress = $row['ownerAddress'];
+        $bd_nameTS = $row['nameTS'];
+        $bd_idTS = $row['idTS'];
     } else {
-        //die("Error del servidor: Se solicitó un ID inexistente, favor de comunicarse con el departamento de sistemas.");
-        header("Location: /views/admin/viewPets.php");
+        // No se encontraron resultados, redirecciona al usuario
+        header("Location: /views/adm/viewPets.php");
     }
+    $result->free();
+
+    $queryGetTS = "SELECT id AS idTS, CONCAT(nombre, ' ', apellido) AS nameTS FROM usuarios WHERE userType = 'ts' OR id = 3";
+    $result = $conn->query($queryGetTS);
+
+    $optionsHTML = `<option value="">Seleccione una Opción</option>`;
+    while ($row = $result->fetch_assoc()) {
+        $idTS = $row['idTS'];
+        $nameTS = $row['nameTS'];
+        $optionsHTML .= '<option value="' . $idTS . '"';
+        if (isset($nameTS) && $nameTS == $bd_nameTS) {
+            $optionsHTML .= ' selected';
+        }
+        $optionsHTML .= '>' . strtoupper($nameTS) . '</option>';
+    }
+    
+
+
     // Cerrar la conexión
     $conn->close();
 } else {
-    // Si no se recibe el parámetro 'petID', muestra un mensaje de error o redirecciona al usuario
-    //die("Error en el servidor: Error del 'GET' en la modificación de mascotas, favor de comunicarse con el departamento de sistemas.");
-    header("Location: /views/admin/viewPets.php");
+    // Si no se recibe el parámetro 'petID', redirecciona al usuario
+    header("Location: /views/adm/viewPets.php");
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -54,6 +75,7 @@ if (isset($_GET['petID'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
+    <link rel="stylesheet" href="/API/libraries/toastr.min.css">
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/petAdd.css"/>
     <title>UPA | Modificar Acta</title>
@@ -84,11 +106,13 @@ if (isset($_GET['petID'])) {
     </header>
 
     <!-- Ingresar formulario aqui abajo -->
-    <section class="login" style="padding-bottom: 150px; padding-top: 100px; animation: showSlow 1s forwards">
+    <section class="login" style="padding-bottom: 150px; padding-top: 150px; animation: showSlow 1s forwards">
         <div class="form-box">
             <div class="form-value">
             <form autocomplete="off">
                     <div class="twoColumns">
+                        <input type="text" name="idTS" id="idTS" value=<?php echo $bd_idTS?> style="display: none;"/>
+                        <input type="text" name="nameTS" id="nameTS" value=<?php echo $bd_nameTS?> style="display: none;"/>
                         <input type="text" name="folioActa" id="folioActa" value=<?php echo $petID?> style="display: none;"/>
                         <input type="text" name="old_petPicture" id="old_petPicture" value=<?php echo $bd_petPicture?> style="display: none;"/>
                         <!-- !DATOS DE LA MASCOTA -->
@@ -97,21 +121,21 @@ if (isset($_GET['petID'])) {
                             <hr />
                             <div class="inputbox">
                                 <input type="text" name="petName" id="petName" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" onblur="upperCase(this);"
+                                    required title="Solo letras y espacios" maxlength="25" oninput="upperCase(this);"
                                     value="<?php echo isset($bd_petName) ? $bd_petName : ''; ?>"/>
                                 <label>Nombre Mascota</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="petBreed" id="petBreed" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" onblur="upperCase(this);"
+                                    required title="Solo letras y espacios" maxlength="25" oninput="upperCase(this);"
                                     value="<?php echo isset($bd_petBreed) ? $bd_petBreed : ''; ?>"/>
                                 <label>Raza</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="petColor" id="petColor" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" onblur="upperCase(this);"
+                                    required title="Solo letras y espacios" maxlength="25" oninput="upperCase(this);"
                                     value="<?php echo isset($bd_petColor) ? $bd_petColor : ''; ?>"/>
                                 <label>Color</label>
                             </div>
@@ -139,20 +163,20 @@ if (isset($_GET['petID'])) {
                             <div class="inputbox">
                                 <input type="text" name="ownerName" id="ownerName"
                                     pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,40}" required title="Solo letras y espacios"
-                                    maxlength="40" onblur="upperCase(this);" value="<?php echo isset($bd_ownerName) ? $bd_ownerName : ''; ?>"/>
+                                    maxlength="40" oninput="upperCase(this);" value="<?php echo isset($bd_ownerName) ? $bd_ownerName : ''; ?>"/>
                                 <label>Nombre Propietario</label>
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerINE" id="ownerINE" required maxlength="18"
-                                    required title="La clave de elector se compone de 18 caracteres" onblur="upperCase(this);"
+                                <input type="text" name="ownerINE" id="ownerINE" required maxlength="18" oninput="return killSpace(event);" onpaste="return false"
+                                    required title="La clave de elector se compone de 18 caracteres" oninput="upperCase(this);"
                                     value="<?php echo isset($bd_ownerINE) ? $bd_ownerINE : ''; ?>"/>
                                 <label>INE</label>
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerCURP" id="ownerCURP" required maxlength="18"
-                                    required title="El CURP se compone de 18 caracteres" onblur="upperCase(this);"
+                                <input type="text" name="ownerCURP" id="ownerCURP" required maxlength="18" oninput="return killSpace(event);" onpaste="return false"
+                                    required title="El CURP se compone de 18 caracteres" oninput="upperCase(this);"
                                     value="<?php echo isset($bd_ownerCURP) ? $bd_ownerCURP : ''; ?>"/>
                                 <label>CURP</label>
                             </div>
@@ -160,7 +184,7 @@ if (isset($_GET['petID'])) {
                             <div class="selectBox">
                                 <select name="ownerColony" id="ownerColony">
                                     <option value="">Seleccione Colonia</option>
-                                    <option value="AlFREDO BARANDA" <?php if(isset($bd_ownerColony) && $bd_ownerColony == 'AlFREDO BARANDA') echo 'selected'; ?>>Alfredo Baranda</option>
+                                    <option value="ALFREDO BARANDA" <?php if(isset($bd_ownerColony) && $bd_ownerColony == 'ALFREDO BARANDA') echo 'selected'; ?>>Alfredo Baranda</option>
                                     <option value="ALFREDO DEL MAZO" <?php if(isset($bd_ownerColony) && $bd_ownerColony == 'ALFREDO DEL MAZO') echo 'selected'; ?>>Alfredo del Mazo</option>
                                     <option value="AMÉRICAS I" <?php if(isset($bd_ownerColony) && $bd_ownerColony == 'AMÉRICAS I') echo 'selected'; ?>>Américas I</option>
                                     <option value="AMÉRICAS II" <?php if(isset($bd_ownerColony) && $bd_ownerColony == 'AMÉRICAS II') echo 'selected'; ?>>Americas II</option>
@@ -205,16 +229,22 @@ if (isset($_GET['petID'])) {
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerAddress" id="ownerAddress" required maxlength="254" onblur="upperCase(this);"
+                                <input type="text" name="ownerAddress" id="ownerAddress" required maxlength="254" oninput="upperCase(this);"
                                 value="<?php echo isset($bd_ownerAddress) ? $bd_ownerAddress : ''; ?>"/>
                                 <label>Domicilio</label>
                             </div>
                         </div>
                     </div>
                     <!--! Fin del div "Two Columns"  -->
+                    <div class="selectBoxTS">
+                                <select name="dataTS" id="dataTS">
+                                    <?php echo $optionsHTML; ?>
+                                </select>
+                        <label>Reasignar Acta</label>
+                    </div>
                 </form>
                 <div class="options">
-                    <div><button class="login" style="width: 240px;" type="button" onClick="editPet();">Modificar Acta</button></div>
+                    <div><button class="loginDisabled" style="width: 240px;" type="button" id="sendPet" onClick="editPet();">Modificar Acta</button></div>
                     <div><button class="cancel" style="width: 240px; margin-top: 10px;" onClick="cancelPet();">Cancelar</button></div>
                 </div>
                 <div class="returnSuccesful" id="successMsg"></div>
@@ -286,6 +316,8 @@ if (isset($_GET['petID'])) {
             Valle de Chalco Solidaridad | Copyright © 2024
         </div>
     </footer>
+    <script src="/API/libraries/jquery.min.js"></script>
+    <script src="/API/libraries/toastr.min.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

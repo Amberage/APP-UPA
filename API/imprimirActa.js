@@ -2,7 +2,7 @@
 function loadJsPDF() {
     return new Promise(resolve => {
         const script = document.createElement('script');
-        script.src = '/API/jspdf.min.js'; // Ubicación de jsPDF
+        script.src = '/API/libraries/jspdf.min.js'; // Ubicación de jsPDF
         script.onload = () => {
             resolve(window.jspdf); // Resuelve la promesa con la referencia a jsPDF
         };

@@ -205,3 +205,12 @@ function disabledButton() {
     old_tsLastname = tsLastnameInput.value;
     old_username = usernameInput.value;
 }
+
+function killSpace(event) {
+    var codigoTecla = event.keyCode || event.which;
+    // Verificar si la tecla presionada es un espacio o si se está intentando pegar
+    if (codigoTecla === 32 || (event.ctrlKey && (codigoTecla === 86 || codigoTecla === 118))) {
+        event.preventDefault();
+        return false;
+    }
+}

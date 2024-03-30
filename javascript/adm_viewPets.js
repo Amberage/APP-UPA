@@ -37,8 +37,7 @@ function getData(pagina) {
 }
 
 function editPet(folio) {
-  //window.location.href = '/views/admin/editPets.php?petID=' + folio;
-  alert(`Funcion en desarrollo, ID: ${folio}`)
+  window.location.href = '/views/admin/editPets.php?petID=' + folio;
 }
 
 function restorePet(folioRestore) {

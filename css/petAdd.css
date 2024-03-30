@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
-@import url("animations.css");
-@import url(/css/fonts.css);
+@import url("/css/animations.css");
+@import url("/css/fonts.css");
 
 section.login {
   display: flex;
@@ -192,6 +192,40 @@ select:valid ~ label {
   font-family: "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
+/*SelectTS Form*/
+.selectBoxTS {
+  position: relative;
+  margin: 20px 0;
+  width: 750px;
+  border-bottom: 2px solid #d3bf9a;
+}
+.selectBoxTS label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  color: #d7a255;
+  font-size: 1em;
+  font-weight: bold;
+  pointer-events: none;
+  transition: 0.5s;
+}
+select:focus ~ label,
+select:valid ~ label {
+  top: -5px;
+}
+.selectBoxTS select {
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.1em;
+  padding: 0 35px 0 5px;
+  color: #8b8f91;
+  font-family: "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
 /* Estilo para el input de tipo file */
 input[type="file"] {
   font-size: small;
@@ -233,6 +267,13 @@ input[type="file"]::file-selector-button {
     border-bottom: 2px solid #d3bf9a;
   }
 
+  .selectBoxTS {
+    position: relative;
+    margin: 20px 0;
+    width: 450px;
+    border-bottom: 2px solid #d3bf9a;
+  }
+
   input[type="file"]::file-selector-button {
     visibility: hidden;
   }
@@ -251,7 +292,7 @@ input[type="file"]::file-selector-button {
   .inputbox {
     position: relative;
     margin: 20px 0;
-    width: 100px;
+    width: 150px;
     border-bottom: 2px solid #d3bf9a;
     font-size: 0.8em;
   }
@@ -268,12 +309,24 @@ input[type="file"]::file-selector-button {
   .selectBox {
     position: relative;
     margin: 20px 0;
-    width: 100px;
+    width: 150px;
     border-bottom: 2px solid #d3bf9a;
     font-size: 0.8em;
   }
 
   .selectBox select {
+    font-size: 0.7em;
+  }
+
+  .selectBoxTS {
+    position: relative;
+    margin: 20px 0;
+    width: 350px;
+    border-bottom: 2px solid #d3bf9a;
+    font-size: 0.8em;
+  }
+
+  .selectBoxTS select {
     font-size: 0.7em;
   }
   input[type="file"]::file-selector-button {
@@ -287,4 +340,46 @@ input[type="file"]::file-selector-button {
     left: -70px;
     width: fit-content;
   }
+}
+
+
+@import url("/API/libraries/toastr.min.css");
+/* Cambiar la fuente de todos los mensajes Toastr */
+.toast {
+  font-family: 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* Cambiar la fuente del título del mensaje Toastr */
+.toast-title {
+  font-family: 'Gill Sans MT Bold', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  color: #d7a255;
+}
+
+/* Cambiar la fuente del cuerpo del mensaje Toastr */
+.toast-message {
+  font-family: 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: #f0e5d4;
+  text-align: justify;
+}
+
+.toast-success {
+  background-color: #002e2b; /* Verde */
+  opacity: 50%;
+}
+
+button.loginDisabled {
+  width: 100%;
+  height: 40px;
+  border-radius: 40px;
+  background: #2a8c77;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  opacity: 35%;
+  cursor: default;
+  pointer-events: none;
 }

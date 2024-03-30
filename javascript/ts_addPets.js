@@ -93,6 +93,7 @@ function validateFormData() {
 }
 
 function createPet() {
+    disableButton();
     // Datos del TS
     var idTS = document.getElementById('idTS').value.trim();
     // Datos de la mascota
@@ -202,4 +203,42 @@ function killSpace(event) {
         event.preventDefault();
         return false;
     }
+}
+
+function showWarningPic(){
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-bottom-right",
+      "preventDuplicates": true,
+      "onclick": null,
+      "showDuration": "500",
+      "hideDuration": "1000",
+      "timeOut": "7000",
+      "extendedTimeOut": "3000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+
+    toastr["success"]("Se esta generando el acta, este proceso puede tardar debido al peso de la imagen.<br><span style='font-size: 0.75em; color: #d3bf9a; font-style: italic;'>Si el proceso tarda demasiado se recomienda usar imagenes más ligeras (menos de 5MB).</span>", "¡ACTA GENERANDOSE!")
+    // Aplicar estilo al mensaje de Toastr para aumentar el ancho
+    $(".toast").css("width", "420px"); // Cambia el valor 500px al ancho deseado
+}
+
+function disableButton() {
+    showWarningPic();
+    var button = document.getElementById("sendPet");
+    button.disabled = true;
+    button.style.cursor = "not-allowed";
+    button.style.backgroundColor = "#CCCCCC";
+
+    setTimeout(function() {
+        button.disabled = false;
+        button.style.cursor = "pointer";
+        button.style.backgroundColor = "#2A8C77";
+    }, 5000);
 }

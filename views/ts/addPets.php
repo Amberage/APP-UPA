@@ -11,6 +11,7 @@ validarSesion('ts_session');
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
+    <link rel="stylesheet" href="/API/libraries/toastr.min.css">
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/petAdd.css"/>
     <title>UPA | Generar Acta</title>
@@ -51,20 +52,20 @@ validarSesion('ts_session');
                             <hr />
                             <div class="inputbox">
                                 <input type="text" name="petName" id="petName" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" onblur="upperCase(this);"/>
+                                    required title="Solo letras y espacios" maxlength="25" oninput="upperCase(this);"/>
                                 <label>Nombre Mascota</label>
                                 
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="petBreed" id="petBreed" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" onblur="upperCase(this);"/>
+                                    required title="Solo letras y espacios" maxlength="25" oninput="upperCase(this);"/>
                                 <label>Raza</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="petColor" id="petColor" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}"
-                                    required title="Solo letras y espacios" maxlength="25" onblur="upperCase(this);"/>
+                                    required title="Solo letras y espacios" maxlength="25" oninput="upperCase(this);"/>
                                 <label>Color</label>
                             </div>
 
@@ -91,19 +92,19 @@ validarSesion('ts_session');
                             <div class="inputbox">
                                 <input type="text" name="ownerName" id="ownerName"
                                     pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,40}" required title="Solo letras y espacios"
-                                    maxlength="40" onblur="upperCase(this);"/>
+                                    maxlength="40" oninput="upperCase(this);"/>
                                 <label>Nombre Propietario</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="ownerINE" id="ownerINE" required maxlength="18" onkeydown="return killSpace(event);" onpaste="return false"
-                                    required title="La clave de elector se compone de 18 caracteres" onblur="upperCase(this);"/>
+                                    required title="La clave de elector se compone de 18 caracteres" oninput="upperCase(this);"/>
                                 <label>INE</label>
                             </div>
 
                             <div class="inputbox">
                                 <input type="text" name="ownerCURP" id="ownerCURP" required maxlength="18" onkeydown="return killSpace(event);" onpaste="return false"
-                                    required title="El CURP se compone de 18 caracteres" onblur="upperCase(this);"/>
+                                    required title="El CURP se compone de 18 caracteres" oninput="upperCase(this);"/>
                                 <label>CURP</label>
                             </div>
                             <script src="/javascript/ts_getIdTS.js"></script>
@@ -113,7 +114,7 @@ validarSesion('ts_session');
                             <div class="selectBox">
                                 <select name="ownerColony" id="ownerColony">
                                     <option value="">Seleccione Colonia</option>
-                                    <option value="AlFREDO BARANDA">Alfredo Baranda</option>
+                                    <option value="ALFREDO BARANDA">Alfredo Baranda</option>
                                     <option value="ALFREDO DEL MAZO">Alfredo del Mazo</option>
                                     <option value="AMÉRICAS I">Américas I</option>
                                     <option value="AMÉRICAS II">Americas II</option>
@@ -158,7 +159,7 @@ validarSesion('ts_session');
                             </div>
 
                             <div class="inputbox">
-                                <input type="text" name="ownerAddress" id="ownerAddress" required maxlength="254" onblur="upperCase(this);"/>
+                                <input type="text" name="ownerAddress" id="ownerAddress" required maxlength="254" oninput="upperCase(this);"/>
                                 <label>Domicilio</label>
                             </div>
                         </div>
@@ -166,7 +167,7 @@ validarSesion('ts_session');
                     <!--! Fin del div "Two Columns"  -->
                 </form>
                 <div class="options" style="margin-top: 10px;">
-                    <div style="text-align: center;"><div><button class="login" style="width: 240px;" type="button" onclick="sendPet()">Registrar Mascota</button></div></div>
+                    <div style="text-align: center;"><div><button class="login" style="width: 240px;" type="button" id="sendPet" onclick="sendPet()">Registrar Mascota</button></div></div>
                     <div><button class="cancel" style="width: 240px; margin-top: 10px;" onClick="back();">Volver</button></div>
                 </div>
                 <div class="returnSuccesful" id="successMsg"></div>
@@ -238,9 +239,11 @@ validarSesion('ts_session');
             Valle de Chalco Solidaridad | Copyright © 2024
         </div>
     </footer>
+    <script src="/API/libraries/jquery.min.js"></script>
+    <script src="/API/libraries/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/javascript/ts_addPets.js"></script>
     <script src="/API/imprimirActa.js"></script>
+    <script src="/javascript/ts_addPets.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

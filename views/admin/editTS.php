@@ -93,7 +93,7 @@ if (isset($_GET['idTS'])) {
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" id="username" pattern="[a-zA-Z0-9_.]{4,12}" value="<?php echo isset($bd_username) ? $bd_username : ''; ?>" required title="Mínimo 4 caracteres, se permiten letras (sin ñ), números, _ y .">
+                        <input type="text" id="username" pattern="[a-zA-Z0-9_.]{4,12}" value="<?php echo isset($bd_username) ? $bd_username : ''; ?>" required title="Mínimo 4 caracteres, se permiten letras (sin ñ), números, _ y ." onkeydown="return killSpace(event);" onpaste="return false">
                         <label>Nombre de Usuario</label>
                     </div>
 

@@ -108,7 +108,18 @@ th {
     color: #9d2348;
 }
 
-tr.enabled:nth-child(even) {
+.lbl-info {
+    display: none;
+}
+
+/*tr para ts/viewPets.php*/
+tr {
+    background-color: #ffe3d0;
+    color: #1a5c50;
+}
+
+/*trs para admin/viewPets.php*/
+tr:nth-child(even) {
     background-color: #FFF2EE;
 }
 
@@ -116,9 +127,8 @@ tr.enabled {
     background-color: #ffe3d0;
     color: #1a5c50;
 }
-
-.lbl-info {
-    display: none;
+tr.enabled:nth-child(even) {
+    background-color: #FFF2EE;
 }
 
 tr.disabled {

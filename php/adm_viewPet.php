@@ -11,7 +11,7 @@ function getFolios($servername, $mysql_username, $mysql_password, $dbname) {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    $sql = "SELECT folio FROM mascotaspropietarios";
+    $sql = "SELECT folio FROM mascotasPropietarios";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $folios = array();

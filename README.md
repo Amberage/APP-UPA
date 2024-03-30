@@ -22,5 +22,4 @@ upload_max_filesize = 20M
 
 
 # Pendientes DEVS:
-* Validaciones editPets en el form del TS
-* Validaciones addPets en el form del TS
+* Correggir el CSS de ts viewPets que se ha empalmado con el de admin

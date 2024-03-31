@@ -2,15 +2,15 @@
 
 # Datos para la migración
 * Crear una BBDD con los parametros adecuados acorde al config.php y la bd.sql
-* En el php.ini buscar "session.gc_maxlifetime" y setearlo a 2592000
 
-# Dependencias necesarias en PHP
+# Dependencias necesarias en PHP (php.ini)
 extension=mbstring
 extension=exif
 extension=mysqli
 extension=gd
 post_max_size = 20M
 upload_max_filesize = 20M
+session.gc_maxlifetime = 2592000
 
 ## Lista de Pendientes:
 * Conseguir logotipos oficiales
@@ -22,3 +22,13 @@ upload_max_filesize = 20M
 
 
 # Pendientes DEVS:
+* Definir cuentas clave
+* Documentar
+
+
+Token SU: bFP-.gv0Mo1z1-jgf4'OAA(skBuW1=;u56bH{#3j-6"H}tz;D.R:oU(H;@o13Pk#
+
+1: sistemavach system@vach!
+2: admin ?2KJ9pcYb!
+3. UPAVACH SisUPa.23@#
+

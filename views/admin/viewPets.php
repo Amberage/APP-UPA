@@ -42,8 +42,8 @@ validarSesion('adm_session');
     <section class="section__container banner__container" style="padding: 0;  animation: showSlow 1s forwards">
     <div class="banner__content">
       <div class="banner__card">
-        <h4>Registros</h4>
-        <div class="registros">
+          <h4>Registros</h4>
+          <div class="registros">
             <label for="numRegisters">Mostrar: </label>
             <select name="numRegisters" id="numRegisters">
                 <option value="10">10</option>
@@ -62,10 +62,10 @@ validarSesion('adm_session');
         </div>
       </div>
       <div class="banner__card">
-        <h4>Buscar</h4>
-        <div class="searchbox">
-            <ion-icon name="search-sharp"></ion-icon>
-            <input type="text" name="searchData" id="searchData" placeholder="Ingrese busqueda..."/>
+          <div class="searchbox">
+              <h4>Buscar</h4>
+              <ion-icon name="search-sharp"></ion-icon>
+              <input type="text" name="searchData" id="searchData" placeholder="Ingrese busqueda..."/>
         </div>
       </div>
       <div class="banner__card">

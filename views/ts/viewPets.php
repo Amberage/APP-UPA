@@ -61,10 +61,10 @@ validarSesion('ts_session');
         </div>
       </div>
       <div class="banner__card">
-        <h4>Buscar</h4>
-        <div class="searchbox">
-            <ion-icon name="search-sharp"></ion-icon>
-            <input type="text" name="searchData" id="searchData" placeholder="Ingrese busqueda..."/>
+          <div class="searchbox">
+              <h4>Buscar</h4>
+              <ion-icon name="search-sharp"></ion-icon>
+              <input type="text" name="searchData" id="searchData" placeholder="Ingrese busqueda..."/>
         </div>
       </div>
       <div class="banner__card">

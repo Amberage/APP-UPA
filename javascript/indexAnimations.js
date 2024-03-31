@@ -2,6 +2,9 @@ const menuBtn = document.getElementById("menu-btn");
 const navLinks = document.getElementById("nav-links");
 const menuBtnIcon = menuBtn.querySelector("i");
 
+const mainPosition = document.getElementById('home');
+//mainPosition.scrollIntoView();
+
 menuBtn.addEventListener("click", () => {
   navLinks.classList.toggle("open");
 

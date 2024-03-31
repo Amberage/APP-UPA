@@ -166,12 +166,12 @@ validarSesion('ts_session');
                     </div>
                     <!--! Fin del div "Two Columns"  -->
                 </form>
+                <div class="returnSuccesful" id="successMsg"></div>
+                <div class="returnError" style="margin-top:-20px;" id="errorMsg"></div>
                 <div class="options" style="margin-top: 10px;">
                     <div style="text-align: center;"><div><button class="login" style="width: 240px;" type="button" id="sendPet" onclick="sendPet()">Registrar Mascota</button></div></div>
                     <div><button class="cancel" style="width: 240px; margin-top: 10px;" onClick="back();">Volver</button></div>
                 </div>
-                <div class="returnSuccesful" id="successMsg"></div>
-                <div class="returnError" style="margin-top:-20px;" id="errorMsg"></div>
             </div>
         </div>
     </section>

@@ -13,13 +13,13 @@ for ($i = 0; $i < 50; $i++) {
     $petBreed = "Raza" . $i;
     $petColor = "Color" . $i;
     $petSex = ($i % 2 == 0) ? 'MACHO' : 'HEMBRA';
-    $petPicture = "/debug/database/test.jpg";
+    $petPicture = "/views/sudo/test.jpg";
     $ownerName = "Propietario" . $i;
     $ownerINE = "INE" . $i;
     $ownerCURP = "CURP" . $i;
     $ownerColony = "Colonia" . $i;
     $ownerAddress = "Dirección" . $i;
-    $idTS = 1; // ID del trabajador social, cámbialo según tus necesidades
+    $idTS = 3; // ID del trabajador social, cámbialo según tus necesidades
 
     // Insertar el registro en la base de datos
     $sql = "INSERT INTO mascotasPropietarios (petName, petBreed, petColor, petSex, petPicture, ownerName, ownerINE, ownerCURP, ownerColony, ownerAddress, idTS)

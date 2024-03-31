@@ -1,5 +1,4 @@
 CREATE DATABASE UPA;
-
 USE UPA
 
 CREATE TABLE usuarios(
@@ -34,14 +33,6 @@ CREATE TABLE mascotasPropietarios(
     FOREIGN KEY (idTS) REFERENCES usuarios (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
--- Vista: Trabajador Social
-CREATE VIEW pets AS
-SELECT folio, petName, petPicture, ownerName, ownerColony, CONCAT(DAY(mp.fechaRegistro), '/', MONTH(mp.fechaRegistro), '/', YEAR(mp.fechaRegistro)) AS registerDate, CONCAT(users.nombre, ' ', users.apellido) AS tsName, users.id AS tsID
-FROM mascotasPropietarios mp
-INNER JOIN usuarios users ON mp.idTS = users.id
-WHERE users.userType = 'ts';
-
-
 CREATE TABLE backup_mascotasPropietarios(
     -- Esta tabla corresponde a los registros, de aquí se extraen los datos para las actas.
     folio INT PRIMARY KEY,
@@ -63,6 +54,17 @@ CREATE TABLE backup_mascotasPropietarios(
     FOREIGN KEY (idTS) REFERENCES usuarios (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE tokenSuperUser(
+    token varchar(128)
+);
+
+-- Vista: Trabajador Social
+CREATE VIEW pets AS
+SELECT folio, petName, petPicture, ownerName, ownerColony, CONCAT(DAY(mp.fechaRegistro), '/', MONTH(mp.fechaRegistro), '/', YEAR(mp.fechaRegistro)) AS registerDate, CONCAT(users.nombre, ' ', users.apellido) AS tsName, users.id AS tsID
+FROM mascotasPropietarios mp
+INNER JOIN usuarios users ON mp.idTS = users.id
+WHERE users.userType = 'ts';
+
 -- Vista: Administrador
 CREATE VIEW adminPets AS
 SELECT folio, petName, petPicture, ownerName, ownerColony, CONCAT(DAY(mp.fechaRegistro), '/', MONTH(mp.fechaRegistro), '/', YEAR(mp.fechaRegistro)) AS registerDate, CONCAT(users.nombre, ' ', users.apellido) AS tsName, users.id AS tsID
@@ -70,8 +72,10 @@ FROM backup_mascotasPropietarios mp
 INNER JOIN usuarios users ON mp.idTS = users.id
 WHERE users.userType = 'ts' || users.userType = 'adm';
 
+
 -- Triggers para clonar la información de la tabla original en la del respaldo.
---! Nota: Esto cumple dos funciones, tener un respaldo de la BBDD y llevar un conteo de los registros reales en la tabla de mascotas.
+-- Nota: Esto cumple dos funciones, tener un respaldo de la BBDD y llevar un conteo de los registros reales en la tabla de mascotas.
+-- IF @recoveryBackup IS NULL THEN, si se establece una variable de sesión al hacer la query, el trigger no se activara, es util para poder restaurar información desde el backup sin activar los triggers y provocar errores de duplicidad
 CREATE TRIGGER insertBackup AFTER INSERT ON mascotasPropietarios
 FOR EACH ROW
 BEGIN
@@ -103,3 +107,12 @@ BEGIN
         WHERE folio = NEW.folio;
     END IF;
 END;
+
+-- Valores default
+INSERT INTO usuarios (id, nombre, apellido, username, password, userType, fechaRegistro)
+VALUES 
+(1, 'Gobierno', 'Valle de Chalco Solidaridad', 'sistemavach', '$2y$10$DR1clMGMAi.6T6ZMecdOYOBMlggtg0O.ksLLROJ9IXpgDcomR6c5y', 'adm', '2000-01-01 00:00:00'),
+(2, 'Administrador', 'UPA', 'admin', '$2y$10$JMi/XGgXMGo8QLbHTz5IOe0/MMlzVxbN8BBhfQIYUrC4oZqMgqip6', 'adm', '2000-01-01 00:00:00'),
+(3, 'UPA', 'Valle de Chalco Solidaridad', 'UPAVACH', '$2y$10$HV5e7mPDEjcqehD.wJma.eCEMiSN941v9ar/AqPse1lQqOCZUhsPu', 'adm', '2000-01-01 00:00:00');
+
+INSERT INTO tokenSuperUser (token) VALUES ('bFP-.gv0Mo1z1-jgf4\'OAA(skBuW1=;u56bH{#3j-6"H}tz;D.R:oU(H;@o13Pk#');

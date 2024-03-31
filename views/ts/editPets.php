@@ -218,12 +218,12 @@ $successfulQuery = '';
                     </div>
                     <!--! Fin del div "Two Columns"  -->
                 </form>
-                <div class="options">
+                <div class="returnSuccesful" id="successMsg"></div>
+                <div class="returnError" style="margin-top:-20px;" id="errorMsg"></div>
+                <div class="options" style="margin-top: 10px;">
                     <div><button class="loginDisabled" style="width: 240px;" type="button" id="sendPet" onClick="editPet();">Modificar Acta</button></div>
                     <div><button class="cancel" style="width: 240px; margin-top: 10px;" onClick="cancelPet();">Cancelar</button></div>
                 </div>
-                <div class="returnSuccesful" id="successMsg"></div>
-                <div class="returnError" id="errorMsg"></div>
             </div>
         </div>
     </section>

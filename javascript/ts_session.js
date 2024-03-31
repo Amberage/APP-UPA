@@ -15,7 +15,15 @@ fetch(loaderURL, {
     nombre = sessionData.nombre;
     apellido = sessionData.apellido;
     userType = sessionData.userType;
+    all_tsIDs = sessionData.all_tsIDs;
 
+    if (all_tsIDs.length > 0) {
+        if (all_tsIDs.includes(id)) {
+            //pass
+        } else {
+            window.location.href = '/php/st_killSession.php';
+        }
+    }
     // Luego de asignar los valores, puedes realizar las validaciones aquí mismo
     if (userType === 'null' || userType === undefined) {
         window.location.href = '/index.php';

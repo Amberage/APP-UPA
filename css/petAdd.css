@@ -243,11 +243,29 @@ input[type="file"]::file-selector-button {
 
 .options {
   text-align: center;
-  margin-top: 50px;
 }
 
 /* Media query para pantallas más pequeñas */
 @media screen and (max-width: 768px) {
+
+  .returnError {
+    padding-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    animation: bounce 2s;
+    color: #ba1934;
+    font-size: 0.8em;
+  }
+  
+  .returnSuccesful {
+    padding-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #1a5c50;
+    font-size: 0.8em;
+  }
+  
+
   .inputbox {
     position: relative;
     margin: 20px 0;
@@ -289,6 +307,24 @@ input[type="file"]::file-selector-button {
 
 /* Otra media query para pantallas aún más pequeñas */
 @media screen and (max-width: 480px) {
+
+  .returnError {
+    padding-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    animation: bounce 2s;
+    color: #ba1934;
+    font-size: 0.7em;
+  }
+  
+  .returnSuccesful {
+    padding-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #1a5c50;
+    font-size: 0.7em;
+  }
+
   .inputbox {
     position: relative;
     margin: 20px 0;
@@ -298,7 +334,8 @@ input[type="file"]::file-selector-button {
   }
 
   .inputbox input{
-    font-size: 0.7em;
+    font-size: 1em;
+    width: 180px;
   }
 
   h2.form {
@@ -315,7 +352,7 @@ input[type="file"]::file-selector-button {
   }
 
   .selectBox select {
-    font-size: 0.7em;
+    font-size: 1em;
   }
 
   .selectBoxTS {
@@ -334,10 +371,10 @@ input[type="file"]::file-selector-button {
   }
 
   input[type="file"] {
-    font-size: 0.5em;
+    font-size: 1em;
     position: relative;
     top: 25px;
-    left: -70px;
+    left: -120px;
     width: fit-content;
   }
 }
@@ -364,8 +401,16 @@ input[type="file"]::file-selector-button {
 }
 
 .toast-success {
-  background-color: #002e2b; /* Verde */
+  background-color: #002e2b;
   opacity: 50%;
+}
+
+.toast-warning {
+  background-color: #f48424; 
+}
+
+.toast-error {
+  background-color: #9d2348;
 }
 
 button.loginDisabled {

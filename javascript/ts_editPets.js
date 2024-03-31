@@ -328,3 +328,76 @@ function checkInputChange() {
         editButton.classList.add('loginDisabled');
     }
 }
+
+// Obtener el elemento de input de tipo file
+var pictureFile = document.getElementById('petPicture');
+
+// Agregar un event listener para el evento 'change'
+pictureFile.addEventListener('change', function() {
+    // Obtener el archivo de imagen cargado
+    var petFile = this.files[0];
+    
+    // Verificar si se ha cargado un archivo
+    if (petFile) {
+        // Verificar si el tamaño del archivo es mayor a 5MB (5 * 1024 * 1024 bytes)
+        if (petFile.size > 20 * 1024 * 1024) {
+            showErrorPreload();
+            this.value = "";
+        } else if (petFile.size > 5 * 1024 * 1024) {
+            showWarningPreload();
+        }
+    }
+});
+
+
+function showWarningPreload(){
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-bottom-right",
+      "preventDuplicates": true,
+      "onclick": null,
+      "showDuration": "500",
+      "hideDuration": "1000",
+      "timeOut": "7000",
+      "extendedTimeOut": "3000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+
+    toastr["warning"]("La imagen es valida, pero quizá el acta tarde en poco más en actualizarse, te recomendamos usar imagenes de menos de 5MB.", "IMAGEN PESADA")
+    // Aplicar estilo al mensaje de Toastr para aumentar el ancho
+    $(".toast").css("width", "420px");
+    $(".toast-title").css("color", "#611230");
+    $(".toast-message").css("color", "#fff");
+}
+
+function showErrorPreload(){
+    toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-bottom-right",
+      "preventDuplicates": true,
+      "onclick": null,
+      "showDuration": "500",
+      "hideDuration": "1000",
+      "timeOut": "7000",
+      "extendedTimeOut": "3000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+
+    toastr["error"]("La imagen es muy pesada, el límite es de 15MB.", "¡IMAGEN INVALIDA!")
+    // Aplicar estilo al mensaje de Toastr para aumentar el ancho
+    $(".toast").css("width", "420px");
+    $(".toast-title").css("color", "#d7a255");
+    $(".toast-message").css("color", "#fff");
+}

@@ -1,10 +1,10 @@
 <?php
 session_start();
 if (isset($_SESSION["id"]) && isset($_SESSION["nombre"]) && isset($_SESSION["apellido"]) && isset($_SESSION["userType"])) {
-  if($_SESSION["userType"] = 'ts') {
+  if($_SESSION["userType"] == 'ts') {
     header("Location: /views/ts/dashboard.php");
     exit;
-  } else if ($_SESSION["userType"] = 'adm') {
+  } else if ($_SESSION["userType"] == 'adm') {
     header("Location: /views/admin/dashboard.php");
     exit;
   } else {

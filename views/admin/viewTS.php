@@ -35,7 +35,7 @@ validarSesion('adm_session');
         </nav>
         <div class="section__container header__container" id="home">
             <p style="color: black">UPA Valle de Chalco Solidaridad</p>
-            <h1><span>Lista de Trabajadores</span></h1>
+            <h1><span style="font-size: 0.8em;">Lista de Trabajadores</span></h1>
         </div>
     </header>
 
@@ -62,10 +62,10 @@ validarSesion('adm_session');
         </div>
       </div>
       <div class="banner__card">
-        <h4>Buscar</h4>
-        <div class="searchbox">
-            <ion-icon name="search-sharp"></ion-icon>
-            <input type="text" name="searchData" id="searchData" placeholder="Ingrese busqueda..."/>
+          <div class="searchbox">
+              <h4>Buscar</h4>
+              <ion-icon name="search-sharp"></ion-icon>
+              <input type="text" name="searchData" id="searchData" placeholder="Ingrese busqueda..."/>
         </div>
       </div>
       <div class="banner__card">

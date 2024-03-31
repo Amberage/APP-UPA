@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ini_set('session.gc_maxlifetime', $tiempoSesion);
             session_set_cookie_params($tiempoSesion, '/');
             session_start();
-
+            
             // Contraseña correcta, iniciar sesión
             $_SESSION["id"] = $row["id"];
             $_SESSION["nombre"] = $row["nombre"];

@@ -1,12 +1,12 @@
 <?php
-/* include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
-validarSesion('gnr_session'); */
+include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+validarSesion('gnr_session');
 session_start();
 if (isset($_SESSION["id"]) && isset($_SESSION["nombre"]) && isset($_SESSION["apellido"]) && isset($_SESSION["userType"])) {
-  if($_SESSION["userType"] = 'ts') {
+  if($_SESSION["userType"] == 'ts') {
     header("Location: /views/ts/dashboard.php");
     exit;
-  } else if ($_SESSION["userType"] = 'adm') {
+  } else if ($_SESSION["userType"] == 'adm') {
     header("Location: /views/admin/dashboard.php");
     exit;
   } else {
@@ -23,7 +23,6 @@ if (isset($_SESSION["id"]) && isset($_SESSION["nombre"]) && isset($_SESSION["ape
   <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png"/>
   <link rel="stylesheet" href="/css/styles.css" />
   <title>UPA | Valle de Chalco Solidaridad</title>
-  <script src="/debug/showDebug.js"></script>
 </head>
 
 <body>

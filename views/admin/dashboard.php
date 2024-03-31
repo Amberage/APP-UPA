@@ -1,10 +1,6 @@
 <?php
-// Iniciar sesión si aún no está iniciada
-session_start();
-
-if ($_SESSION["userType"] != "adm") {
-    header("Location: /index.php");
-}
+include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+validarSesion('adm_session');
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +20,7 @@ if ($_SESSION["userType"] != "adm") {
         <nav>
             <div class="nav__bar">
                 <div class="logo">
-                    <a href="/index.php"><img src="/assets/images/logo_gobVDCH.png" alt="logo" /></a>
+                    <img id="logoVACH" src="/assets/images/logo_gobVDCH.png" alt="logo" />
                 </div>
                 <div class="nav__menu__btn" id="menu-btn">
                     <i class="ri-menu-line"></i>
@@ -41,7 +37,7 @@ if ($_SESSION["userType"] != "adm") {
         </div>
     </header>
 
-    <section class="section__container room__container">
+    <section class="section__container room__container" id="main">
         <div class="about__content">
             <p class="section__subheader">PANEL DE ADMINISTRACIÓN</p>
         </div>
@@ -139,8 +135,10 @@ if ($_SESSION["userType"] != "adm") {
             Valle de Chalco Solidaridad | Copyright © 2024
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
+    <script src="/javascript/adm_dashboard.js"></script>
 </body>
 
 </html>

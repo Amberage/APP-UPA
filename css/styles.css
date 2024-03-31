@@ -6,7 +6,7 @@
 Otros:
 Rojo claro: #871b35
 Rojo obscuro: #771631
-Rojo intenso: #ba1934
+Rojo más intenso que mi ex: #ba1934
 Falso blanco: #f0e5d4
 Dorado: #d7a255
 
@@ -163,6 +163,7 @@ nav {
   max-width: var(--max-width);
   margin: auto;
   z-index: 9;
+  margin-bottom: -80px;
 }
 
 .nav__bar {
@@ -227,7 +228,7 @@ nav {
 .header__container h1 {
   font-size: 4rem;
   font-weight: 500;
-  line-height: 4.5rem;
+  line-height: 4rem;
   color: var(--white);
   text-align: center;
 }
@@ -586,6 +587,12 @@ nav {
 
   .footer__container {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width < 768px) {
+  .nav__links a {
+    color: #ffe4e6;
   }
 }
 

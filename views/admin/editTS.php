@@ -103,20 +103,21 @@ if (isset($_GET['idTS'])) {
 
                     <div class="inputbox" id="inputPassword" style="display: none;">
                         <input type="password" id="password" minlength="6" pattern=".{6,36}"  title="Mínimo 6 caracteres, maximo 64 caracteres" disabled=true>
-                        <label>Contraseña</label>
+                        <label>Nueva Contraseña</label>
                     </div>
 
                     <div class="inputbox" id="inputConfirmPassword" style="display: none;">
                         <input type="password" id="confirmPassword" minlength="6" pattern=".{6,36}" disabled=true>
-                        <label>Confirmar Contraseña</label>
+                        <label>Confirmar Nueva Contraseña</label>
                     </div>
                 </form>
-                <div class="options">
-                    <div><button class="loginDisabled" id="editButton" style="width: 240px;" type="button" onClick="editTS()">Modificar Usuario</button></div>
+                
+                <div class="returnError" style="margin-top: 0px;" id="errorMsg"></div>
+                <div class="options" style="margin-top: -5px;">
+                    <div><button class="loginDisabled" id="editButton" style="width: 240px; margin-top: 15px;" type="button" onClick="editTS()">Modificar Usuario</button></div>
                     <div><button class="cancel" style="width: 240px; margin-top: 10px;" onClick="cancelTS();">Cancelar</button></div>
                 </div>
                 <div class="returnSuccesful" id="successMsg"></div>
-                <div class="returnError" style="margin-top: 0px;" id="errorMsg"></div>
             </div>
         </div>
     </section>

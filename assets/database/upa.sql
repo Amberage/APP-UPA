@@ -1,5 +1,8 @@
+/*l nombre de la base de datos puede variar según el hosting, 
+algunos permiten crearla directamente por CLI en otros 
+es necesario crearla desde el panel del hosting */
 CREATE DATABASE UPA;
-USE UPA
+USE UPA --
 
 CREATE TABLE usuarios(
     id INT AUTO_INCREMENT PRIMARY KEY,

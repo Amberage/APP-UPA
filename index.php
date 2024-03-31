@@ -1,7 +1,6 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
 validarSesion('gnr_session');
-session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">

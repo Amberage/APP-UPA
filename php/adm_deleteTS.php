@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $folios = array();
     $sql = "SELECT folio FROM mascotasPropietarios WHERE idTS = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $idTS);
+    $stmt->bind_param("i", $idTS);
     $stmt->execute();
     $result = $stmt->get_result();
     

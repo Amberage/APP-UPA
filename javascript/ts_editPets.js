@@ -173,6 +173,7 @@ function updatePet() {
                   }).then((result) => {
                     if (result.isConfirmed) {
                         printPet(folioActa);
+                        enableButton();
                     }
                   });
             } else {
@@ -240,12 +241,13 @@ function disableButton() {
     button.disabled = true;
     button.style.cursor = "not-allowed";
     button.style.backgroundColor = "#CCCCCC";
+}
 
-    setTimeout(function() {
-        button.disabled = false;
-        button.style.cursor = "pointer";
-        button.style.backgroundColor = "#2A8C77";
-    }, 5000);
+function enableButton() {
+    var button = document.getElementById("sendPet");
+    button.disabled = false;
+    button.style.cursor = "pointer";
+    button.style.backgroundColor = "#2A8C77";
 }
 
 // Evitar mandar datos innecesarios a la BBDD

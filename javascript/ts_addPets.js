@@ -161,6 +161,7 @@ function createPet() {
                   }).then((result) => {
                     if (result.isConfirmed) {
                         printPet(folio);
+                        enableButton();
                     }
                   });
             } else {
@@ -235,12 +236,13 @@ function disableButton() {
     button.disabled = true;
     button.style.cursor = "not-allowed";
     button.style.backgroundColor = "#CCCCCC";
+}
 
-    setTimeout(function() {
-        button.disabled = false;
-        button.style.cursor = "pointer";
-        button.style.backgroundColor = "#2A8C77";
-    }, 5000);
+function enableButton() {
+    var button = document.getElementById("sendPet");
+    button.disabled = false;
+    button.style.cursor = "pointer";
+    button.style.backgroundColor = "#2A8C77";
 }
 
 // Obtener el elemento de input de tipo file

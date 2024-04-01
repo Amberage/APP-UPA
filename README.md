@@ -32,3 +32,7 @@ Token SU: bFP-.gv0Mo1z1-jgf4'OAA(skBuW1=;u56bH{#3j-6"H}tz;D.R:oU(H;@o13Pk#
 2: admin ?2KJ9pcYb!
 3. UPAVACH SisUPa.23@#
 
+
+buttton habilitado hasta que se actualice la acta
+bug al enviar formato invalido, permite actualziar cuando no deberia
+

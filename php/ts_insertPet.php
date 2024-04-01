@@ -161,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
     
         } else {
-            $responseData['errorMsg'] = "El tamaño del archivo excede el límite permitido (20MB).";
+            $responseData['errorMsg'] = "El tamaño del archivo excede el límite permitido (15MB).";
             $esValido = false;
         }
     } else {

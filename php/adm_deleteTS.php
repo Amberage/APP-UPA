@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response = "";
     $queryResult = false;
 
-    $sqlName = "SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE idTS = ?";
+    $sqlName = "SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE id = 3";
     $stmt = $conn->prepare($sqlName);
     $stmt->bind_param("i", $idTS);
     $stmt->execute();

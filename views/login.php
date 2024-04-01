@@ -5,7 +5,6 @@ validarSesion('gnr_session');
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script src="/javascript/gnr_session.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />

@@ -1,7 +1,7 @@
-const loaderURL = "/php/st_getSessionData.php";
+const loaderURL_gnrSession = "/php/st_getSessionData.php";
 let id, nombre, apellido, userType;
 
-fetch(loaderURL, {
+fetch(loaderURL_gnrSession, {
     method: "POST"
 })
 .then(response => {

@@ -161,7 +161,6 @@ function createPet() {
                   }).then((result) => {
                     if (result.isConfirmed) {
                         printPet(folio);
-                        enableButton();
                     }
                   });
             } else {
@@ -172,6 +171,7 @@ function createPet() {
                   });
             }
             resetForm();
+            enableButton();
         })
         .catch((err) => console.log(err));
 }
@@ -231,18 +231,20 @@ function showWarningPic(){
 }
 
 function disableButton() {
-    showWarningPic();
     var button = document.getElementById("sendPet");
-    button.disabled = true;
-    button.style.cursor = "not-allowed";
-    button.style.backgroundColor = "#CCCCCC";
+    // Verificar si se ha cargado una imagen para mostrar la alerta de espera.
+    let inputFile = document.getElementById('petPicture');
+    if (inputFile.files && inputFile.files[0]) {
+        showWarningPic();
+    }
+    button.classList.add("loginDisabled");
+    button.classList.remove("login");
 }
 
 function enableButton() {
     var button = document.getElementById("sendPet");
-    button.disabled = false;
-    button.style.cursor = "pointer";
-    button.style.backgroundColor = "#2A8C77";
+    button.classList.remove("loginDisabled");
+    button.classList.add("login");
 }
 
 // Obtener el elemento de input de tipo file

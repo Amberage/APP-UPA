@@ -173,7 +173,6 @@ function updatePet() {
                   }).then((result) => {
                     if (result.isConfirmed) {
                         printPet(folioActa);
-                        enableButton();
                     }
                   });
             } else {
@@ -184,7 +183,7 @@ function updatePet() {
                     icon: "error"
                   });
             }
-
+            enableButton();
         })
         .catch((err) => console.log(err));
 }
@@ -232,23 +231,22 @@ function showWarningPic(){
 }
 
 function disableButton() {
+    var button = document.getElementById("sendPet");
     // Verificar si se ha cargado una imagen para mostrar la alerta de espera.
     let inputFile = document.getElementById('petPicture');
     if (inputFile.files && inputFile.files[0]) {
         showWarningPic();
     }
-    var button = document.getElementById("sendPet");
-    button.disabled = true;
-    button.style.cursor = "not-allowed";
-    button.style.backgroundColor = "#CCCCCC";
+    button.classList.add("loginDisabled");
+    button.classList.remove("login");
 }
 
 function enableButton() {
     var button = document.getElementById("sendPet");
-    button.disabled = false;
-    button.style.cursor = "pointer";
-    button.style.backgroundColor = "#2A8C77";
+    button.classList.remove("loginDisabled");
+    button.classList.add("login");
 }
+
 
 // Evitar mandar datos innecesarios a la BBDD
 var petNameInput = document.getElementById('petName');

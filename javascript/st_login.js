@@ -11,7 +11,7 @@ function login() {
         sessionTime = 'off';
     }
 
-    const loaderURL = "/php/st_login.php";
+    const urLogin = "/php/st_login.php";
 
     let formData = new FormData();
     formData.append("username", username);
@@ -19,7 +19,7 @@ function login() {
     formData.append("sessionTime", sessionTime);
     
     //Enviarlos via POST
-    fetch(loaderURL, {
+    fetch(urLogin, {
         method: "POST",
         body: formData,
     })

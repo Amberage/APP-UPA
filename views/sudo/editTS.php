@@ -6,6 +6,12 @@ validarSesion('adm_session');
 // Verifica si se recibió el parámetro 'idTS'
 if (isset($_GET['idTS'])) {
     $idTS = $_GET['idTS'];
+
+    if($idTS >= 1 && $idTS <= 3) {
+        $visibility = "none";
+    } else {
+        $visibility = "block";
+    }
     $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
     
     // Verificar la conexión
@@ -82,7 +88,7 @@ if (isset($_GET['idTS'])) {
     <div class="form-box">
             <div class="form-value">
                 <form autocomplete="off">
-                <input type="text" name="idTS" id="idTS" value=<?php echo $idTS?> style="display: none;"/>
+                <input type="text" name="idTS" id="idTS" value="<?php echo $idTS ?>" style="display: none;"/>
                     <div class="inputbox">
                         <input type="text" id="tsName" value="<?php echo isset($bd_nombre) ? $bd_nombre : ''; ?>" required/>
                         <label>Nombre</label>
@@ -98,11 +104,11 @@ if (isset($_GET['idTS'])) {
                         <label>Nombre de Usuario</label>
                     </div>
 
-                    <div class="selectBox">
+                    <div class="selectBox" style="display: <?php echo $visibility ?>">
                         <select name="userType" id="userType">
                             <option value="">Seleccione Cuenta</option>
-                            <option value="adm" <?php if(isset($bd_userType) && $bd_userType == 'adm') echo 'selected'; ?>>Administrador</option>
-                            <option value="ts" <?php if(isset($bd_userType) && $bd_userType == 'ts') echo 'selected'; ?>>Trabajador Social</option>
+                            <option value="adm" <?php if(isset($bd_userType) && $bd_userType == 'adm') echo 'selected="selected"'; ?>>Administrador</option>
+                            <option value="ts" <?php if(isset($bd_userType) && $bd_userType == 'ts') echo 'selected="selected"'; ?>>Trabajador Social</option>
                         </select>
                         <label>Tipo de Cuenta</label>
                     </div>

@@ -110,14 +110,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 function getNameUPA($servername, $mysql_username, $mysql_password, $dbname) {
     $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
     $sqlName = "SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE id = 3";
+    // Ejecutar la consulta SQL
+    $result = $conn->query($sqlName);
     // Verificar si hay resultados
-    if ($result->num_rows > 0) {
+    if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $upaName = $row["nombre_completo"];
     } else {
         $upaName = "una cuenta de administración.";
     }
-
     return $upaName;
 }
+
 ?>

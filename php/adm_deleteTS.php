@@ -15,12 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $queryResult = false;
 
     $sqlName = "SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE id = 3";
-    $stmt = $conn->prepare($sqlName);
-    $stmt->bind_param("i", $idTS);
-    $stmt->execute();
-    $stmt->bind_result($upaName);
-    $stmt->fetch();
-    $stmt->close();
+    // Verificar si hay resultados
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $upaName = $row["nombre_completo"];
+    }
+    
 
     // Paso 1: Verificar existencia de actas
     $folios = array();

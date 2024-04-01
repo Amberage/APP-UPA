@@ -14,6 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $response = "";
     $queryResult = false;
 
+    $sqlName = "SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE idTS = ?";
+    $stmt = $conn->prepare($sqlName);
+    $stmt->bind_param("i", $idTS);
+    $stmt->execute();
+    $stmt->bind_result($upaName);
+    $stmt->fetch();
+    $stmt->close();
+
     // Paso 1: Verificar existencia de actas
     $folios = array();
     $sql = "SELECT folio FROM mascotasPropietarios WHERE idTS = ?";
@@ -69,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($stmt->affected_rows > 0) {
                 $queryResult = true;
-                $response = "El usuario ha sido eliminado, " . count($folios) . " actas que tenía registradas ahora son propiedad de UPA Valle de Chalco Solidaridad";
+                $response = "El usuario ha sido eliminado, " . count($folios) . " actas que tenía registradas ahora son propiedad de $upaName";
             } else {
                 $queryResult = false;
                 $response = "Error al eliminar el usuario con el idTS: " . $idTS . ". No se encontraron actas asociadas al usuario.";

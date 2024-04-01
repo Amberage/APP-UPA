@@ -15,7 +15,7 @@ function resetDB() {
     inputAttributes: {
       paste: false,
       autocapitalize: "off",
-      autocorrect: "off"
+      autocorrect: "off",
     },
     customClass: {
       input: "swalInput",
@@ -46,6 +46,9 @@ function resetDB() {
           let mP = responseData.mP;
           let b_mP = responseData.b_mP;
           let users = responseData.users;
+          let resetUsers = responseData.resetUsers;
+          let warning = responseData.warning;
+
           if (queryStatus === false) {
             Swal.fire({
               title: "¡Error al realizar el proceso!",
@@ -74,16 +77,25 @@ function resetDB() {
                       <li>${mP}</li>
                       <li>${b_mP}</li>
                       <li>${users}</li>
+                      <li>${resetUsers}</li>
                     </ul>`;
 
             Swal.fire({
               title: "¡La base de datos fue reiniciada!",
               html: listHTML,
               icon: "success",
+              willClose: () => {
+                downloadLink.click();
+                deleteLog();
+                if (warning === true) {
+                  Swal.fire({
+                    title: "¡ADVERTENCIA!",
+                    html: `Se ha reseteado la base de datos, sin embargo no se han podido reestablecer las contraseñas de los administradores de default (sistemavach, admin y UPAVACH). <br><br> <b style="color: #ba1934">"Reestablece INMEDIATAMENTE la base de datos manualmente, usa el script en /assets/database/upa.sql"</b>`,
+                    icon: "warning",
+                  });
+                }
+              },
             });
-
-            downloadLink.click();
-            deleteLog();
           }
         })
         .catch((err) => console.log(err));

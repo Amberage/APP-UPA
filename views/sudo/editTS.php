@@ -14,7 +14,7 @@ if (isset($_GET['idTS'])) {
     }
     
     // Preparar la consulta SQL
-    $sql = "SELECT nombre, apellido, username FROM `usuarios` WHERE id = $idTS";
+    $sql = "SELECT nombre, apellido, username, userType FROM `usuarios` WHERE id = $idTS";
     
     // Ejecutar la consulta
     $result = $conn->query($sql);
@@ -26,16 +26,17 @@ if (isset($_GET['idTS'])) {
         $bd_nombre = $row['nombre'];
         $bd_apellido = $row['apellido'];
         $bd_username = $row['username'];
+        $bd_userType = $row['userType'];
     } else {
         //die("Error del servidor: Se solicitó un ID inexistente, favor de comunicarse con el departamento de sistemas.");
-        header("Location: /views/admin/viewTS.php");
+        header("Location: /views/sudo/viewTS.php");
     }
     // Cerrar la conexión
     $conn->close();
 } else {
     // Si no se recibe el parámetro 'idTS', muestra un mensaje de error o redirecciona al usuario
     //die("Error en el servidor: Error del 'GET' en la modificación de mascotas, favor de comunicarse con el departamento de sistemas.");
-    header("Location: /views/admin/viewTS.php");
+    header("Location: /views/sudo/viewTS.php");
 }
 ?>
 
@@ -48,8 +49,9 @@ if (isset($_GET['idTS'])) {
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/petAdd.css" />
     <link rel="stylesheet" href="/css/login.css" />
-    <title>UPA | Editar Trabajador</title>
+    <title>SU | Editar Trabajador</title>
 </head>
 
 <body>
@@ -64,14 +66,13 @@ if (isset($_GET['idTS'])) {
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/admin/dashboard.php">Administración</a></li>
-                <li><a href="/views/admin/viewTS.php">Administrar Trabajadores</a></li>
-                <li><a href="/views/admin/viewPets.php">Administrar Actas</a></li>
-                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
+                <li><a href="/views/sudo/dashboard.php">Superadministrador</a></li>
+                <li><a href="/views/admin/dashboard.php">Administrador</a></li>
+                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Cerrar Sesión</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">
-            <p style="color: black;">UPA Valle de Chalco Solidaridad</p>
+            <p style="color: black;">Modo Super Administrador</p>
             <h1><span>Editar Usuarios</span></h1>
         </div>
     </header>
@@ -83,18 +84,27 @@ if (isset($_GET['idTS'])) {
                 <form autocomplete="off">
                 <input type="text" name="idTS" id="idTS" value=<?php echo $idTS?> style="display: none;"/>
                     <div class="inputbox">
-                        <input type="text" id="tsName" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,25}" value="<?php echo isset($bd_nombre) ? $bd_nombre : ''; ?>" required title="Solo letras y espacios" maxlength="25"/>
+                        <input type="text" id="tsName" value="<?php echo isset($bd_nombre) ? $bd_nombre : ''; ?>" required/>
                         <label>Nombre</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" id="tsLastname" pattern="[A-Za-záéíóúÁÉÍÓÚñÑ\s]{3,40}" value="<?php echo isset($bd_apellido) ? $bd_apellido : ''; ?>" required title="Solo letras y espacios" maxlength="40"/>
+                        <input type="text" id="tsLastname" value="<?php echo isset($bd_apellido) ? $bd_apellido : ''; ?>" required/>
                         <label>Apellido</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" id="username" pattern="[a-zA-Z0-9_.]{4,12}" value="<?php echo isset($bd_username) ? $bd_username : ''; ?>" required title="Mínimo 4 caracteres, se permiten letras (sin ñ), números, _ y ." onkeydown="return killSpace(event);" onpaste="return false">
+                        <input type="text" id="username" value="<?php echo isset($bd_username) ? $bd_username : ''; ?>" required onkeydown="return killSpace(event);" onpaste="return false">
                         <label>Nombre de Usuario</label>
+                    </div>
+
+                    <div class="selectBox">
+                        <select name="userType" id="userType">
+                            <option value="">Seleccione Cuenta</option>
+                            <option value="adm" <?php if(isset($bd_userType) && $bd_userType == 'adm') echo 'selected'; ?>>Administrador</option>
+                            <option value="ts" <?php if(isset($bd_userType) && $bd_userType == 'ts') echo 'selected'; ?>>Trabajador Social</option>
+                        </select>
+                        <label>Tipo de Cuenta</label>
                     </div>
 
                     <div class="pwdEdit" style="text-align: center;">
@@ -102,12 +112,12 @@ if (isset($_GET['idTS'])) {
                     </div>
 
                     <div class="inputbox" id="inputPassword" style="display: none;">
-                        <input type="password" id="password" minlength="6" pattern=".{6,36}"  title="Mínimo 6 caracteres, maximo 64 caracteres" disabled=true>
+                        <input type="password" id="password"  disabled=true>
                         <label>Nueva Contraseña</label>
                     </div>
 
                     <div class="inputbox" id="inputConfirmPassword" style="display: none;">
-                        <input type="password" id="confirmPassword" minlength="6" pattern=".{6,36}" disabled=true>
+                        <input type="password" id="confirmPassword" disabled=true>
                         <label>Confirmar Nueva Contraseña</label>
                     </div>
                 </form>
@@ -173,7 +183,7 @@ if (isset($_GET['idTS'])) {
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/javascript/adm_editTS.js"></script>
+    <script src="/javascript/sudo_editTS.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

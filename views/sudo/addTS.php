@@ -5,14 +5,14 @@ validarSesion('adm_session');
 
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
     <link rel="stylesheet" href="/css/styles.css" />
-    <title>UPA | Superadministrador</title>
+    <link rel="stylesheet" href="/css/petAdd.css" />
+    <title>SU | Registrar Trabajadores</title>
 </head>
 
 <body>
@@ -27,62 +27,66 @@ validarSesion('adm_session');
                 </div>
             </div>
             <ul class="nav__links" id="nav-links">
-                <li><a href="/views/admin/dashboard.php">Volver a Administración</a></li>
-                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Salir</a></li>
+                <li><a href="/views/sudo/dashboard.php">Superadministrador</a></li>
+                <li><a href="/views/admin/dashboard.php">Administrador</a></li>
+                <li><a href="#" id="killSession" style="color: #ba1934; font-weight: bold;">Cerrar Sesión</a></li>
             </ul>
         </nav>
         <div class="section__container header__container" id="home">
-            <p style="color: black;">UPA Valle de Chalco Solidaridad</p>
-            <h1 style="font-size: 3em;"><span>Super Administrador</span></h1>
+            <p style="color: black;">Modo Super Administrador</p>
+            <h1><span>Registrar Usuarios</span></h1>
         </div>
     </header>
 
-    <section class="section__container room__container" id="main">
-        <div class="about__content">
-            <p class="section__subheader">PANEL DE SUPER ADMINISTRACIÓN</p>
-        </div>
-        <div class="room__grid">
-            <a class="adminSection" href="#home" onClick="resetDB()">
-                <div class="room__card">
-                    <div class="room__card__image">
-                        <img src="/assets/images/sudo_restoreBD.png" alt="Registrar Trabajadores Sociales" />
+    <!-- Ingresar registro aqui abajo -->
+    <section class="login" style="padding-bottom: 150px; padding-top: 100px; animation: showSlow 1s forwards;">
+    <div class="form-box">
+            <div class="form-value">
+                <form autocomplete="off">
+                    <div class="inputbox">
+                        <input type="text" id="tsName" required/>
+                        <label>Nombre</label>
                     </div>
-                    <div class="room__card__details">
-                        <h4>Reiniciar Base de Datos</h4>
-                        <p style="text-align: justify;"> Reinicia la base de datos, <span class="impact">los trabajadores y las actas se perderán.</span>
-                            </p>
-                    </div>
-                </div>
-            </a>
 
-            <a class="adminSection" href="/views/sudo/addTS.php">
-                <div class="room__card">
-                    <div class="room__card__image">
-                        <img src="/assets/images/admin_registerUser.png" alt="Registrar Trabajadores Sociales" />
+                    <div class="inputbox">
+                        <input type="text" id="tsLastname" required/>
+                        <label>Apellido</label>
                     </div>
-                    <div class="room__card__details">
-                        <h4>Registrar Usuarios</h4>
-                        <p style="text-align: justify;"> Registra usuarios, <span class="impact">ignorando el control de errores.</span>
-                            </p>
-                    </div>
-                </div>
-            </a>
 
-            <a class="adminSection" href="/views/sudo/viewTS.php">
-                <div class="room__card">
-                    <div class="room__card__image">
-                        <img src="/assets/images/admin_adminUser.png" alt="Registrar Trabajadores Sociales" />
+                    <div class="inputbox">
+                        <input type="text" id="username" required>
+                        <label>Nombre de Usuario</label>
                     </div>
-                    <div class="room__card__details">
-                        <h4>Editar Usuarios</h4>
-                        <p style="text-align: justify;"> Editar usuarios, <span class="impact">ignorando el control de errores.</span>
-                            </p>
-                    </div>
-                </div>
-            </a>
 
+                    <div class="inputbox">
+                        <input type="password" id="password" required>
+                        <label>Contraseña</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="password" id="confirmPassword" required>
+                        <label>Confirmar Contraseña</label>
+                    </div>
+
+                    <div class="selectBox">
+                        <select name="userType" id="userType">
+                            <option value="">Seleccione Cuenta</option>
+                            <option value="adm">Administrador</option>
+                            <option value="ts">Trabajador Social</option>
+                        </select>
+                        <label>Tipo de Cuenta</label>
+                    </div>
+                </form>
+                <div class="returnError" style="margin-top: 0px;" id="errorMsg"></div>
+                <div class="returnSuccesful" id="successMsg"></div>
+                <div class="options" style="margin-top: 10px;">
+                    <div><button class="login" style="width: 240px;" type="button" onClick="sendTS()">Registrar Usuario</button></div>
+                    <div><button class="cancel" style="width: 240px; margin-top: 10px;" onClick="back();">Volver</button></div>
+                </div>
+            </div>
         </div>
     </section>
+    <!-- Ingresar registro aqui arriba -->
 
     <footer class="footer" id="contact">
         <div class="section__container footer__container">
@@ -133,10 +137,12 @@ validarSesion('adm_session');
             Valle de Chalco Solidaridad | Copyright © 2024
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/javascript/sudo_addTS.js"></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="/javascript/indexAnimations.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/javascript/sudo_dashboard.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>

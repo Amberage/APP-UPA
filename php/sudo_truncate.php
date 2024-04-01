@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Eliminar usuarios
         $log .= "\n\n\n*** REGISTRO TABLA usuarios ***\n";
-        $sql_delUser = "DELETE FROM usuarios WHERE id > 3";
+        $sql_delUser = "DELETE FROM usuarios";
         if ($conn->query($sql_delUser) === TRUE) {
             $responseData['users'] = '¡Usuarios eliminados con éxito!';
             $log .= "¡Usuarios eliminados con éxito!\n";
@@ -102,9 +102,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $log .= "Error al eliminar usuarios: " . $conn->error . "\n";
         }
 
+        $sqlResetUsers = "INSERT INTO usuarios (id, nombre, apellido, username, password, userType, fechaRegistro)
+        VALUES 
+        (1, 'Gobierno', 'Valle de Chalco Solidaridad', 'sistemavach', '\$2y\$10\$DR1clMGMAi.6T6ZMecdOYOBMlggtg0O.ksLLROJ9IXpgDcomR6c5y', 'adm', '2000-01-01 00:00:00'),
+        (2, 'Administrador', 'UPA', 'admin', '\$2y\$10\$JMi/XGgXMGo8QLbHTz5IOe0/MMlzVxbN8BBhfQIYUrC4oZqMgqip6', 'adm', '2000-01-01 00:00:00'),
+        (3, 'UPA', 'Valle de Chalco Solidaridad', 'UPAVACH', '\$2y\$10\$HV5e7mPDEjcqehD.wJma.eCEMiSN941v9ar/AqPse1lQqOCZUhsPu', 'adm', '2000-01-01 00:00:00')";
+
+        if ($conn->query($sqlResetUsers) === TRUE) {
+            $responseData['resetUsers'] = '¡Administradores reseteados con éxito!';
+            $log .= "¡Administradores reseteados con éxito!\n";
+            $responseData['warning'] = false;
+        } else {
+            $responseData['resetUsers'] = "Error al resetear administradores: " . $conn->error;
+            $log .= "Error al resetear administradores: " . $conn->error . "\n";
+            $responseData['warning'] = true;
+        }
+
         $fechaLogin = getFecha();
         $log .= "\n\n\n" . $fechaLogin;
         $conn->close();
+
         echo json_encode($responseData, JSON_UNESCAPED_UNICODE);
 
         // Ruta donde quieres guardar el archivo .txt
@@ -175,7 +192,7 @@ function getFecha() {
     }
 
     // Construir el mensaje con la fecha y hora del proceso
-    $mensaje = "PROCESO FINALIZADO: \n Realizado el día $dia del mes de $nombre_mes del año $año a las $hora:$minuto";
+    $mensaje = "PROCESO FINALIZADO: \nRealizado el día $dia del mes de $nombre_mes del año $año a las $hora:$minuto";
 
     // Retornar el mensaje
     return $mensaje;

@@ -3,6 +3,7 @@ require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idUPA = 3;
+    $upaName = getNameUPA($servername, $mysql_username, $mysql_password, $dbname);
     $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
 
     // Verificar conexión
@@ -13,14 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idTS = $conn->real_escape_string($_POST['idTS']);
     $response = "";
     $queryResult = false;
-
-    $sqlName = "SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE id = 3";
-    // Verificar si hay resultados
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $upaName = $row["nombre_completo"];
-    }
-    
 
     // Paso 1: Verificar existencia de actas
     $folios = array();
@@ -112,5 +105,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     );
 
     echo json_encode($result, JSON_UNESCAPED_UNICODE);
+}
+
+function getNameUPA($servername, $mysql_username, $mysql_password, $dbname) {
+    $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
+    $sqlName = "SELECT CONCAT(nombre, ' ', apellido) AS nombre_completo FROM usuarios WHERE id = 3";
+    // Verificar si hay resultados
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $upaName = $row["nombre_completo"];
+    } else {
+        $upaName = "una cuenta de administración.";
+    }
+
+    return $upaName;
 }
 ?>

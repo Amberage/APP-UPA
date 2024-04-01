@@ -44,17 +44,17 @@ validarSesion('adm_session');
             <div class="form-value">
                 <form autocomplete="off">
                     <div class="inputbox">
-                        <input type="text" id="tsName" required/>
+                        <input type="text" id="tsName" required maxlength="50"/>
                         <label>Nombre</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" id="tsLastname" required/>
+                        <input type="text" id="tsLastname" required maxlength="50"/>
                         <label>Apellido</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" id="username" required>
+                        <input type="text" id="username" required maxlength="12">
                         <label>Nombre de Usuario</label>
                     </div>
 

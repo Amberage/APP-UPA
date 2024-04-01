@@ -28,9 +28,10 @@ session.gc_maxlifetime = 2592000
 
 Token SU: bFP-.gv0Mo1z1-jgf4'OAA(skBuW1=;u56bH{#3j-6"H}tz;D.R:oU(H;@o13Pk#
 
-1: sistemavach system@vach!
+1: sistemasVACH 5yg%gpmcv^$&93^4D4AnUr5ACHakDAw9
 2: admin ?2KJ9pcYb!
 3. UPAVACH SisUPa.23@#
+
 
 
 Deshabilitar cambio de tipo de cuenta en 1 2 y 3

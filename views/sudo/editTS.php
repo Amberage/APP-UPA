@@ -8,10 +8,18 @@ if (isset($_GET['idTS'])) {
     $idTS = $_GET['idTS'];
 
     if($idTS >= 1 && $idTS <= 3) {
-        $visibility = "none";
+        $visibilityUserType = "none";
     } else {
-        $visibility = "block";
+        $visibilityUserType = "block";
     }
+
+    if($idTS == 1) {
+        $visibilityPassword = "none";
+    } else {
+        $visibilityPassword = "block";
+    }
+
+    
     $conn = new mysqli($servername, $mysql_username, $mysql_password, $dbname);
     
     // Verificar la conexión
@@ -90,21 +98,21 @@ if (isset($_GET['idTS'])) {
                 <form autocomplete="off">
                 <input type="text" name="idTS" id="idTS" value="<?php echo $idTS ?>" style="display: none;"/>
                     <div class="inputbox">
-                        <input type="text" id="tsName" value="<?php echo isset($bd_nombre) ? $bd_nombre : ''; ?>" required/>
+                        <input type="text" id="tsName" value="<?php echo isset($bd_nombre) ? $bd_nombre : ''; ?>" required maxlength="50"/>
                         <label>Nombre</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" id="tsLastname" value="<?php echo isset($bd_apellido) ? $bd_apellido : ''; ?>" required/>
+                        <input type="text" id="tsLastname" value="<?php echo isset($bd_apellido) ? $bd_apellido : ''; ?>" required maxlength="50"/>
                         <label>Apellido</label>
                     </div>
 
                     <div class="inputbox">
-                        <input type="text" id="username" value="<?php echo isset($bd_username) ? $bd_username : ''; ?>" required onkeydown="return killSpace(event);" onpaste="return false">
+                        <input type="text" id="username" value="<?php echo isset($bd_username) ? $bd_username : ''; ?>" required onkeydown="return killSpace(event);" onpaste="return false" maxlength="12">
                         <label>Nombre de Usuario</label>
                     </div>
 
-                    <div class="selectBox" style="display: <?php echo $visibility ?>">
+                    <div class="selectBox" style="display: <?php echo $visibilityUserType ?>">
                         <select name="userType" id="userType">
                             <option value="">Seleccione Cuenta</option>
                             <option value="adm" <?php if(isset($bd_userType) && $bd_userType == 'adm') echo 'selected="selected"'; ?>>Administrador</option>
@@ -113,7 +121,7 @@ if (isset($_GET['idTS'])) {
                         <label>Tipo de Cuenta</label>
                     </div>
 
-                    <div class="pwdEdit" style="text-align: center;">
+                    <div class="pwdEdit" style="text-align: center; display: <?php echo $visibilityPassword ?>">
                         <label style="color: #9d2348;"><input type="checkbox" id="editPassword" onClick="changePassword();"> Modificar Contraseña</label>
                     </div>
 

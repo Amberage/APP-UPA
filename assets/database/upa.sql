@@ -114,7 +114,7 @@ END;
 -- Valores default
 INSERT INTO usuarios (id, nombre, apellido, username, password, userType, fechaRegistro)
 VALUES 
-(1, 'Gobierno', 'Valle de Chalco Solidaridad', 'sistemavach', '$2y$10$DR1clMGMAi.6T6ZMecdOYOBMlggtg0O.ksLLROJ9IXpgDcomR6c5y', 'adm', '2000-01-01 00:00:00'),
+(1, 'Departamento de Sistemas', 'Valle de Chalco Solidaridad', 'sistemasVACH', '$2y$10$ffTcEA8iVlI..xWxfTIeOeGAskoTrdjYPDEzCSkLj5vYA.J9cCrAS', 'adm', '2000-01-01 00:00:00'),
 (2, 'Administrador', 'UPA', 'admin', '$2y$10$JMi/XGgXMGo8QLbHTz5IOe0/MMlzVxbN8BBhfQIYUrC4oZqMgqip6', 'adm', '2000-01-01 00:00:00'),
 (3, 'UPA', 'Valle de Chalco Solidaridad', 'UPAVACH', '$2y$10$HV5e7mPDEjcqehD.wJma.eCEMiSN941v9ar/AqPse1lQqOCZUhsPu', 'adm', '2000-01-01 00:00:00');
 

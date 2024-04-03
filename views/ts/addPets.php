@@ -1,5 +1,5 @@
 <?php
-include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+require ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
 validarSesion('ts_session');
 ?>
 

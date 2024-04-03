@@ -1,7 +1,8 @@
 <?php
-require ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
 validarSesion('gnr_session');
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +12,7 @@ validarSesion('gnr_session');
   <link rel="icon" type="image/png" href="/assets/images/logo_muncipioVDCH.png" />
   <link rel="stylesheet" href="/css/login.css" />
   <link rel="stylesheet" href="/css/styles.css" />
-  <title>UPA | Ingresar</title>
+  <title>UPA | Consultar Acta</title>
 </head>
 
 <body>
@@ -27,13 +28,12 @@ validarSesion('gnr_session');
         </div>
       </div>
       <ul class="nav__links" id="nav-links">
-        <li><a href="/views/consultarActa.php">Consultar Acta</a></li>
-        <li><a href="/index.php"><span><i class="ri-home-4-fill"></i></span></a></li>
+        <li><a href="/index.php">Inicio <span><i class="ri-home-4-fill"></i></span></a></li>
       </ul>
     </nav>
     <div class="section__container header__container" id="home">
       <p style="color: black;">UPA Valle de Chalco Solidaridad</p>
-      <h1><span>Sistema de Control</span></h1>
+      <h1><span>Consultar Acta</span></h1>
     </div>
   </header>
 
@@ -42,38 +42,24 @@ validarSesion('gnr_session');
     <div class="form-box">
       <div class="form-value">
         <form autocomplete="off">
-          <h2 class="login">Ingresar</h2>
+          <h2 class="login">¡Busca tu Acta!</h2>
           <div class="inputbox">
-            <ion-icon name="person-circle-outline"></ion-icon>
-            <input id="username" type="text" required>
-            <label>Nombre de Usuario</label>
+            <ion-icon name="paw"></ion-icon>
+            <input id="folio" type="text" required maxlength="6" onkeydown="return killStrings(event);" onpaste="return false">
+            <label>FOLIO</label>
           </div>
           <div class="inputbox">
-            <ion-icon name="lock-closed-outline"></ion-icon>
-            <input id="password" type="password" required>
-            <label>Contraseña</label>
-          </div>
-          <div class="forget">
-            <label style="color: #1a5c50;"><input type="checkbox" id="sessionTime"> Mantener sesión iniciada</label>
+            <ion-icon name="id-card"></ion-icon>
+            <input id="ine" type="text" required maxlength="18" onkeydown="return allowInput(event);" onpaste="return false" oninput="upperCase(this);">
+            <label>NÚMERO DE INE</label>
           </div>
         </form>
-        <div style="margin-top: 20px;"><button class="login" type="button" onClick="login();">Ingresar</button></div>
-        <div class="returnError" style="margin-top:10px;" id="errorMsg"></div>
+        <div style="margin-top: 20px;"><button class="login" type="button" onClick="search();">Buscar</button></div>
+        <div class="returnError" style="margin-top:10px" id="errorMsg"></div>
       </div>
     </div>
   </section>
   <!-- Ingresar login aqui arriba -->
-
-  <section class="explore" id="consultarActa">
-    <p class="section__subheader">ADOPCIÓN</p>
-    <h2 class="section__header">CONSULTA TU ACTA</h2>
-    <div class="explore__bg">
-      <div class="explore__content">
-        <h4 style="text-align: justify;">¿Tienes un acta y quieres reimprimirla o descargarla?</h4>
-        <button class="btn" onclick="window.location.href='/views/consultarActa.php'">Consulta el acta de tu mascota</button>
-      </div>
-    </div>
-  </section>
 
   <footer class="footer" id="contact">
     <div class="section__container footer__container">
@@ -124,11 +110,15 @@ validarSesion('gnr_session');
       Valle de Chalco Solidaridad | Copyright © 2024
     </div>
   </footer>
-  <script src="/javascript/st_login.js"></script>
   <script src="https://unpkg.com/scrollreveal"></script>
   <script src="/javascript/indexAnimations.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/API/libraries/jquery.min.js"></script>
+  <script src="/API/libraries/toastr.min.js"></script>
+  <script src="/javascript/gnr_buscarActa.js"></script>
+  <script src="/API/imprimirActa.js"></script>
 </body>
 
 </html>

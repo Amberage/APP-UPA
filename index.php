@@ -28,7 +28,7 @@ validarSesion('gnr_session');
       <ul class="nav__links" id="nav-links">
         <li><a href="#aboutUS">¿Quiénes somos?</a></li>
         <li><a href="#services">Servicios</a></li>
-        <li><a href="#consultarActa">Consultar Acta</a></li>
+        <li><a href="/views/consultarActa.php">Consultar Acta</a></li>
         <li><a href="#contact">Contáctanos</a></li>
         <li><a href="/views/login.php" style="color: #ba1934; font-weight: bold;">Ingresar</a></li>
         <li id="debugMenu" style="display: none;"><a href="debug/debugPanel.php"><span><i class="ri-code-box-fill"></i></span></a></li>
@@ -151,8 +151,8 @@ validarSesion('gnr_session');
     <h2 class="section__header">CONSULTA TU ACTA</h2>
     <div class="explore__bg">
       <div class="explore__content">
-        <h4 style="text-align: justify;">¿Recientemente has adoptado una mascota y quieres consultar su acta?</h4>
-        <button class="btn">Consulta el acta de tu mascota</button>
+        <h4 style="text-align: justify;">¿Tienes un acta y quieres reimprimirla o descargarla?</h4>
+        <button class="btn" onclick="window.location.href='/views/consultarActa.php'">Consulta el acta de tu mascota</button>
       </div>
     </div>
   </section>

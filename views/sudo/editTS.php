@@ -1,6 +1,6 @@
 <?php
-include ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
-include ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
+require ($_SERVER['DOCUMENT_ROOT'] . '/config/config.php');
+require ($_SERVER['DOCUMENT_ROOT'] . '/php/st_validateSession.php');
 validarSesion('adm_session');
 
 // Verifica si se recibió el parámetro 'idTS'

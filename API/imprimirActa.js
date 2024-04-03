@@ -252,3 +252,48 @@ function printPetBackup(folio) {
         .catch((err) => console.log(err));
     }
 }
+
+
+function printPetUser(folio) {
+    if (isNaN(folio)) {
+        Swal.fire({
+            title: "¡ERROR!",
+            html: "Ocurrió un error al generar el acta, si el problema persiste comunicate con nosotros para estar al tanto del problema. ERROR: 19C11A",
+            icon: "error"
+          });
+        return;
+    } else {
+        const loaderURL = "/php/getPrintPetData.php";
+        let formData = new FormData();
+        formData.append("folio", folio);
+        //Enviarlos via POST
+        fetch(loaderURL, {
+        method: "POST",
+        body: formData,
+    })
+        .then((response) => response.json())
+        .then((responseData) => {
+            let successMsg  = responseData.successMsg;
+            let errorMsg  = responseData.errorMsg;
+            let resultQuery = responseData.resultQuery;
+
+            if(resultQuery === false) {
+                Swal.fire({
+                    title: "¡Error!",
+                    text: errorMsg,
+                    icon: "error"
+                  });
+            }
+
+            if(resultQuery === true) {
+                Swal.fire({
+                    title: successMsg,
+                    html: '<b>Este proceso puede demorar debido a la velocidad de internet o tu dispositivo, no olvides revisar tus descargas.</b>',
+                    icon: "success"
+                  });
+                createPDF(responseData[0].folio, responseData[0].petName, responseData[0].petSex, responseData[0].petBreed, responseData[0].petColor, responseData[0].petPicture, responseData[0].ownerName, responseData[0].ownerCURP, responseData[0].ownerINE, responseData[0].ownerColony, responseData[0].ownerAddress, responseData[0].nombreTS, responseData[0].dia, responseData[0].mes, responseData[0].anio);
+            }
+        })
+        .catch((err) => console.log(err));
+    }
+}

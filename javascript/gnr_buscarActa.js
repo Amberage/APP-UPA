@@ -27,14 +27,12 @@ function searchPet() {
       const resultQuery = responseData.resultQuery;
 
       if (resultQuery == true) {
-        console.log("activado true")
         printPetUser(printFolio);
         document.getElementById("folio").value = "";
         document.getElementById("ine").value = "";
       }
 
       if (resultQuery == false) {
-        console.log("activado false")
         Swal.fire({
           title: "¡ERROR!",
           html: "No se encontro ningún acta con los datos proporcionados, revisa los datos y si el problema persiste asiste a las <a href='https://maps.app.goo.gl/Kr1hdXWRYfJMzRgD7'>instalaciones de la UPA</a> para revisar tu caso.",

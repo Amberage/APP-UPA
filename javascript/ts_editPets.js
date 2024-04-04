@@ -22,6 +22,7 @@ function validateFormData() {
     var ownerAddress = document.getElementById('ownerAddress').value;
 
     const namePattern = /^[A-Za-záéíóúÁÉÍÓÚñÑ\s]+$/;
+    const sanitSQL = /^[^'"]+$/;
 
     //Errores de la mascota
     if (petName === '') {
@@ -65,10 +66,17 @@ function validateFormData() {
     if (ownerINE.length < 18) {
         errorMessage.innerHTML = 'El INE debe tener al menos 18 caracteres';
         return false;
+    } else if(!sanitSQL.test(ownerINE)) {
+        errorMessage.innerHTML = `No puedes usar caracteres especiales en el INE`;
+        return false;
     }
+
 
     if (ownerCURP.length < 18) {
         errorMessage.innerHTML = 'El CURP debe tener al menos 18 caracteres';
+        return false;
+    } else if(!sanitSQL.test(ownerCURP)) {
+        errorMessage.innerHTML = `No puedes usar caracteres especiales en el CURP.`;
         return false;
     }
     
@@ -79,6 +87,9 @@ function validateFormData() {
 
     if (ownerAddress === '' || ownerAddress.length < 5) {
         errorMessage.innerHTML = 'Por favor, ingrese una dirección válida</br> Mínimo 5 caracteres.';
+        return false;
+    } else if(!sanitSQL.test(ownerAddress)) {
+        errorMessage.innerHTML = `No puedes usar ' ni " en el domicilio.`;
         return false;
     }
 

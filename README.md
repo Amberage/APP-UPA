@@ -137,12 +137,14 @@ bFP-.gv0Mo1z1-jgf4'OAA(skBuW1=;u56bH{#3j-6"H}tz;D.R:oU(H;@o13Pk#
 
 Las siguientes credenciales son para proporcionaselas a la UPA, estas credenciales a diferencia de las del superadministrador __SON MODIFICABLES__ y tienen como finalidad llevar la gestión de los trabajadores de la UPA y las actas generadas por el sistema.
 
-* Credencial #1
+* Credencial #1  
+_Cuenta de administración: Aquí se crean trabajadores y se gestionan actas_
 ```ini
 usuario = admin
 contrasena = ?2KJ9pcYb!
 ```
-* Credencial #2
+* Credencial #2  
+ _Cuenta de trabajador: Aquí se pueden generar actas_
 ```ini
 usuario = UPAVACH
 contrasena = SisUPa.23@#

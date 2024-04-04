@@ -100,6 +100,18 @@ Aquí configuraremos <code>post_max_size</code>, <code>upload_max_filesize</code
 
 ![img_8](/assets/readme/8.png)
 
+__4. Cargar todo el sistema a la página web__
+
+Finalmente, deberemos cargar todo el proyecto con las carpetas que se muestran a continuación dentro de la carpeta de nuestro hosting:
+
+![img_11](/assets/readme/11.png)
+
+Es ideal seleccionar estas carpetas y meterlas en un <code>zip</code> para agilizar el proceso.
+
+![img_12](/assets/readme/12.png)
+
+__ES IMPORTANTE QUE EL PROYECTO SE ENCUENTRE COMO SE MUESTRA EN LA DERECHA DE LA IMAGEN, YA QUE LAS RUTAS ESTAN CONFIGURADAS PARA TRABAJAR EN ESA DISPOSICIÓN, DE LO CONTRARIO EL PROYECTO NO FUNCIONARÁ ADECUADAMENTE__
+
 ### Después de instalar...
 A este punto, de todo estar en orden el proyecto debería funcionar adecuadamente, aún asi es ideal testear todas sus funcionalidades y buscar constantemente dentro de la carpetas  <code>/</code>,  <code>config</code>,  <code>php</code> y todas sus subcarpetas un fichero llamado <code>error_log</code> el cual guarda el registro de todos los errores del sistema durante la ejecución del mismo. Allí podremos averiguar si algo no funciona como debería.
 

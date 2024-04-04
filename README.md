@@ -24,7 +24,9 @@ El sistema desarrollado para la UPA es un pequeño sistema CRUD con diferentes t
 
 ## Instalación
 
-Si el proyecto desea instalarse de manera local basta con configurar el config.php y el php.ini (pasos 2 y 3) y tener MySQL instalado en el equipo. Ahora bien, la siguiente explicación esta ideada para la instalación del proyecto dentro de un hosting compartido. __LA EXPLICACIÓN PODRÍA SER  MUY AMBIGUA DEBIDO A LA DIFERENCIA ENTRE EMPRESAS DE HOSTING__
+<b style="color: red;">LA EXPLICACIÓN PODRÍA SER  MUY AMBIGUA DEBIDO A LA DIFERENCIA ENTRE EMPRESAS DE HOSTING</b>
+
+Si el proyecto desea instalarse de manera local basta con configurar el config.php y el php.ini (pasos 2 y 3) y tener MySQL instalado en el equipo. Ahora bien, la siguiente explicación esta ideada para la instalación del proyecto dentro de un hosting compartido.
 
 __1. Creación de la base de datos__
 * __Debemos acceder al CPANEL y buscar el apartado relacionado a bases de datos__ _(Este apartado puede tener otro nombre según el plan y empresa de hosting)_

@@ -67,14 +67,21 @@ $data['paginacion'] = '';
 if ($num_rows > 0) {
     $data['table'] = '';
     while ($row = $result -> fetch_assoc()) {       
+        if($row['id'] == 3) {
+            $options = '<td>' .
+            "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/editarActa.png\");' onClick=editTS(" . $row['id'] . ");></button>" .
+            '</td>';
+        } else {
+            $options = '<td>' .
+            "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/editarActa.png\");' onClick=editTS(" . $row['id'] . ");></button>" .
+            "<button class='btnAction' style='background-image: url(\"/assets/images/eliminarActa.png\");' onClick=deleteTS(" . $row['id'] . ");></button>" .
+            '</td>';
+        }
         $data['table'] .= '<tr>';
         $data['table'] .= '<td><label class="lbl-info">Nombre: </label><span id="name' . $row['id'] . '">' . $row['nombre'] . '</span></td>';
         $data['table'] .= '<td><label class="lbl-info">Apellido: </label>' . $row['apellido'] . '</td>';
         $data['table'] .= '<td><label class="lbl-info">Propietario: </label>' . $row['username'] . '</td>';
-        $data['table'] .= '<td>' .
-                        "<button class='btnAction' style='margin-right: 3px; background-image: url(\"/assets/images/editarActa.png\");' onClick=editTS(" . $row['id'] . ");></button>" .
-                        "<button class='btnAction' style='background-image: url(\"/assets/images/eliminarActa.png\");' onClick=deleteTS(" . $row['id'] . ");></button>" .
-                 '</td>';
+        $data['table'] .= $options;
         $data['table'] .= '</tr>';
     }
 } else {

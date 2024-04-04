@@ -21,3 +21,4 @@ jobs:
           **/.git/**
           README.md
           .gitignore
+          /assets/readme/**

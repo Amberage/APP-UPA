@@ -1,9 +1,3 @@
-/*l nombre de la base de datos puede variar según el hosting, 
-algunos permiten crearla directamente por CLI en otros 
-es necesario crearla desde el panel del hosting */
-CREATE DATABASE UPA;
-USE UPA --
-
 CREATE TABLE usuarios(
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
@@ -75,24 +69,19 @@ FROM backup_mascotasPropietarios mp
 INNER JOIN usuarios users ON mp.idTS = users.id
 WHERE users.userType = 'ts' || users.userType = 'adm';
 
-
--- Triggers para clonar la información de la tabla original en la del respaldo.
--- Nota: Esto cumple dos funciones, tener un respaldo de la BBDD y llevar un conteo de los registros reales en la tabla de mascotas.
--- IF @recoveryBackup IS NULL THEN, si se establece una variable de sesión al hacer la query, el trigger no se activara, es util para poder restaurar información desde el backup sin activar los triggers y provocar errores de duplicidad
-CREATE TRIGGER insertBackup AFTER INSERT ON mascotasPropietarios
-FOR EACH ROW
-BEGIN
+DELIMITER $$
+CREATE TRIGGER `insertBackup` AFTER INSERT ON `mascotasPropietarios` FOR EACH ROW BEGIN
     IF @recoveryBackup IS NULL THEN
         INSERT INTO backup_mascotasPropietarios 
         (folio, petName, petBreed, petColor, petSex, petPicture, ownerName, ownerINE, ownerCURP, ownerColony, ownerAddress, idTS, fechaRegistro) 
         VALUES 
         (NEW.folio, NEW.petName, NEW.petBreed, NEW.petColor, NEW.petSex, NEW.petPicture, NEW.ownerName, NEW.ownerINE, NEW.ownerCURP, NEW.ownerColony, NEW.ownerAddress, NEW.idTS, NEW.fechaRegistro);
     END IF;
-END;
-
-CREATE TRIGGER updateBackup AFTER UPDATE ON mascotasPropietarios
-FOR EACH ROW
-BEGIN
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `updateBackup` AFTER UPDATE ON `mascotasPropietarios` FOR EACH ROW BEGIN
     IF @recoveryBackup IS NULL THEN
         UPDATE backup_mascotasPropietarios 
         SET 
@@ -109,9 +98,10 @@ BEGIN
         fechaRegistro = NEW.fechaRegistro
         WHERE folio = NEW.folio;
     END IF;
-END;
+END
+$$
+DELIMITER ;
 
--- Valores default
 INSERT INTO usuarios (id, nombre, apellido, username, password, userType, fechaRegistro)
 VALUES 
 (1, 'Departamento de Sistemas', 'Valle de Chalco Solidaridad', 'sistemasVACH', '$2y$10$ffTcEA8iVlI..xWxfTIeOeGAskoTrdjYPDEzCSkLj5vYA.J9cCrAS', 'adm', '2000-01-01 00:00:00'),

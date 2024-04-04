@@ -106,6 +106,6 @@ INSERT INTO usuarios (id, nombre, apellido, username, password, userType, fechaR
 VALUES 
 (1, 'Departamento de Sistemas', 'Valle de Chalco Solidaridad', 'sistemasVACH', '$2y$10$A2ptE8PxOnLhAClidNKRNOVe0Pja5OH2iqaMF9t5QtwfLujPasljG', 'adm', '2000-01-01 00:00:00'),
 (2, 'Administrador', 'UPA', 'admin', '$2y$10$JMi/XGgXMGo8QLbHTz5IOe0/MMlzVxbN8BBhfQIYUrC4oZqMgqip6', 'adm', '2000-01-01 00:00:00'),
-(3, 'UPA', 'Valle de Chalco Solidaridad', 'UPAVACH', '$2y$10$HV5e7mPDEjcqehD.wJma.eCEMiSN941v9ar/AqPse1lQqOCZUhsPu', 'adm', '2000-01-01 00:00:00');
+(3, 'UPA', 'Valle de Chalco Solidaridad', 'UPAVACH', '$2y$10$HV5e7mPDEjcqehD.wJma.eCEMiSN941v9ar/AqPse1lQqOCZUhsPu', 'ts', '2000-01-01 00:00:00');
 
 INSERT INTO tokenSuperUser (token) VALUES ('bFP-.gv0Mo1z1-jgf4\'OAA(skBuW1=;u56bH{#3j-6"H}tz;D.R:oU(H;@o13Pk#');
